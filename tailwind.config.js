@@ -16,9 +16,10 @@ module.exports = {
         },
         darkTheme: {
           primary: '#ffffff', // Blanco
-          background: '#03011D', // Color de contraste
+          background: '#020110', // Color de contraste
           text: '#ffffff', // Blanco
           gray: '#cbd5e0', // Grisito más claro
+          formulario: '#03011D',
         },
         yellow: {
           '500': '#f59e0b',

@@ -44,11 +44,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     };
 
     return (
-        <div className={`gradient-form h-full bg-neutral-200 dark:bg-neutral-700`}>
+        <div className={`gradient-form h-full ${theme === 'dark' ? 'dark' : ''}`}>
             <div className="container h-full p-10">
                 <div className="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
                     <div className="w-full">
-                        <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
+                        <div className="block rounded-lg bg-white shadow-lg dark:bg-darkTheme-formulario">
                             <div className="g-0 lg:flex lg:flex-wrap">
                                 {/* Left column container */}
                                 <div className="px-4 md:px-0 lg:w-6/12">
@@ -109,30 +109,31 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                                                     type="submit"
                                                     className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-dark-3 transition duration-150 ease-in-out hover:shadow-dark-2 focus:shadow-dark-2 focus:outline-none focus:ring-0 active:shadow-dark-2"
                                                     style={{
-                                                        background: 'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
+                                                        background: 'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)'
                                                     }}
                                                 >
                                                     Log in
                                                 </button>
-                                                <a href="#!">Forgot password?</a>
                                             </div>
-                                            {/* Register button */}
                                         </form>
                                     </div>
                                 </div>
-                                {/* Right column container with background and description */}
+                                {/* Right column container */}
                                 <div
-                                    className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none"
-                                    style={{ background: 'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)' }}
+                                    className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
+                                    style={{
+                                        background: 'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)'
+                                    }}
                                 >
                                     <div className="px-4 py-6 text-white md:mx-6 md:p-12">
-                                        <h4 className="mb-6 text-xl font-semibold">We are more than just a company</h4>
+                                        <h4 className="mb-6 text-xl font-semibold">
+                                            We are more than just a company
+                                        </h4>
                                         <p className="text-sm">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                                            nostrud exercitation ullamco laboris nisi ut aliquip ex
-                                            ea commodo consequat.
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                            consequat.
                                         </p>
                                     </div>
                                 </div>

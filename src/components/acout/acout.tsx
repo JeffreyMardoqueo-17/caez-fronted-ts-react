@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import { CustomInput } from '../Forms/CustomInput'
 import { CustomTypography } from '../Forms/CustomTypography';
 import { DatePicker } from '../Forms/DatePicker';
+import { ComboBox } from "../Forms/ComboBox";
 
 const Account1: React.FC = () => {
     const [date, setDate] = useState<Date | undefined>();
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
+    //para el com
+    const [selectedOption, setSelectedOption] = useState<string>("");
+
+    const options = [
+        { value: 'Mujer', label: 'Mujer' },
+        { value: 'Hombre', label: 'Hombre' },
+    ];
 
     const handleSubmit = () => {
         const data = {
@@ -58,7 +66,21 @@ const Account1: React.FC = () => {
                         >
                             Fecha de Nacimiento
                         </CustomTypography>
-                        <DatePicker date={date} setDate={setDate} />
+                        <div className="flex flex-col md:flex-row gap-4">
+                            <DatePicker date={date} setDate={setDate} />
+                            <ComboBox
+                                label="Seleccione una opción"
+                                options={options}
+                                selectedValue={selectedOption}
+                                onChange={(value: React.SetStateAction<string>) => setSelectedOption(value)}
+                            />
+                            <ComboBox
+                                label="Seleccione una opción"
+                                options={options}
+                                selectedValue={selectedOption}
+                                onChange={(value: React.SetStateAction<string>) => setSelectedOption(value)}
+                            />
+                        </div>
                     </div>
                 </div>
                 <button onClick={handleSubmit} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">

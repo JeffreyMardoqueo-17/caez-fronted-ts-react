@@ -4,6 +4,7 @@ import React from 'react';
 interface InputProps {
     id: string;
     type: string;
+    name: string;
     label: string;
     placeholder?: string;
     required?: boolean;

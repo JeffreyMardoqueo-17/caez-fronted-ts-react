@@ -12,14 +12,14 @@ module.exports = {
           primary: '#03011D', // Color de contraste
           background: '#ffffff', // Blanco
           text: '#3182ce', // Azulito
-          gray: '#4a5568', // Gris oscuro
+          gray: '#4a5568', // Gris oscur
         },
         darkTheme: {
           primary: '#ffffff', // Blanco
-          background: '#020110', // Color de contraste
+          background: '#212121', // Color de contraste
           text: '#ffffff', // Blanco
           gray: '#cbd5e0', // Grisito más claro
-          formulario: '#03011D',
+          formulario: '#171717',
         },
         yellow: {
           '500': '#f59e0b',

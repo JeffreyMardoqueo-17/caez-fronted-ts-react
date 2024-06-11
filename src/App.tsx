@@ -4,6 +4,7 @@ import Menu from './components/Menu/Menu';
 import { useTheme } from './components/hooks/theme/theme';
 import Login from './components/layouts/login/Login';
 import MainTemplate from './components/views/public/MainTemplate';
+import Account1 from './components/acout/acout';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -18,7 +19,8 @@ const App: React.FC = () => {
             {!isLoggedIn && (
                 <div className="bg-lightTheme-background dark:bg-darkTheme-background min-h-screen">
                     <Menu toggleTheme={toggleTheme} theme={theme} />
-                    <Login onLogin={handleLogin} />
+                    {/* <Login onLogin={handleLogin} /> */}
+                    <Account1 />
                 </div>
             )}
             {isLoggedIn && <MainTemplate />}

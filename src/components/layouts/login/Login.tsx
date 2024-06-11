@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../hooks/theme/theme';
+import logoClaro from '../../../assets/png/logo-color.png';
+import logoOscuro from '../../../assets/png/logo-no-background.png';
 
 interface LoginProps {
     onLogin: () => void;
@@ -57,7 +59,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                                         <div className="text-center">
                                             <img
                                                 className="mx-auto w-48"
-                                                src="../../../assets/png/logo-color.png"
+                                                src={(theme === 'dark') ? logoOscuro : logoClaro}
                                                 alt="logo"
                                             />
                                             <h4 className="mb-12 mt-1 pb-1 text-xl font-semibold">

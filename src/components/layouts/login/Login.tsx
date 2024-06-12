@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from '../../hooks/theme/theme';
+import { useTheme } from '../../hooks/theme';
 import logoClaro from '../../../assets/png/logo-color.png';
 import logoOscuro from '../../../assets/png/logo-no-background.png';
 

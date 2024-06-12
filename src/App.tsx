@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import Menu from './components/Menu/Menu';
-import { useTheme } from './components/hooks/theme/theme';
+import { useTheme } from './components/hooks/theme';
 import Login from './components/layouts/login/Login';
 import MainTemplate from './components/views/public/MainTemplate';
 import Account1 from './components/acout/acout';

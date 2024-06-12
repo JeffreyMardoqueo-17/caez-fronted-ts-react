@@ -26,7 +26,6 @@ const Account1: React.FC = () => {
         // Aquí puedes enviar los datos a tu API
         console.log(data);
     };
-
     return (
         <section className="px-8 py-20 dark:bg-darkTheme-formulario container mx-auto">
             <CustomTypography

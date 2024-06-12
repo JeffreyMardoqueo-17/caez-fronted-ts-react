@@ -12,7 +12,8 @@ module.exports = {
           primary: '#03011D', // Color de contraste
           background: '#ffffff', // Blanco
           text: '#3182ce', // Azulito
-          gray: '#4a5568', // Gris oscur
+          gray: '#4a5568', // Gris oscursa
+          hover: '#9AD7EE',
         },
         darkTheme: {
           primary: '#ffffff', // Blanco

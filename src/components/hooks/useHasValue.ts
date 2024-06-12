@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Custom hook that tracks the value of an input field and determines if it has a value or not.
+ * Hook personalizado que realiza un seguimiento del valor de un campo de entrada y determina si tiene un valor o no.
  *
- * @param initialValue - The initial value of the input field.
- * @returns An object containing the current value, a function to update the value, and a boolean indicating if the input field has a value.
+ * @param initialValue - El valor inicial del campo de entrada.
+ * @returns Un objeto que contiene el valor actual, una función para actualizar el valor y un booleano que indica si el campo de entrada tiene un valor.
  */
 export const useHasValue = (initialValue: string) => {
     const [value, setValue] = useState(initialValue);

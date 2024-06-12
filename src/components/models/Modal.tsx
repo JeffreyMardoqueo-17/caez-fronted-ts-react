@@ -20,11 +20,7 @@ import { ModalProps } from '../../interfaces/ModalProps';
  */
 export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, content, confirmText, cancelText, onConfirm }) => {
     useEffect(() => {
-        if (showModal) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
+        (showModal)? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto';
         return () => {
             document.body.style.overflow = 'auto';
         };
@@ -34,14 +30,15 @@ export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, co
         setShowModal(false);
     };
 
-    const handleOutsideClick = (e) => {
-        if (e.target.id === 'modal-overlay') {
+    const handleOutsideClick = (e: React.MouseEvent<EventTarget>) => {
+        const target = e.target as HTMLDivElement;
+        if (target.id === 'modal-overlay') {
             handleClose();
         }
     };
 
     return (
-        <>
+        <div>
             {showModal ? (
                 <>
                     <div
@@ -102,7 +99,7 @@ export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, co
                     </div>
                 </>
             ) : null}
-        </>
+        </div>
     );
 };
 

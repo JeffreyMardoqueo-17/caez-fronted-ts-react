@@ -15,7 +15,7 @@ export const ComboBox: FC<ComboBoxProps> = ({ label, options, selectedValue, onC
         setIsOpen(false);
     };
 
-    const borderColor = hasValue ? 'border-blue-500' : 'border-lightTheme-gray dark:border-darkTheme-gray';
+    const borderColor = hasValue ? 'border-blue-600' : 'border-lightTheme-gray dark:border-darkTheme-gray';
 
     return (
         <div className="relative w-full">

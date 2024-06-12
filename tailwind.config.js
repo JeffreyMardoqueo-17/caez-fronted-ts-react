@@ -14,6 +14,7 @@ module.exports = {
           text: '#3182ce', // Azulito
           gray: '#4a5568', // Gris oscursa
           hover: '#9AD7EE',
+          opacidad: '#08060651'
         },
         darkTheme: {
           primary: '#ffffff', // Blanco
@@ -21,6 +22,7 @@ module.exports = {
           text: '#ffffff', // Blanco
           gray: '#cbd5e0', // Grisito más claro
           formulario: '#171717',
+          opacidad: '#08060651'
         },
         yellow: {
           '500': '#f59e0b',

@@ -5,6 +5,8 @@ import { useTheme } from './components/hooks/theme';
 import Login from './components/layouts/login/Login';
 import MainTemplate from './components/views/public/MainTemplate';
 import Account1 from './components/acout/acout';
+import Modal from './components/models/Modal';
+import { Ejemplo } from './components/views/public/modales/Ejemplo';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -21,6 +23,7 @@ const App: React.FC = () => {
                     <Menu toggleTheme={toggleTheme} theme={theme} />
                     {/* <Login onLogin={handleLogin} /> */}
                     <Account1 />
+                    <Ejemplo />
                 </div>
             )}
             {isLoggedIn && <MainTemplate />}

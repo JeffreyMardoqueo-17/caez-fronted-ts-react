@@ -1,10 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { ComboBoxProps } from '../../interfaces/ComboBoxProps';
 import { useHasValue } from '../hooks/useHasValue';
 
 export const ComboBox: FC<ComboBoxProps> = ({ label, options, selectedValue, onChange }) => {
-    const { hasValue } = useHasValue(selectedValue);
+    const { hasValue, setValue } = useHasValue(selectedValue);
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        setValue(selectedValue);
+    }, [selectedValue, setValue]);
 
     const handleSelect = (value: string) => {
         onChange(value);

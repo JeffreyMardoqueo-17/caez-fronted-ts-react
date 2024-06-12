@@ -1,5 +1,7 @@
 export interface CustomTypographyProps {
-    variant: "h6" | "small";
+    variant: string;
     children: React.ReactNode;
     className: string;
+    fontBold: string;
+    fontSize: string;
 }

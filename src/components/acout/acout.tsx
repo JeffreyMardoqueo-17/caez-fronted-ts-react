@@ -29,15 +29,19 @@ const Account1: React.FC = () => {
     return (
         <section className="px-8 py-20 dark:bg-darkTheme-formulario container mx-auto">
             <CustomTypography
-                variant="h6"
-                className="text-darkTheme-background font-bold dark:text-lightTheme-background"
+                variant=""
+                fontBold="font-bold"
+                fontSize="text-3xl"
+                className="text-darkTheme-background dark:text-lightTheme-background"
             >
                 ALUMNO
             </CustomTypography>
 
             <CustomTypography
-                variant="small"
-                className="text-lightTheme-gray dark:text-darkTheme-gray font-normal mt-1"
+            variant=""
+            fontBold="font-normal"
+            fontSize=""
+                className="text-lightTheme-gray dark:text-darkTheme-gray mt-1"
             >
                 Ingrese la información del alumno
             </CustomTypography>
@@ -62,8 +66,10 @@ const Account1: React.FC = () => {
                 <div className="mb-6 flex flex-col gap-4 md:flex-row">
                     <div className="w-full">
                         <CustomTypography
-                            variant="small"
-                            className="mb-2 font-medium text-darkTheme-background font-bold dark:text-darkTheme-gray"
+                            variant=""
+                            fontBold="font-medium"
+                            fontSize=""
+                            className="mb-2  text-darkTheme-background dark:text-darkTheme-gray"
                         >
                             Fecha de Nacimiento
                         </CustomTypography>

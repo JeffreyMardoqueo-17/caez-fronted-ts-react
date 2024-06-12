@@ -11,14 +11,15 @@ import { CustomTypographyProps } from '../../interfaces/CustomTypographyProps';
  * @param {ReactNode} props.children - Contenido del componente.
  * @returns {JSX.Element} Componente de tipografía personalizada.
  */
-export const CustomTypography: FC<CustomTypographyProps> = ({ variant, children }) => {
+export const CustomTypography: FC<CustomTypographyProps> = ({ variant,fontSize,  children, fontBold }) => {
     return (
         <Typography
-            className="mb-2 font-medium font-bold text-darkTheme-background  dark:text-darkTheme-gray"
+            className={`mb-2 ${fontBold} ${fontSize} text-darkTheme-background dark:text-darkTheme-gray`}
             placeholder="Placeholder"
             onPointerEnterCapture={() => { }}
-            onPointerLeaveCapture={() => { }}
-            variant={variant} >
+            onPointerLeaveCapture={() => { }} // Add the missing onPointerLeaveCapture property
+            variant={undefined}
+        >
             {children}
         </Typography>
     );

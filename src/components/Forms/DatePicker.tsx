@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Popover, PopoverHandler, PopoverContent } from '@material-tailwind/react';
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
@@ -10,8 +10,21 @@ interface DatePickerProps {
 }
 
 export const DatePicker: FC<DatePickerProps> = ({ date, setDate }) => {
-    const dateValue = date ? format(date, "PPP") : "";
-    const currentDate = new Date();
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>(date);
+
+    const handleSelectDate = (date: Date | undefined) => {
+        setSelectedDate(date);
+        setDate(date);
+    };
+
+    const handleSelectNow = () => {
+        const now = new Date();
+        setSelectedDate(now);
+        setDate(now);
+    };
+
+    const dateValue = selectedDate ? format(selectedDate, "PPP") : "";
+    const timeValue = selectedDate ? format(selectedDate, "p") : "";
 
     return (
         <Popover placement="bottom">
@@ -19,24 +32,27 @@ export const DatePicker: FC<DatePickerProps> = ({ date, setDate }) => {
                 <div className="relative">
                     <input
                         readOnly
-                        value={dateValue}
-                        placeholder="Seleccione la fecha de nacimiento"
-                        className={`w-auto h-12 placeholder:opacity-100 focus:border-t-primary text-lightTheme-gray dark:text-bg-darkTheme-text pl-4 pr-10 py-2 rounded-md shadow-sm cursor-pointer bg-lightTheme-background dark:bg-darkTheme-background ${dateValue ? 'border-blue-600' : 'border-lightTheme-gray'}`}
+                        value={dateValue ? `${dateValue}, ${timeValue}` : ""}
+                        placeholder="Seleccione la fecha y hora"
+                        className={`w-auto h-12 placeholder:opacity-100 focus:border-t-primary text-lightTheme-gray dark:text-bg-darkTheme-gray pl-4 pr-10 py-2 rounded-md shadow-sm cursor-pointer bg-lightTheme-background dark:bg-darkTheme-background ${dateValue ? 'border-blue-600' : 'border-lightTheme-gray'}`}
                     />
                     <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <svg className="w-5 h-5 text-gray-400 dark:text-darkTheme-gray" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M5.293 9.707a1 1 0 011.414 0L10 13.586l3.293-3.879a1 1 0 011.414 0l.793.793a1 1 0 010 1.414l-4 4a 1 1 0 01-1.414 0l-4-4a 1 1 0 010-1.414l.793-.793z" clipRule="evenodd" />
+                            <path fillRule="evenodd" d="M5.293 9.707a1 1 0 011.414 0L10 13.586l3.293-3.879a1 1 0 011.414 0l.793.793a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l.793-.793z" clipRule="evenodd" />
                         </svg>
                     </span>
                 </div>
             </PopoverHandler>
             <PopoverContent
+                placeholder=""
+                onPointerEnterCapture={() => {}}
+                onPointerLeaveCapture={() => {}}
                 className="p-2 bg-lightTheme-background dark:bg-darkTheme-background border border-gray-300 dark:border-darkTheme-gray rounded-md shadow-lg"
             >
                 <DayPicker
                     mode="single"
-                    selected={date}
-                    onSelect={setDate}
+                    selected={selectedDate}
+                    onSelect={handleSelectDate}
                     showOutsideDays
                     classNames={{
                         caption: "flex justify-center py-2 mb-4 relative items-center",
@@ -63,10 +79,12 @@ export const DatePicker: FC<DatePickerProps> = ({ date, setDate }) => {
                         IconRight: (props) => <ChevronRightIcon {...props} className="h-4 w-4 stroke-2" />,
                     }}
                 />
-                <div className="mt-2 text-gray-900 dark:text-darkTheme-gray">
-                    <p>Fecha actual: {format(currentDate, 'PPP')}</p>
-                    <p>Hora actual: {format(currentDate, 'p')}</p>
-                </div>
+                <button
+                    onClick={handleSelectNow}
+                    className="mt-2 w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
+                >
+                    Seleccionar Fecha y Hora Actual
+                </button>
             </PopoverContent>
         </Popover>
     );

@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import Menu from './components/Menu/Menu';
 import { useTheme } from './components/hooks/theme';
-import Login from './components/layouts/login/Login';
 import MainTemplate from './components/views/public/MainTemplate';
 import Account1 from './components/acout/acout';
-import Modal from './components/models/Modal';
 import { Ejemplo } from './components/views/public/modales/Ejemplo';
+import { Table } from './components/Table/Table';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -24,6 +23,7 @@ const App: React.FC = () => {
                     {/* <Login onLogin={handleLogin} /> */}
                     <Account1 />
                     <Ejemplo />
+                    <Table />
                 </div>
             )}
             {isLoggedIn && <MainTemplate />}

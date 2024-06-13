@@ -58,7 +58,7 @@ export function Table() {
                     {TABLE_ROWS.map(({ name, job, date }, index) => (
                         <tr
                             key={name}
-                            className={`even:bg-gray-50 dark:even:bg-darkTheme-background ${
+                            className={`even:bg-gray-50 dark:even:bg-darkTheme-background cursor-pointer ${
                                 index % 2 === 0 ? "bg-white dark:bg-darkTheme-formulario" : "bg-gray-50 dark:bg-darkTheme-background"
                             } hover:bg-gray-200 dark:hover:bg-darkTheme-background`}
                         >

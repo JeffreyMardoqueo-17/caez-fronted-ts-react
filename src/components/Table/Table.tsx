@@ -34,7 +34,6 @@ const TABLE_ROWS = [
 
 export function Table() {
     return (
-        <Card className="h-full w-full overflow-scroll shadow-lg rounded-lg">
             <table className="w-full min-w-max table-auto text-left">
                 <thead>
                     <tr>
@@ -87,6 +86,5 @@ export function Table() {
                     ))}
                 </tbody>
             </table>
-        </Card>
     );
 }

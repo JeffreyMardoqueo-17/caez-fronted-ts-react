@@ -10,7 +10,7 @@ interface CardProps {
 
 export const DashboardCard: React.FC<CardProps> = ({ title, amount, Icon, iconColor }) => {
     return (
-        <div className="bg-lightTheme-background dark:bg-darkTheme-background shadow-md rounded-lg p-6 flex items-center justify-between border-2 dark:border-darkTheme-formulario border-gray-400 mr-2 ml-2 w-full sm:w-auto">
+        <div className="bg-lightTheme-background dark:bg-darkTheme-formulario shadow-md rounded-lg p-6 flex items-center justify-between border-2 dark:border-darkTheme-background border-gray-400 w-full sm:w-auto flex-1">
             <div className="flex flex-col">
                 <h2 className="text-lg font-semibold text-lightTheme-gray dark:text-darkTheme-gray mb-2">{title}</h2>
                 <p className="text-2xl font-bold text-lightTheme-gray dark:text-darkTheme-text">{amount}</p>

@@ -5,12 +5,13 @@ import MainTemplate from './components/views/public/MainTemplate';
 import Menu from './components/Menu/Menu';
 import Dashboard from './components/views/public/Dashboard';
 import { Table } from './components/Table/Table';
+import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const menu = "menu"
+    const menu =  <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />
     const head = "head"
 
     const handleLogin = () => {
@@ -21,7 +22,7 @@ const App: React.FC = () => {
         <div className={theme === 'dark' ? 'dark' : ''}>
             <div className="bg-lightTheme-background dark:bg-darkTheme-background min-h-screen">
 
-                <Menu toggleTheme={toggleTheme} theme={theme} />
+                {/* <Menu toggleTheme={toggleTheme} theme={theme} /> */}
                 {/* Contenido de la aplicación */}
                 <MainTemplate sidebar={menu} header={head}>
                     <h1>HOLA</h1>

@@ -2,6 +2,7 @@ import React from 'react';
 import { DashboardCard } from '../../DashboardCard/DashboardCard';
 import { FaMoneyBill, FaUser } from "react-icons/fa";
 import { Table } from '../../Table/Table';
+import { BarChartBarras } from '../../Graficos/BarChart';
 
 const Dashboard = () => {
     return (
@@ -32,10 +33,14 @@ const Dashboard = () => {
                 <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
                     <Table />
                 </div>
+                <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
+                    <BarChartBarras />
+                </div>
             </div>
             {/* Tercera sección */}
             <div className='w-full lg:w-1/5 h-full bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
-                <h2 className="text-lg font-semibold mb-4">Tarjetas Informativas</h2>
+                {/* <BarChartBarras /> */}
+
                 {/* Aquí puedes colocar componentes como tarjetas informativas */}
             </div>
         </div>

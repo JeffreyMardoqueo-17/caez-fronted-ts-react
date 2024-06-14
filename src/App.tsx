@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import { useTheme } from './components/hooks/theme';
 import MainTemplate from './components/views/public/MainTemplate';
-import Menu from './components/Menu/Menu';
-import Dashboard from './components/views/public/Dashboard';
-import { Table } from './components/Table/Table';
 import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton';
+import Dashboard from './components/views/public/Dashboard';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const menu =  <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />
-    const head = "head"
+    const menu = <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />;
+    const headerContent = <div>Header</div>; // Ajusta esto según tu necesidad
 
     const handleLogin = () => {
         setIsLoggedIn(true);
@@ -20,14 +18,10 @@ const App: React.FC = () => {
 
     return (
         <div className={theme === 'dark' ? 'dark' : ''}>
-            <div className="bg-lightTheme-background dark:bg-darkTheme-background min-h-screen">
-
-                {/* <Menu toggleTheme={toggleTheme} theme={theme} /> */}
-                {/* Contenido de la aplicación */}
-                <MainTemplate sidebar={menu} header={head}> 
+            <div className="bg-lightTheme-background dark:bg-darkTheme-background h-full">
+                <MainTemplate sidebar={menu} header={headerContent}> 
                     <Dashboard />
                 </MainTemplate>
-
             </div>
         </div>
     );

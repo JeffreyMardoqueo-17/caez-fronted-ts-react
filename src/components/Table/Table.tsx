@@ -1,8 +1,8 @@
 import React from 'react';
 import { Typography } from "@material-tailwind/react";
 import { CustomTypography } from "../Forms/CustomTypography";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { ActionButton } from "../inputs/Buttoom/ActionButton";
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
 interface TableProps {
     tableHead: string[];
@@ -41,14 +41,14 @@ export function Table({ tableHead, tableRows }: TableProps) {
                             <td key={i} className="p-4">
                                 {key === 'Acciones' ? (
                                     <div className="flex gap-2">
-                                        <ActionButton icon={<FaEdit />}  className="bg-blue-500 hover:bg-blue-600" onClick={() => console.log('Editar')} />
-                                        <ActionButton icon={<FaEye />}  className="bg-green-500 hover:bg-green-600" onClick={() => console.log('Ver')} />
-                                        <ActionButton icon={<FaTrash />}  className="bg-red-500 hover:bg-red-600" onClick={() => console.log('Eliminar')} />
+                                        {row[key].map((action: {icon: React.ReactNode, color: string, onClick: () => void}, actionIndex: number) => (
+                                            <ActionButton key={actionIndex} icon={action.icon} className={`bg-${action.color}-500 hover:bg-${action.color}-600`} onClick={action.onClick} />
+                                        ))}
                                     </div>
                                 ) : (
-                                    <Typography variant="small" color="blue-gray" className="font-normal text-gray-800 dark:text-darkTheme-text">
+                                    <CustomTypography variant="small" color="blue-gray" className="font-normal text-gray-800 dark:text-darkTheme-text">
                                         {String(row[key])}
-                                    </Typography>
+                                    </CustomTypography>
                                 )}
                             </td>
                         ))}

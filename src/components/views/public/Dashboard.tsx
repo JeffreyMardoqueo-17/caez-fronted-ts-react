@@ -7,9 +7,11 @@ import { AreaChartUsage } from '../../Graficos/AreaChartUsage';
 import { ActionButton } from '../../inputs/Buttoom/ActionButton';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa';
+import { CustomTypography } from '../../Forms/CustomTypography';
 
 
 const Dashboard = () => {
+    // Ejemplo de uso
     const tableHead1 = ["Nombre", "Apellido", "Grado", "Estado", "Acciones"];
     const tableRows1 = [
         {
@@ -17,36 +19,72 @@ const Dashboard = () => {
             Apellido: "Pérez",
             Grado: "10",
             Estado: "Activo",
-        },
-        {
-            Nombre: "María",
-            Apellido: "González",
-            Grado: "11",
-            Estado: "No Activo",
-        },
-        // Agrega más filas si es necesario
-    ];
-
-    const tableHead2 = ["Nombre", "Apellido", "Grado", "Estado", "Acciones"];
-    const tableRows2 = [
-        {
-            Nombre: "Jeffrey",
+            Acciones: [
+                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
+                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
+                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
+            ]
+        }, {
+            Nombre: "Juan",
             Apellido: "Pérez",
             Grado: "10",
             Estado: "Activo",
+            Acciones: [
+                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
+                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
+                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
+            ]
         },
         {
-            Nombre: "Maradona",
-            Apellido: "González",
-            Grado: "11",
-            Estado: "No Activo",
+            Nombre: "Juan",
+            Apellido: "Pérez",
+            Grado: "10",
+            Estado: "Activo",
+            Acciones: [
+                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
+                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
+                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
+            ]
         },
-        // Agrega más filas si es necesario
+        {
+            Nombre: "Juan",
+            Apellido: "Pérez",
+            Grado: "10",
+            Estado: "Activo",
+            Acciones: [
+                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
+                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
+                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
+            ]
+        },
+        {
+            Nombre: "Juan",
+            Apellido: "Pérez",
+            Grado: "10",
+            Estado: "Activo",
+            Acciones: [
+                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
+                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
+                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
+            ]
+        },
     ];
+    const tableHead2 = ["Nombre", "Apellido", "Acciones"];
+    const tableRows2 = [
+        {
+            Nombre: "Jeffrey",
+            Apellido: "Mardoqueo",
+
+            Acciones: [
+                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
+            ]
+        },
+    ];
+
 
     return (
         <div className='flex flex-col w-full h-full p-4 gap-4'>
-            <div className='flex flex-col lg:flex-row w-full gap-4'>
+            <div className='flex flex-col lg:flex-row w-full h-full gap-4'>
                 <div className='w-full lg:w-2/3 flex flex-col gap-4'>
                     {/* Primera sección */}
                     <div className='flex flex-wrap gap-4'>
@@ -71,7 +109,8 @@ const Dashboard = () => {
                     </div>
                     {/* Segunda sección */}
                     <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
-                        <Table tableHead={tableHead1} tableRows={tableRows1.map(row => ({ ...row, Acciones: <div className="flex"><ActionButton icon={<FaEdit />}  className="bg-blue-500 hover:bg-blue-600" onClick={() => console.log('Editar')} /><ActionButton icon={<FaEye />} className="bg-green-500 hover:bg-green-600" onClick={() => console.log('Ver')} /><ActionButton icon={<FaTrash />}  className="bg-red-500 hover:bg-red-600" onClick={() => console.log('Eliminar')} /></div> }))} />
+                        <Table tableHead={tableHead1} tableRows={tableRows1} />
+
                     </div>
                     <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
                         <BarChartBarras />
@@ -82,7 +121,16 @@ const Dashboard = () => {
                     <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg h-full gap-3'>
                         <AreaChartUsage />
                         <div className='mt-4'>
-                            <Table tableHead={tableHead2} tableRows={tableRows2.map(row => ({ ...row, Acciones: <div className="flex"><ActionButton icon={<FaPlus />}  className="bg-gray-500 hover:bg-gray-600" onClick={() => console.log('Ver más')} /></div> }))} />
+                            <CustomTypography
+                                variant=""
+                                fontBold="font-bold"
+                                fontSize="font-base"
+                                className="text-darkTheme-background dark:text-lightTheme-background"
+                            >
+                                Padrinos
+                            </CustomTypography>
+                            <Table tableHead={tableHead2} tableRows={tableRows2} />
+
                         </div>
                     </div>
                 </div>

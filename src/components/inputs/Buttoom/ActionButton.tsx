@@ -15,15 +15,15 @@ interface ActionButtonProps {
  * @param {string} props.action - La acción del botón.
  * @param {Function} props.onClick - La función que se ejecuta al hacer clic en el botón.
  * @param {string} props.className - La clase CSS adicional para el botón.
- * @returns {JSX.Element} El elemento del botón de acción.
- */
+* @returns {JSX.Element} El elemento del botón de acción.
+*/
 export function ActionButton({ icon, onClick, className }: ActionButtonProps) {
-    return (
-        <button
-            className={`flex text-white items-center justify-center rounded-full p-2 ${className}`}
-            onClick={onClick}
-        >
-            {icon}
-        </button>
-    );
+return (
+    <button
+        className={`flex text-white items-center justify-center rounded-full text-center p-4 bg-darkTheme-icono`}
+        onClick={onClick}
+    >
+        {icon}
+    </button>
+);
 }

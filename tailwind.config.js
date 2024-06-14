@@ -20,7 +20,7 @@ module.exports = {
           background: '#ffffff', // Blanco
           text: '#3182ce', // Azulito
           gray: '#4a5568', // Gris oscursa
-          hover: '#9AD7EE',
+          hover: '#F1F5F9',
           opacidad: '#08060651'
         },
         darkTheme: {
@@ -29,7 +29,11 @@ module.exports = {
           text: '#ffffff', // Blanco
           gray: '#cbd5e0', // Grisito más claro
           formulario: '#171717',
-          opacidad: '#08060651'
+          opacidad: '#08060651',
+          hover:'#191B1F',
+          border: '#6366F1',
+          icono: '#6669F1',
+          
         },
         yellow: {
           '500': '#f59e0b',

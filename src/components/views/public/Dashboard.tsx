@@ -20,54 +20,11 @@ const Dashboard = () => {
             Grado: "10",
             Estado: "Activo",
             Acciones: [
-                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
-                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
-                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
+                { icon: <FaEdit />, onClick: () => console.log('Editar') },
+                { icon: <FaEye />,  onClick: () => console.log('Ver') },
+                { icon: <FaTrash />, onClick: () => console.log('Eliminar') }
             ]
-        }, {
-            Nombre: "Juan",
-            Apellido: "Pérez",
-            Grado: "10",
-            Estado: "Activo",
-            Acciones: [
-                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
-                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
-                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
-            ]
-        },
-        {
-            Nombre: "Juan",
-            Apellido: "Pérez",
-            Grado: "10",
-            Estado: "Activo",
-            Acciones: [
-                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
-                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
-                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
-            ]
-        },
-        {
-            Nombre: "Juan",
-            Apellido: "Pérez",
-            Grado: "10",
-            Estado: "Activo",
-            Acciones: [
-                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
-                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
-                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
-            ]
-        },
-        {
-            Nombre: "Juan",
-            Apellido: "Pérez",
-            Grado: "10",
-            Estado: "Activo",
-            Acciones: [
-                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
-                { icon: <FaEye />, color: "green", onClick: () => console.log('Ver') },
-                { icon: <FaTrash />, color: "red", onClick: () => console.log('Eliminar') }
-            ]
-        },
+        }, 
     ];
     const tableHead2 = ["Nombre", "Apellido", "Acciones"];
     const tableRows2 = [
@@ -76,7 +33,7 @@ const Dashboard = () => {
             Apellido: "Mardoqueo",
 
             Acciones: [
-                { icon: <FaEdit />, color: "blue", onClick: () => console.log('Editar') },
+                { icon: <FaEdit />, onClick: () => console.log('Editar') },
             ]
         },
     ];
@@ -98,7 +55,7 @@ const Dashboard = () => {
                             title="Total alumnos en Deuda"
                             amount="1,200"
                             Icon={FaUser}
-                            iconColor="text-blue-500"
+                            iconColor="text-darkTheme-icono"
                         />
                         <DashboardCard
                             title="Total Revenue"

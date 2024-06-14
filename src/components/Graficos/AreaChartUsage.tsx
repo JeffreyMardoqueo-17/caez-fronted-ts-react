@@ -79,7 +79,7 @@ const valueFormatter: ValueFormatter = function (number) {
 
 export function AreaChartUsage() {
     return (
-        <>
+        <div className='bg-lightTheme-background dark:bg-darkTheme-formulario p-4 rounded-lg '>
             <h3 className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">Newsletter Revenue</h3>
             <p className="text-tremor-metric text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">$34,567</p>
             <AreaChart
@@ -91,6 +91,6 @@ export function AreaChartUsage() {
                 colors={['indigo', 'cyan']}
                 valueFormatter={valueFormatter}
             />
-        </>
+        </div>
     );
 }

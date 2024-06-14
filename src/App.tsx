@@ -24,8 +24,7 @@ const App: React.FC = () => {
 
                 {/* <Menu toggleTheme={toggleTheme} theme={theme} /> */}
                 {/* Contenido de la aplicación */}
-                <MainTemplate sidebar={menu} header={head}>
-                    <h1>HOLA</h1>
+                <MainTemplate sidebar={menu} header={head}> 
                     <Dashboard />
                 </MainTemplate>
 

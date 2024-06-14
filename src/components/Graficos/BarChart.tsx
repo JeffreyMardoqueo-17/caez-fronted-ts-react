@@ -16,12 +16,56 @@ const chartdata = [
         'Pagados': 75,
         'Faltantes': 25,
     },
-    // Agrega los datos para los demás meses
+    {
+        month: 'Abril',
+        'pagados': 45,
+        'Faltantes': 55,
+    },
+    {
+        month: 'Mayo',
+        'Pagados': 60,
+        'Faltantes': 40,
+    },
+    {
+        month: 'Junio',
+        'Pagados': 70,
+        'Faltantes': 30,
+    },
+    {
+        month: 'Julio',
+        'Pagados': 90,
+        'Faltantes': 10,
+    },
+    {
+        month: 'Agosto',
+        'Pagados': 55,
+        'Faltantes': 45,
+    },
+    {
+        month: 'Septiembre',
+        'Pagados': 65,
+        'Faltantes': 35,
+    },
+    {
+        month: 'Octubre',
+        'Pagados': 75,
+        'Faltantes': 25,
+    },
+    {
+        month: 'Noviembre',
+        'Pagados': 80,
+        'Faltantes': 20,
+    },
+    {
+        month: 'Diciembre',
+        'Pagados': 85,
+        'Faltantes': 15,
+    }
 ];
 
 export function BarChartBarras() {
     return (
-        <>
+        <div className='bg-lightTheme-background dark:bg-darkTheme-formulario p-2 rounded-sm'>
             <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
                 Pagos de Alumnos por Mes
             </h3>
@@ -33,6 +77,6 @@ export function BarChartBarras() {
                 color="fuchsia, red"
                 yAxisWidth={30}
             />
-        </>
+        </div>
     );
 }

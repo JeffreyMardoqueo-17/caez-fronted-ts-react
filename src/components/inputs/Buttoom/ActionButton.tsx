@@ -2,7 +2,6 @@ import React, { ReactNode, MouseEventHandler } from 'react';
 
 interface ActionButtonProps {
     icon: ReactNode;
-    action: string;
     onClick: MouseEventHandler<HTMLButtonElement>;
     className: string;
 }
@@ -18,14 +17,13 @@ interface ActionButtonProps {
  * @param {string} props.className - La clase CSS adicional para el botón.
  * @returns {JSX.Element} El elemento del botón de acción.
  */
-export function ActionButton({ icon, action, onClick, className }: ActionButtonProps) {
+export function ActionButton({ icon, onClick, className }: ActionButtonProps) {
     return (
         <button
-            className={`flex items-center justify-center rounded-full p-2 ${className}`}
+            className={`flex text-white items-center justify-center rounded-full p-2 ${className}`}
             onClick={onClick}
         >
             {icon}
-            <span className="ml-2">{action}</span>
         </button>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from '../../../models/Modal';
+import { Modal } from './Modal';
 
 export const Ejemplo = () => {
     const [showModal, setShowModal] = useState(false);

@@ -18,8 +18,8 @@ const App: React.FC = () => {
 
     return (
         <div className={theme === 'dark' ? 'dark' : ''}>
-            <div className="bg-lightTheme-background dark:bg-darkTheme-background h-full">
-                <MainTemplate sidebar={menu} header={headerContent}> 
+            <div className="bg-lightTheme-background dark:bg-darkTheme-background min-h-screen flex flex-col">
+                <MainTemplate sidebar={menu} header={headerContent}>
                     <Dashboard />
                 </MainTemplate>
             </div>

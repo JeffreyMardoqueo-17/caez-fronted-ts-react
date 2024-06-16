@@ -4,6 +4,7 @@ import { useTheme } from './components/hooks/theme';
 import MainTemplate from './components/views/public/MainTemplate';
 import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton';
 import Dashboard from './components/views/public/Dashboard';
+import AlumnosPage from './components/views/public/AlumnosPage';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -20,7 +21,8 @@ const App: React.FC = () => {
         <div className={theme === 'dark' ? 'dark' : ''}>
             <div className="bg-lightTheme-background dark:bg-darkTheme-background min-h-screen flex flex-col">
                 <MainTemplate sidebar={menu} header={headerContent}>
-                    <Dashboard />
+                    {/* <Dashboard /> */}
+                    <AlumnosPage />
                 </MainTemplate>
             </div>
         </div>

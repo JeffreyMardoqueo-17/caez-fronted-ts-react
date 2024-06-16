@@ -30,7 +30,7 @@ module.exports = {
           gray: '#cbd5e0', // Grisito más claro
           formulario: '#171717',
           opacidad: '#08060651',
-          hover:'#191B1F',
+          hover:'#212121',
           border: '#6366F1',
           icono: '#6669F1',
           

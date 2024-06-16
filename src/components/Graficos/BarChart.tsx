@@ -74,7 +74,7 @@ export function BarChartBarras() {
                 data={chartdata}
                 index="month"
                 categories={['Pagados', 'Faltantes']}
-                color="fuchsia, red"
+                colors={['indigo', 'cyan']}
                 yAxisWidth={30}
             />
         </div>

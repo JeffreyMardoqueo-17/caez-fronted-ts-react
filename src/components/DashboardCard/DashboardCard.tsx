@@ -1,5 +1,6 @@
 import React from "react";
 import { IconType } from "react-icons";
+import { Card } from '@tremor/react';
 
 interface CardProps {
     title: string;
@@ -10,12 +11,16 @@ interface CardProps {
 
 export const DashboardCard: React.FC<CardProps> = ({ title, amount, Icon, iconColor }) => {
     return (
-        <div className="bg-lightTheme-background cursor-pointer dark:bg-darkTheme-formulario shadow-md rounded-lg p-6 flex items-center justify-between border-2 dark:border-darkTheme-background border-gray-400 w-full sm:w-auto flex-1 dark:hover:border-darkTheme-border hover:bg-lightTheme-hover border-spacing-1">
-            <div className="flex flex-col">
-                <h2 className="text-lg font-semibold text-lightTheme-gray dark:text-darkTheme-gray mb-2">{title}</h2>
-                <p className="text-2xl font-bold text-lightTheme-gray dark:text-darkTheme-text">{amount}</p>
+        <Card
+            className={`mx-auto max-w-xs ${iconColor} bg-lightTheme-background dark:bg-darkTheme-formulario dark:hover:bg-darkTheme-hover cursor-pointer flex items-center justify-between hover:bg-lightTheme-hover`}
+            decoration="top"
+            decorationColor="indigo"
+        >
+            <div>
+                <p className="text-3xl text-tremor-default text-tremor-content dark:text-dark-tremor-content">{title}</p>
+                <p className="text-3xl text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">{amount}</p>
             </div>
-            <Icon className={`w-16 h-16 ml-4 ${iconColor}`} />
-        </div>
+            <Icon className="w-16 h-16 ml-4" />
+        </Card>
     );
 };

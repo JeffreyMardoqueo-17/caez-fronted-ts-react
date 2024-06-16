@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { DashboardCard } from '../../DashboardCard/DashboardCard';
-import { FaMoneyBill, FaUser, FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { FaMoneyBill, FaUser, FaEdit, FaEye, FaTrash, } from "react-icons/fa";
+import { FaUsersLine } from "react-icons/fa6"; //total de alumno becados
+import { FaUsersBetweenLines } from "react-icons/fa6"; //total de alumnos
+import { FaUsersRays } from "react-icons/fa6"; //total de alumnos en deuda
+
 import { Table } from '../../Table/Table';
 import { BarChartBarras } from '../../Graficos/BarChart';
 import { AreaChartUsage } from '../../Graficos/AreaChartUsage';
 import { CustomTypography } from '../../Forms/CustomTypography';
 import { Modal } from '../../modales/Modal';
+import { PlusCircleIcon } from '@heroicons/react/24/solid';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
@@ -51,6 +56,28 @@ const Dashboard = () => {
                 { icon: <FaTrash />, onClick: () => handleDelete('Juan Pérez') }
             ]
         },
+        {
+            Nombre: "Juan",
+            Apellido: "Pérez",
+            Grado: "10",
+            Estado: "Activo",
+            Acciones: [
+                { icon: <FaEdit />, onClick: () => console.log('Editar') },
+                { icon: <FaEye />, onClick: () => handleShowInfo({ Nombre: "Juan", Apellido: "Pérez", Grado: "10", Estado: "Activo" }) },
+                { icon: <FaTrash />, onClick: () => handleDelete('Juan Pérez') }
+            ]
+        },
+        {
+            Nombre: "Juan",
+            Apellido: "Pérez",
+            Grado: "10",
+            Estado: "Activo",
+            Acciones: [
+                { icon: <FaEdit />, onClick: () => console.log('Editar') },
+                { icon: <FaEye />, onClick: () => handleShowInfo({ Nombre: "Juan", Apellido: "Pérez", Grado: "10", Estado: "Activo" }) },
+                { icon: <FaTrash />, onClick: () => handleDelete('Juan Pérez') }
+            ]
+        },
     ];
 
     const tableHead2 = ["Nombre", "Apellido", "Acciones"];
@@ -59,7 +86,28 @@ const Dashboard = () => {
             Nombre: "Jeffrey",
             Apellido: "Mardoqueo",
             Acciones: [
-                { icon: <FaEdit />, onClick: () => console.log('Editar') },
+                { icon: <FaEye />, onClick: () => console.log('Editar') },
+            ]
+        },
+        {
+            Nombre: "Jeffrey",
+            Apellido: "Mardoqueo",
+            Acciones: [
+                { icon: <FaEye />, onClick: () => console.log('Editar') },
+            ]
+        },
+        {
+            Nombre: "Jeffrey",
+            Apellido: "Mardoqueo",
+            Acciones: [
+                { icon: <FaEye />, onClick: () => console.log('Editar') },
+            ]
+        },
+        {
+            Nombre: "Jeffrey",
+            Apellido: "Mardoqueo",
+            Acciones: [
+                { icon: <FaEye />, onClick: () => console.log('Editar') },
             ]
         },
     ];
@@ -71,21 +119,21 @@ const Dashboard = () => {
                     <div className='flex flex-wrap gap-4'>
                         <DashboardCard
                             title="Total alumnos Becados"
-                            amount="$5,000"
-                            Icon={FaMoneyBill}
-                            iconColor="text-green-500"
-                        />
-                        <DashboardCard
-                            title="Total alumnos en Deuda"
-                            amount="1,200"
-                            Icon={FaUser}
+                            amount="60"
+                            Icon={FaUsersLine}
                             iconColor="text-darkTheme-icono"
                         />
                         <DashboardCard
-                            title="Total Revenue"
-                            amount="$5,000"
-                            Icon={FaMoneyBill}
-                            iconColor="text-green-500"
+                            title="Total alumnos en Deuda"
+                            amount="40"
+                            Icon={FaUsersRays}
+                            iconColor="text-darkTheme-icono"
+                        />
+                        <DashboardCard
+                            title="Total de Alumnos"
+                            amount="100"
+                            Icon={FaUsersBetweenLines}
+                            iconColor="text-darkTheme-icono"
                         />
                     </div>
                     <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>

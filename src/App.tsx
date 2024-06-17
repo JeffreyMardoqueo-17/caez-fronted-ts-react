@@ -7,12 +7,13 @@ import Dashboard from './components/views/public/Dashboard';
 import AlumnosPage from './components/views/public/AlumnosPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
+import { MultiLevelSidebar } from './components/Sidebar/MultiLevelSidebar';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const menu = <Menu toggleTheme={toggleTheme} theme={theme} />
+    const menu = <MultiLevelSidebar toggleTheme={toggleTheme} theme={theme} />
     const headerContent = <div>Header</div>; // Ajusta esto según tu necesidad
 
     const handleLogin = () => {

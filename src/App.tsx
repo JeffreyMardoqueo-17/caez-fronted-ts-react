@@ -6,22 +6,13 @@ import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton'
 import Dashboard from './components/views/public/Dashboard';
 import AlumnosPage from './components/views/public/AlumnosPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Menu from './components/Menu/Menu';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const menu = (
-        <div>
-            <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />
-            <nav>
-                <ul>
-                    <li><Link to="/">Dashboard</Link></li>
-                    <li><Link to="/alumnos">Alumnos</Link></li>
-                </ul>
-            </nav>
-        </div>
-    );
+    const menu = <Menu toggleTheme={toggleTheme} theme={theme} />
     const headerContent = <div>Header</div>; // Ajusta esto según tu necesidad
 
     const handleLogin = () => {

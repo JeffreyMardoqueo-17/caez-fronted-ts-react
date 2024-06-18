@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from '../../Table/Table'; // Asegúrate de importar el componente Table desde la ruta correcta
-
+import ThemeToggleButton from '../../ThemeToggleButton/ThemeToggleButton';
 export default function AlumnosPage() {
     const [Data, setData] = useState<any[]>([]); // Specify the type for Data as an array of any
 
@@ -45,6 +45,7 @@ export default function AlumnosPage() {
                 {/* Caja izquierda */}
                 <div className="w-5/6 bg-gray-200 p-4">
                     Contenido de la caja izquierda
+                     {/* <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} /> */}
                 </div>
                 {/* Caja derecha */}
                 <div className="w-1/6 bg-gray-300 p-4">

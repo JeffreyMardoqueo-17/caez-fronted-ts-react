@@ -20,7 +20,7 @@ export const MultiLevelSidebar = () => {
     };
 
     return (
-        <div className='bg-lightTheme-background dark:bg-darkTheme-formulario text-white h-full w-full overflow-hidden'>
+        <div className='bg-lightTheme-background dark:bg-darkTheme-formulario text-white min-h-full h-full w-full overflow-hi'>
             <div className='p-4'>
                 <h1 className='text-lg font-bold mb-4'>Sidebar Menu</h1>
                 <ul className='space-y-2'>

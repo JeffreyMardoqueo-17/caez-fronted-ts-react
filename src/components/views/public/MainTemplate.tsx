@@ -1,4 +1,5 @@
 import React from 'react';
+import { Cabecera } from '../../header/Cabecera';
 
 interface MainTemplateProps {
     sidebar: React.ReactNode;
@@ -13,10 +14,10 @@ const MainTemplate: React.FC<MainTemplateProps> = ({ sidebar, header, children }
                 {sidebar}
             </div>
             <div className="flex flex-col flex-1">
-                <div className="bg-lightTheme-background dark:bg-darkTheme-formulario p-4 dark:text-light-50">
-                    {header}
+                <div className="bg-lightTheme-background dark:bg-darkTheme-formulario dark:text-light-50 fixed top-0 w-full z-10">
+                    <Cabecera />
                 </div>
-                <div className="p-2 flex-1 overflow-y-auto bg-white dark:bg-darkTheme-background">
+                <div className="p-2 pt-16 flex-1 overflow-y-auto bg-white dark:bg-darkTheme-background">
                     {children}
                 </div>
             </div>
@@ -25,3 +26,5 @@ const MainTemplate: React.FC<MainTemplateProps> = ({ sidebar, header, children }
 };
 
 export default MainTemplate;
+
+

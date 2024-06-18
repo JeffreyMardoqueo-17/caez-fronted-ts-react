@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import { useTheme } from './components/hooks/theme';
 import MainTemplate from './components/views/public/MainTemplate';
-import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton';
 import Dashboard from './components/views/public/Dashboard';
 import AlumnosPage from './components/views/public/AlumnosPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Menu from './components/Menu/Menu';
 import {MultiLevelSidebar} from './components/Sidebar/MultiLevelSidebar'
+import { header } from './components/header/header';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -15,7 +14,7 @@ const App: React.FC = () => {
 
     // const menu = <Menu toggleTheme={toggleTheme} theme={theme} />
     const sidebar = <MultiLevelSidebar />
-    const headerContent = <div>Header</div>; // Ajusta esto según tu necesidad
+    const headerContent = <header />
 
     const handleLogin = () => {
         setIsLoggedIn(true);

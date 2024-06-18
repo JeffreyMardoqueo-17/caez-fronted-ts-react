@@ -116,7 +116,7 @@ const Dashboard = () => {
         <div className='flex flex-col w-full h-full p-4 gap-4'>
             <div className='flex flex-col lg:flex-row w-full h-full gap-4'>
                 <div className='w-full lg:w-2/3 flex flex-col gap-4'>
-                    <div className='flex flex-wrap gap-4'>
+                    <div className='flex flex-wrap gap-2'>
                         <DashboardCard
                             title="Total alumnos Becados"
                             amount="60"

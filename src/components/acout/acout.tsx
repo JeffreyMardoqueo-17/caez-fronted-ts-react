@@ -49,6 +49,7 @@ const Account1: React.FC = () => {
             <div className="flex flex-col mt-8">
                 <div className="mb-6 flex flex-col items-end gap-4 md:flex-row">
                     <CustomInput
+                        id="nombre"
                         initialValue=""
                         label="Nombre"
                         placeholder="Jeffrey Mardoqueo"
@@ -56,6 +57,7 @@ const Account1: React.FC = () => {
                         onChange={(e) => setFirstName(e.target.value)}
                     />
                     <CustomInput
+                    id="apellido"
                         initialValue=""
                         label="Apellido"
                         placeholder="Jeffrey Mardoqueo"

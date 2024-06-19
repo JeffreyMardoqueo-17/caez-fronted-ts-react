@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { PresentationChartBarIcon, UserCircleIcon, Cog6ToothIcon, InboxIcon, PowerIcon, ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
 import ThemeToggleButton from '../ThemeToggleButton/ThemeToggleButton';
 
 interface MenuItem {
     title: string;
+    icon: React.ReactNode;
     submenu?: MenuItem[];
 }
 
@@ -12,53 +14,73 @@ interface MultiLevelSidebarProps {
 }
 
 const menuItems: MenuItem[] = [
-    { title: 'Dashboard' },
-    { title: 'Users', submenu: [{ title: 'List' }, { title: 'Create' }] },
-    { title: 'Settings', submenu: [{ title: 'Profile' }, { title: 'Billing' }] },
-    { title: 'Reports' }
+    { title: 'Dashboard', icon: <PresentationChartBarIcon className="h-6 w-6 group-hover:text-darkTheme-icono" /> },
+    {
+        title: 'Users',
+        icon: <UserCircleIcon className="h-6 w-6 group-hover:text-darkTheme-icono" />,
+        submenu: [
+            { title: 'List', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> },
+            { title: 'Create', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> }
+        ]
+    },
+    {
+        title: 'Settings',
+        icon: <Cog6ToothIcon className="h-6 w-6 group-hover:text-darkTheme-icono" />,
+        submenu: [
+            { title: 'Profile', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> },
+            { title: 'Billing', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> }
+        ]
+    },
+    { title: 'Reports', icon: <InboxIcon className="h-6 w-6 group-hover:text-darkTheme-icono" /> }
 ];
 
 export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, theme }) => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [open, setOpen] = useState<number | null>(null);
 
-    const handleSubmenuToggle = (index: number) => {
-        setOpenIndex(openIndex === index ? null : index);
+    const handleOpen = (index: number) => {
+        setOpen(open === index ? null : index);
     };
 
     return (
-        <div className='bg-lightTheme-background dark:bg-darkTheme-formulario text-white min-h-full h-full w-full overflow-hi'>
-            <div className='p-4'>
-                <h1 className='text-lg font-bold mb-4'>Sidebar Menu</h1>
-                <ul className='space-y-2'>
-                    {menuItems.map((item, index) => (
-                        <li key={index}>
-                            <div
-                                className='flex justify-between items-center cursor-pointer p-2 hover:bg-gray-700'
-                                onClick={() => item.submenu && handleSubmenuToggle(index)}
-                            >
-                                <span>{item.title}</span>
-                                {item.submenu && (
-                                    <span>{openIndex === index ? '-' : '+'}</span>
-                                )}
-                            </div>
-                            {item.submenu && openIndex === index && (
-                                <ul className='pl-4 space-y-1'>
-                                    {item.submenu.map((subItem, subIndex) => (
-                                        <li key={subIndex} className='cursor-pointer p-2 hover:bg-gray-700'>
-                                            {subItem.title}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </li>
-                    ))}
-                </ul>
+        <div className="h-screen fixed w-2/12 max-w-[20rem] p-4 bg-lightTheme-background dark:bg-darkTheme-formulario text-black dark:text-white">
+            <div className="mb-2 p-4">
+                <h1 className="text-xl font-bold text-blue-gray-900 dark:text-white">Sidebar</h1>
             </div>
-            {/* Agrega el componente ThemeToggleButton al final del sidebar */}
-            <div className='flex items-center justify-center mt-3'>
+            <ul className="space-y-3">
+                {menuItems.map((item, index) => (
+                    <li key={index}>
+                        <div
+                            className="flex justify-between items-center cursor-pointer p-3 hover:bg-gray-200 dark:hover:bg-gray-700 group"
+                            onClick={() => handleOpen(index)}
+                        >
+                            <div className="flex items-center">
+                                {item.icon}
+                                <span className="ml-3 text-lg">{item.title}</span>
+                            </div>
+                            {item.submenu && (
+                                <ChevronDownIcon className={`h-5 w-5 transition-transform ${open === index ? "rotate-180" : ""}`} />
+                            )}
+                        </div>
+                        {item.submenu && open === index && (
+                            <ul className="pl-6 space-y-2">
+                                {item.submenu.map((subItem, subIndex) => (
+                                    <li key={subIndex} className="flex items-center cursor-pointer p-2 hover:bg-gray-200 dark:hover:bg-gray-700 group">
+                                        {subItem.icon}
+                                        <span className="ml-2 text-base text-gray-700 dark:text-gray-400">{subItem.title}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                ))}
+                <li className="flex items-center cursor-pointer p-3 hover:bg-gray-200 dark:hover:bg-gray-700 group">
+                    <PowerIcon className="h-6 w-6 group-hover:text-darkTheme-icono" />
+                    <span className="ml-3 text-lg">Log Out</span>
+                </li>
+            </ul>
+            <div className="flex items-center justify-center mt-4">
                 <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />
             </div>
         </div>
     );
 };
-

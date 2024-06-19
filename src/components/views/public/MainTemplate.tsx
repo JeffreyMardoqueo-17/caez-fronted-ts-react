@@ -10,7 +10,7 @@ interface MainTemplateProps {
 const MainTemplate: React.FC<MainTemplateProps> = ({ sidebar, header, children }) => {
     return (
         <div className="flex min-h-screen bg-darkTheme-border">
-            <div className="w-2/12 bg-lightTheme-background dark:bg-darkTheme-formulario text-black dark:text-light-50">
+            <div className="w-2/12 z-50 bg-lightTheme-background dark:bg-darkTheme-formulario text-black dark:text-light-50">
                 {sidebar}
             </div>
             <div className="flex flex-col flex-1">

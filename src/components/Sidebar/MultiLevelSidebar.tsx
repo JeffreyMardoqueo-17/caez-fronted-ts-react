@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import ThemeToggleButton from '../ThemeToggleButton/ThemeToggleButton';
 
 interface MenuItem {
     title: string;
     submenu?: MenuItem[];
+}
+
+interface MultiLevelSidebarProps {
+    toggleTheme: () => void;
+    theme: 'light' | 'dark';
 }
 
 const menuItems: MenuItem[] = [
@@ -12,7 +18,7 @@ const menuItems: MenuItem[] = [
     { title: 'Reports' }
 ];
 
-export const MultiLevelSidebar = () => {
+export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, theme }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     const handleSubmenuToggle = (index: number) => {
@@ -48,6 +54,11 @@ export const MultiLevelSidebar = () => {
                     ))}
                 </ul>
             </div>
+            {/* Agrega el componente ThemeToggleButton al final del sidebar */}
+            <div className='flex items-center justify-center mt-3'>
+                <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />
+            </div>
         </div>
     );
 };
+

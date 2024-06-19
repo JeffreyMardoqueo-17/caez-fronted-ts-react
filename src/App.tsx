@@ -5,15 +5,15 @@ import MainTemplate from './components/views/public/MainTemplate';
 import Dashboard from './components/views/public/Dashboard';
 import AlumnosPage from './components/views/public/AlumnosPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import {MultiLevelSidebar} from './components/Sidebar/MultiLevelSidebar'
-import { header } from './components/header/header';
+import {MultiLevelSidebar} from './components/Sidebar/MultiLevelSidebar';
+
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     // const menu = <Menu toggleTheme={toggleTheme} theme={theme} />
-    const sidebar = <MultiLevelSidebar />
+    const sidebar = <MultiLevelSidebar toggleTheme={toggleTheme} theme={theme}  />
     const headerContent = <header />
 
     const handleLogin = () => {

@@ -46,3 +46,12 @@
     background: #f02020;
     cursor: pointer;
 }
+
+/* Agregar esta parte en tu archivo CSS */
+@media (max-width: 1024px) {
+    .sidebar-mobile {
+        transition: transform 0.3s ease-in-out;
+        width: 16rem;
+        /* Cambiar según tus necesidades */
+    }
+}

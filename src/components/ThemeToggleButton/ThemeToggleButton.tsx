@@ -1,25 +1,20 @@
-// src/components/ThemeToggleButton/ThemeToggleButton.tsx
 import React from 'react';
-import { MdDarkMode } from "react-icons/md";
-import { WiDaySunny } from "react-icons/wi";
+import { Bars3Icon } from '@heroicons/react/24/solid';
 
-interface ThemeToggleButtonProps {
-    toggleTheme: () => void;
-    theme: 'light' | 'dark';
+interface CabeceraProps {
+    toggleSidebar: () => void;
 }
 
-const ThemeToggleButton: React.FC<ThemeToggleButtonProps> = ({ toggleTheme, theme }) => {
-    const icon = theme === 'dark' ? <MdDarkMode className="w-8 h-8 fill-current" /> : <WiDaySunny className="w-8 h-8 fill-current" />;
-
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        e.preventDefault();
-        toggleTheme();
-    };
-
+export const Cabecera: React.FC<CabeceraProps> = ({ toggleSidebar }) => {
     return (
-        <a className="flex items-center justify-center mt-3" href="#" onClick={handleClick}>
-            {icon}
-        </a>
+        <div className="w-full flex items-center justify-between bg-lightTheme-background dark:bg-darkTheme-formulario border-b-2 border-b-lightTheme-hover text-white p-4 dark:border-b-darkTheme-hover">
+            <div className="text-lg font-bold ml-3 text-darkTheme-icono">GESTOR DE PAGOS CAEZ</div>
+            <div className="block lg:hidden">
+                <button onClick={toggleSidebar} className="text-black dark:text-white">
+                    <Bars3Icon className="h-8 w-8" />
+                </button>
+            </div>
+        </div>
     );
 };
-export default ThemeToggleButton;
+

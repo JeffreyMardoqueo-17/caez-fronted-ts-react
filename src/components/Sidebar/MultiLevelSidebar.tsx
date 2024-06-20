@@ -14,24 +14,24 @@ interface MultiLevelSidebarProps {
 }
 
 const menuItems: MenuItem[] = [
-    { title: 'Dashboard', icon: <PresentationChartBarIcon className="h-6 w-6 group-hover:text-darkTheme-icono" /> },
+    { title: 'Dashboard', icon: <PresentationChartBarIcon className="h-6 w-6" /> },
     {
         title: 'Users',
-        icon: <UserCircleIcon className="h-6 w-6 group-hover:text-darkTheme-icono" />,
+        icon: <UserCircleIcon className="h-6 w-6" />,
         submenu: [
-            { title: 'List', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> },
-            { title: 'Create', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> }
+            { title: 'List', icon: <ChevronRightIcon className="h-4 w-4" /> },
+            { title: 'Create', icon: <ChevronRightIcon className="h-4 w-4" /> }
         ]
     },
     {
         title: 'Settings',
-        icon: <Cog6ToothIcon className="h-6 w-6 group-hover:text-darkTheme-icono" />,
+        icon: <Cog6ToothIcon className="h-6 w-6" />,
         submenu: [
-            { title: 'Profile', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> },
-            { title: 'Billing', icon: <ChevronRightIcon className="h-4 w-4 group-hover:text-darkTheme-icono" /> }
+            { title: 'Profile', icon: <ChevronRightIcon className="h-4 w-4" /> },
+            { title: 'Billing', icon: <ChevronRightIcon className="h-4 w-4" /> }
         ]
     },
-    { title: 'Reports', icon: <InboxIcon className="h-6 w-6 group-hover:text-darkTheme-icono" /> }
+    { title: 'Reports', icon: <InboxIcon className="h-6 w-6" /> }
 ];
 
 export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, theme }) => {
@@ -42,7 +42,7 @@ export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleThem
     };
 
     return (
-        <div className="h-screen fixed w-2/12 max-w-[20rem] p-4 bg-lightTheme-background dark:bg-darkTheme-formulario text-black dark:text-white">
+        <div className="h-full fixed w-2/12 max-w-[20rem] p-4 bg-lightTheme-background dark:bg-darkTheme-formulario text-black dark:text-white">
             <div className="mb-2 p-4">
                 <h1 className="text-xl font-bold text-blue-gray-900 dark:text-white">Sidebar</h1>
             </div>
@@ -55,7 +55,7 @@ export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleThem
                         >
                             <div className="flex items-center">
                                 {item.icon}
-                                <span className="ml-3 text-lg">{item.title}</span>
+                                <span className="ml-3 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200">{item.title}</span>
                             </div>
                             {item.submenu && (
                                 <ChevronDownIcon className={`h-5 w-5 transition-transform ${open === index ? "rotate-180" : ""}`} />
@@ -66,7 +66,7 @@ export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleThem
                                 {item.submenu.map((subItem, subIndex) => (
                                     <li key={subIndex} className="flex items-center cursor-pointer p-2 hover:bg-gray-200 dark:hover:bg-gray-700 group">
                                         {subItem.icon}
-                                        <span className="ml-2 text-base text-gray-700 dark:text-gray-400">{subItem.title}</span>
+                                        <span className="ml-2 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200">{subItem.title}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -74,8 +74,8 @@ export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleThem
                     </li>
                 ))}
                 <li className="flex items-center cursor-pointer p-3 hover:bg-gray-200 dark:hover:bg-gray-700 group">
-                    <PowerIcon className="h-6 w-6 group-hover:text-darkTheme-icono" />
-                    <span className="ml-3 text-lg">Log Out</span>
+                    <PowerIcon className="h-6 w-6" />
+                    <span className="ml-3 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200">Log Out</span>
                 </li>
             </ul>
             <div className="flex items-center justify-center mt-4">

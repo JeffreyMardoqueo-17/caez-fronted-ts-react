@@ -11,7 +11,7 @@ interface TableProps {
 
 export function Table({ tableHead, tableRows }: TableProps) {
     return (
-        <table className="w-full min-w-full table-auto text-left rounded-md ">
+        <table className="w-auto dark:shadow-md table-auto text-left rounded-md ">
             <thead>
                 <tr>
                     {tableHead.map((head: string) => (

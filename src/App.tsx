@@ -6,6 +6,7 @@ import Dashboard from './components/views/public/Dashboard';
 import AlumnosPage from './components/views/public/AlumnosPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {MultiLevelSidebar} from './components/Sidebar/MultiLevelSidebar';
+import Account1 from './components/acout/acout';
 
 
 const App: React.FC = () => {
@@ -28,6 +29,7 @@ const App: React.FC = () => {
                         <Routes>
                             <Route path="/" element={<Dashboard />} />
                             <Route path="/alumnos" element={<AlumnosPage />} />
+                            <Route path ="/formulario" element={<Account1 />} />
                         </Routes>
                     </MainTemplate>
                 </div>

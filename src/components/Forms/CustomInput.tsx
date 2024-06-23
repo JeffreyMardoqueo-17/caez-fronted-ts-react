@@ -34,7 +34,7 @@ export const CustomInput: FC<CustomInputProps> = ({ label, placeholder, initialV
                 placeholder={placeholder}
                 value={value}
                 onChange={handleChange}
-                className={`text-lightTheme-gray dark:text-darkTheme-gray rounded-md ${hasValue ? 'border-blue-600' : 'border-lightTheme-gray'}`}
+                className={`text-lightTheme-gray dark:text-darkTheme-gray rounded-md border border-lightTheme-gray`}
                 onPointerEnterCapture={() => { } }
                 onPointerLeaveCapture={() => { } } 
                 crossOrigin={undefined}            

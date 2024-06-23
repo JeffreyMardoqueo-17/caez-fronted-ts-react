@@ -1,0 +1,45 @@
+import { useState } from 'react';
+import axios from 'axios';
+import debounce from 'lodash/debounce';
+
+const BuscarAlumno = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [results, setResults] = useState([]);
+
+    const handleSearch = debounce(async (term) => {
+        if (term.length > 0) {
+            try {
+                const response = await axios.post('http://localhost:5000/alumnos/buscar', { TextoBusqueda: term });
+                setResults(response.data);
+            } catch (error) {
+                console.error('Error al buscar alumnos', error);
+            }
+        } else {
+            setResults([]);
+        }
+    }, 300);
+
+    const onChange = (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        handleSearch(term);
+    };
+
+    return (
+        <div>
+            <input 
+                type="text" 
+                value={searchTerm} 
+                onChange={onChange} 
+                placeholder="Buscar alumno por nombre o apellido" 
+            />
+            <ul>
+                {results.map(alumno => (
+                    <li key={alumno.Id}>{alumno.Nombre} {alumno.Apellido}</li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+export default BuscarAlumno;

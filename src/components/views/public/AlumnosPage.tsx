@@ -1,10 +1,17 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from '../../Table/Table';
 import { Alumno } from '../../../class/Alumno';
-
+import { TotalCard } from '../../Cards/TotalesCards';
+import { FaUserPlus } from 'react-icons/fa';
+import { FaFileAlt } from 'react-icons/fa';
+import { FaUser, FaMoneyBillAlt, FaGraduationCap } from 'react-icons/fa';
+import { Boton } from '../../inputs/Buttoom/Boton';
 export default function AlumnosPage() {
     const [Data, setData] = useState<Alumno[]>([]);
+    const [totalAlumnos, setTotalAlumnos] = useState<number>(0);
+    const [totalBecados, setTotalBecados] = useState<number>(0);
+    const [totalNoBecados, setTotalNoBecados] = useState<number>(0);
 
     useEffect(() => {
         const getAlumnos = async () => {
@@ -13,16 +20,26 @@ export default function AlumnosPage() {
                 const data = respuesta.data.map((alumno: any) => ({
                     Nombre: alumno.Nombre,
                     Apellido: alumno.Apellido,
-                    Encargado: alumno.Encargado, // Asumiendo que tienes el ID o nombre del encargado aquí
-                    TipoDocumento : alumno.TipoDocumento,
+                    Encargado: alumno.Encargado,
+                    TipoDocumento: alumno.TipoDocumento,
                     NumDocumento: alumno.NumDocumento,
-                    Grupo: alumno.Grupo, // Asumiendo que tienes el ID o nombre del grupo aquí
+                    Grupo: alumno.Grupo,
                     EsBecado: alumno.EsBecado,
-                    Turno: alumno.Turno
-                    // Puedes agregar aquí un campo para acciones si es necesario
+                    Turno: alumno.Turno,
+                    Acciones: (
+                        <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            onClick={() => handleVerMas(alumno)}
+                        >
+                            Ver más
+                        </button>
+                    )
                 }));
                 console.log("Datos recibidos:", data);
                 setData(data);
+                setTotalAlumnos(data.length); // Aquí lleno el total de alumnos
+                setTotalBecados(data.filter((alumno) => alumno.EsBecado).length); // Aquí lleno el total de alumnos becados
+                setTotalNoBecados(data.filter((alumno) => !alumno.EsBecado).length); // Aquí lleno el total de alumnos no becados
             } catch (error) {
                 console.error("Error al obtener los datos:", error);
             }
@@ -30,7 +47,12 @@ export default function AlumnosPage() {
         getAlumnos();
     }, []);
 
-    const tableHead = [ 'Nombre', 'Apellido', 'Encargado',"Tipo Doc", 'N° Documento', 'Grupo', 'Becado','Turno',  'Acciones'];
+    const handleVerMas = (alumno: Alumno) => {
+        console.log("Ver más sobre:", alumno);
+        // Aquí es donde abrirás el modal en el futuro
+    };
+
+    const tableHead = ['Nombre', 'Apellido', 'Encargado', 'Tipo Doc', 'N° Documento', 'Grupo', 'Becado', 'Turno', 'Acciones'];
 
     return (
         <>
@@ -41,8 +63,21 @@ export default function AlumnosPage() {
                         <Table tableHead={tableHead} tableRows={Data} />
                     </div>
                 </div>
-                <div className="w-1/6 bg-gray-300 p-4">
-                    Contenido de la caja derecha
+                <div className="w-1/6 p-1 bg-lightTheme-background dark:bg-darkTheme-background flex flex-col">
+                    <div className="p-1">
+                        <Boton texto="Crear Alumno" icono={<FaUserPlus />} onClick={console.log("Agregando Alumno")} />
+                        <Boton texto="Informe de Alumnado" icono={<FaFileAlt />} onClick={console.log("Informe")} />
+                    </div>
+
+                    <div className='p-1 flex-grow'>
+                        <TotalCard title="Total de alumnos" total={totalAlumnos} icon={<FaUser className="text-4xl text-center text-blue-500 mb-2" />} />
+                    </div>
+                    <div className='p-1 flex-grow'>
+                        <TotalCard title="Total de alumnos becados" total={totalBecados} icon={<FaGraduationCap className="text-4xl text-center text-yellow-500 mb-2" />} />
+                    </div>
+                    <div className='p-1 flex-grow'>
+                        <TotalCard title="Total de alumnos no becados" total={totalNoBecados} icon={<FaMoneyBillAlt className="text-4xl text-center text-green-500 mb-2" />} />
+                    </div>
                 </div>
             </div>
         </>

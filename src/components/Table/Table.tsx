@@ -17,7 +17,7 @@ export function Table({ tableHead, tableRows }: TableProps) {
                     {tableHead.map((head: string) => (
                         <th
                             key={head}
-                                className="border-b uppercase border-gray-200 dark:border-gray-800 bg-slate-100 dark:bg-darkTheme-formulario p-4"
+                            className="border-b uppercase border-gray-200 dark:border-gray-800 bg-slate-100 dark:bg-darkTheme-formulario p-4"
                         >
                             <CustomTypography
                                 variant=""
@@ -40,11 +40,19 @@ export function Table({ tableHead, tableRows }: TableProps) {
                         {Object.keys(row).map((key: string, i: number) => (
                             <td key={i} className="p-4">
                                 {key === 'Acciones' ? (
-                                    <div className="flex gap-2">
-                                        {row[key].map((action: {icon: React.ReactNode, color: string, onClick: () => void}, actionIndex: number) => (
-                                            <ActionButton key={actionIndex} icon={action.icon} className={`bg-${action.color}-500 hover:bg-${action.color}-600`} onClick={action.onClick} />
-                                        ))}
-                                    </div>
+                                    Array.isArray(row[key]) ? (
+                                        <div className="flex gap-2">
+                                            {(row[key] as { icon: React.ReactNode, color: string, onClick: () => void }[]).map((action, actionIndex) => (
+                                                <ActionButton key={actionIndex} icon={action.icon} className={`bg-${action.color}-500 hover:bg-${action.color}-600`} onClick={action.onClick} />
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="flex gap-2">
+                                            <ActionButton icon={<FaEye />} className="bg-blue-500 hover:bg-blue-600" onClick={() => console.log('Ver más')} />
+                                            <ActionButton icon={<FaEdit />} className="bg-yellow-500 hover:bg-yellow-600" onClick={() => console.log('Editar')} />
+                                            <ActionButton icon={<FaTrash />} className="bg-red-500 hover:bg-red-600" onClick={() => console.log('Eliminar')} />
+                                        </div>
+                                    )
                                 ) : (
                                     <CustomTypography variant="small" color="blue-gray" className="font-normal text-gray-800 dark:text-darkTheme-text">
                                         {String(row[key])}

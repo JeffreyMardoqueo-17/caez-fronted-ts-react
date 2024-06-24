@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DashboardCard } from '../../DashboardCard/DashboardCard';
+import { DashboardCard } from '../../Cards/DashboardCard';
 import { FaMoneyBill, FaUser, FaEdit, FaEye, FaTrash, } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6"; //total de alumno becados
 import { FaUsersBetweenLines } from "react-icons/fa6"; //total de alumnos

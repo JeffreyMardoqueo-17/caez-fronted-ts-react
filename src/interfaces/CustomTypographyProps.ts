@@ -4,4 +4,5 @@ export interface CustomTypographyProps {
     className: string;
     fontBold: string;
     fontSize: string;
+    color: string
 }

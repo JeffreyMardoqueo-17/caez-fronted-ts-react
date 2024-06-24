@@ -5,6 +5,7 @@ import ThemeToggleButton from '../ThemeToggleButton/ThemeToggleButton';
 interface MenuItem {
     title: string;
     icon: React.ReactNode;
+    path?: string; // Add the 'path' property
     submenu?: MenuItem[];
 }
 
@@ -12,15 +13,14 @@ interface MultiLevelSidebarProps {
     toggleTheme: () => void;
     theme: 'light' | 'dark';
 }
-
 const menuItems: MenuItem[] = [
     { title: 'Dashboard', icon: <PresentationChartBarIcon className="h-6 w-6" /> },
     {
         title: 'Users',
         icon: <UserCircleIcon className="h-6 w-6" />,
         submenu: [
-            { title: 'List', icon: <ChevronRightIcon className="h-4 w-4" /> },
-            { title: 'Create', icon: <ChevronRightIcon className="h-4 w-4" /> }
+            { title: 'List', path: '/alumnos', icon: <ChevronRightIcon className="h-4 w-4" /> },
+            { title: 'Create', path: '/formulario', icon: <ChevronRightIcon className="h-4 w-4" /> }
         ]
     },
     {
@@ -32,7 +32,8 @@ const menuItems: MenuItem[] = [
         ]
     },
     { title: 'Reports', icon: <InboxIcon className="h-6 w-6" /> }
-];
+]; 
+
 
 export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, theme }) => {
     const [open, setOpen] = useState<number | null>(null);

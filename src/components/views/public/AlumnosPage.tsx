@@ -16,7 +16,7 @@ export default function AlumnosPage() {
     useEffect(() => {
         const getAlumnos = async () => {
             try {
-                const respuesta = await axios.get("http://localhost:5000/Alumnos/");
+                const respuesta = await axios.get("http://localhost:3000/Alumnos/");
                 const data = respuesta.data.map((alumno: any) => ({
                     Nombre: alumno.Nombre,
                     Apellido: alumno.Apellido,

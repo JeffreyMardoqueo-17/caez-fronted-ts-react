@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cabecera } from '../../header/Cabecera';
+import Cabecera from '../../header/Cabecera';
 
 interface MainTemplateProps {
     sidebar: React.ReactNode;

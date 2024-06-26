@@ -136,26 +136,32 @@ const Dashboard = () => {
                             iconColor="text-darkTheme-icono"
                         />
                     </div>
-                    <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
+                    <div className='bg-lightTheme-primary dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
                         <Table tableHead={tableHead1} tableRows={tableRows1} />
                     </div>
-                    <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
+                    <div className='bg-lightTheme-pry dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
                         <BarChartBarras />
                     </div>
                 </div>
                 <div className='w-full lg:w-1/3 flex flex-col '>
                     <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-md rounded-lg h-full gap-3'>
-                        <AreaChartUsage />
+                        <div className='bg-lightTheme-primary dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
+                            <AreaChartUsage />
+                        </div>
+
                         <div className='mt-4'>
-                            <CustomTypography
-                                variant=""
-                                fontBold="font-bold"
-                                fontSize="font-base"
-                                className="text-darkTheme-background dark:text-lightTheme-background"
-                            >
-                                Padrinos
-                            </CustomTypography>
-                            <Table tableHead={tableHead2} tableRows={tableRows2} />
+                            <div className='bg-lightTheme-primary dark:bg-darkTheme-background p-4 shadow-md rounded-lg'>
+                                <CustomTypography
+                                    variant=""
+                                    fontBold="font-bold"
+                                    fontSize="font-base"
+                                    className="text-darkTheme-background dark:text-lightTheme-background"
+                                >
+                                    Padrinos
+                                </CustomTypography>
+                                <Table tableHead={tableHead2} tableRows={tableRows2} />
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@ interface CardProps {
 export const DashboardCard: React.FC<CardProps> = ({ title, amount, Icon, iconColor }) => {
     return (
         <Card
-            className={`mx-auto max-w-xs ${iconColor} bg-lightTheme-background dark:bg-darkTheme-formulario dark:hover:bg-darkTheme-hover cursor-pointer flex items-center justify-between hover:bg-lightTheme-hover`}
+            className={`mx-auto max-w-xs ${iconColor} bg-lightTheme-primary dark:bg-darkTheme-formulario dark:hover:bg-darkTheme-hover cursor-pointer flex items-center justify-between hover:bg-lightTheme-hover`}
             decoration="top"
             decorationColor="indigo"
         >

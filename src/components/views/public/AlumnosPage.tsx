@@ -57,8 +57,8 @@ export default function AlumnosPage() {
     return (
         <>
             <div className="flex h-screen w-full">
-                <div className="w-5/6 bg-lightTheme-background dark:bg-darkTheme-background p-4">
-                    Contenido de la caja izquierda
+                <div className="w-5/6 bg-lightTheme-primary dark:bg-darkTheme-background p-4">
+                 
                     <div className='overflow-auto max-h-[500px]'>
                         <Table tableHead={tableHead} tableRows={Data} />
                     </div>

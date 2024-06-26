@@ -16,8 +16,8 @@ module.exports = {
     extend: {
       colors: {
         lightTheme: {
-          primary: '#03011D', // Color de contraste
-          background: '#ffffff', // Blanco
+          primary: '#FFFF', // Color de contraste
+          background: '#F5F5F5', // Blanco
           text: '#3182ce', // Azulito
           gray: '#4a5568', // Gris oscursa
           hover: '#F1F5F9',

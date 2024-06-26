@@ -5,14 +5,16 @@ import ThemeToggleButton from '../ThemeToggleButton/ThemeToggleButton';
 interface MenuItem {
     title: string;
     icon: React.ReactNode;
-    path?: string; // Add the 'path' property
+    path?: string; // Agregar la propiedad 'path'
     submenu?: MenuItem[];
 }
 
 interface MultiLevelSidebarProps {
     toggleTheme: () => void;
     theme: 'light' | 'dark';
+    isOpen: boolean; // Nuevo prop para determinar si el sidebar está abierto
 }
+
 const menuItems: MenuItem[] = [
     { title: 'Dashboard', icon: <PresentationChartBarIcon className="h-6 w-6" /> },
     {
@@ -32,10 +34,9 @@ const menuItems: MenuItem[] = [
         ]
     },
     { title: 'Reports', icon: <InboxIcon className="h-6 w-6" /> }
-]; 
+];
 
-
-export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, theme }) => {
+const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, theme, isOpen }) => {
     const [open, setOpen] = useState<number | null>(null);
 
     const handleOpen = (index: number) => {
@@ -43,7 +44,7 @@ export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleThem
     };
 
     return (
-        <div className="h-full fixed w-2/12 max-w-[20rem] p-4 bg-lightTheme-background dark:bg-darkTheme-formulario text-black dark:text-white">
+        <div className={`h-full w-2/12 max-w-[20rem] p-4 border-r-2 border-red-500 bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-white ${isOpen ? 'block' : 'hidden'}`}>
             <div className="mb-2 p-4">
                 <h1 className="text-xl font-bold text-blue-gray-900 dark:text-white">Sidebar</h1>
             </div>
@@ -79,9 +80,12 @@ export const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleThem
                     <span className="ml-3 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200">Log Out</span>
                 </li>
             </ul>
+            {/* Botón de cambio de tema sin ocupar un div extra */}
             <div className="flex items-center justify-center mt-4">
                 <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />
             </div>
         </div>
     );
 };
+
+export default MultiLevelSidebar;

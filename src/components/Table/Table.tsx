@@ -17,7 +17,7 @@ export function Table({ tableHead, tableRows }: TableProps) {
                     {tableHead.map((head: string) => (
                         <th
                             key={head}
-                            className="border-b uppercase border-gray-200 dark:border-gray-800 bg-slate-100 dark:bg-darkTheme-formulario p-4"
+                            className="border-b uppercase border-gray-200 dark:border-gray-800 bg-lightTheme-background dark:bg-darkTheme-formulario p-4"
                         >
                             <CustomTypography
                                 variant=""

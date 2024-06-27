@@ -9,7 +9,7 @@ interface TotalCardProps {
 
 export function TotalCard({ title, total, icon }: TotalCardProps) {
     return (
-        <Card className="bg-lightTheme-background justify-center dark:bg-darkTheme-formulario rounded-lg shadow-md p-4 text-center"
+        <Card className="bg-lightTheme-primary justify-center dark:bg-darkTheme-formulario rounded-lg shadow-md p-4 text-center"
             decoration="top" 
             decorationColor="indigo">
             <div className="flex justify-center">{icon}</div>

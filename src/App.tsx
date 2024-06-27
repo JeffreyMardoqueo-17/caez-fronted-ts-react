@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import 'tailwindcss/tailwind.css';
 import { useTheme } from './components/hooks/theme';
 import MainTemplate from './components/views/public/MainTemplate';
-import Dashboard from './components/views/public/Dashboard';
-import AlumnosPage from './components/views/public/AlumnosPage';
+import Dashboard from './components/views/public/Home/Dashboard';
+import AlumnosPage from './components/views/public/Alumno/AlumnosPage';
 import LoginForm from './components/views/public/LoginForm';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// import { MultiLevelSidebar } from './components/Sidebar/MultiLevelSidebar';
 import MultiLevelSidebar from './components/Sidebar/MultiLevelSidebar';
 import Account1 from './components/acout/acout';
 
@@ -23,7 +22,7 @@ const App: React.FC = () => {
         setLoading(false);
     }, []);
 
-    const sidebar = <MultiLevelSidebar toggleTheme={toggleTheme} theme={theme} />;
+    const sidebar = <MultiLevelSidebar toggleTheme={toggleTheme} theme={theme} isOpen={true} />;
     const headerContent = <header />;
 
     if (loading) {
@@ -49,6 +48,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 //   <Route path="/home" element={<MainTemplate sidebar={sidebar} header={headerContent} />}>
 //                             <Route index element={<Dashboard />} />

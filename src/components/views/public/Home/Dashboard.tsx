@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { DashboardCard } from '../../Cards/DashboardCard';
+import { DashboardCard } from '../../../Cards/DashboardCard';
 import { FaMoneyBill, FaUser, FaEdit, FaEye, FaTrash, } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6"; //total de alumno becados
 import { FaUsersBetweenLines } from "react-icons/fa6"; //total de alumnos
 import { FaUsersRays } from "react-icons/fa6"; //total de alumnos en deuda
-
-import { Table } from '../../Table/Table';
-import { BarChartBarras } from '../../Graficos/BarChart';
-import { AreaChartUsage } from '../../Graficos/AreaChartUsage';
-import { CustomTypography } from '../../Forms/CustomTypography';
-import { Modal } from '../../modales/Modal';
+import { Table } from '../../../Table/Table'
+import { BarChartBarras } from '../../../Graficos/BarChart';
+import { AreaChartUsage } from '../../../Graficos/AreaChartUsage';
+import { Modal } from '../../../modales/Modal';
+import { CustomTypography } from '../../../Forms/CustomTypography';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
 
 const Dashboard = () => {

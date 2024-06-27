@@ -17,7 +17,7 @@ const Cabecera: React.FC = () => {
     }, []);
 
     return (
-        <div className="w-full flex items-center justify-between bg-lightTheme-primary dark:bg-darkTheme-background border-b-2 border-b-lightTheme-hover text-white p-4 dark:border-b-darkTheme-hover fixed z-50">
+        <div className="w-full flex items-center justify-between bg-lightTheme-primary dark:bg-darkTheme-formulario border-b-2 border-b-lightTheme-hover text-white p-4 dark:border-b-darkTheme-hover fixed z-50">
             <div className="text-lg font-bold ml-3 text-darkTheme-icono">GESTOR DE PAGOS CAEZ</div>
             {userName && (
                 <div className="text-lg font-bold mr-3 text-darkTheme-icono">Bienvenido, {userName}</div>

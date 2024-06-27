@@ -8,6 +8,7 @@ interface MenuItem {
     path?: string;
     submenu?: MenuItem[];
 }
+
 interface MultiLevelSidebarProps {
     toggleTheme: () => void;
     theme: 'light' | 'dark';
@@ -43,9 +44,8 @@ const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, them
     };
 
     return (
-        <div className={`h-full w-2/12 max-w-[20rem] p-4  bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-white ${isOpen ? 'block' : 'hidden'}`}>
-            
-            <ul className="space-y-3 fixed" >  
+        <div className={`h-full w-2/12 max-w-[20rem] p-4 bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-white ${isOpen ? 'block' : 'hidden'}`}>
+            <ul className="space-y-3">
                 <h1 className="text-xl font-bold text-blue-gray-900 dark:text-white">Sidebar</h1>
                 {menuItems.map((item, index) => (
                     <li key={index}>
@@ -68,7 +68,6 @@ const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, them
                                         {subItem.icon}
                                         <span className="ml-2 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200">{subItem.title}</span>
                                     </li>
-                                    
                                 ))}
                             </ul>
                         )}
@@ -79,7 +78,7 @@ const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, them
                     <span className="ml-3 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200">Log Out</span>
                 </li>
             </ul>
-            <div className="flex items-center justify-center mt-4 fixed ">
+            <div className="flex items-center justify-center mt-4">
                 <ThemeToggleButton toggleTheme={toggleTheme} theme={theme} />
             </div>
         </div>

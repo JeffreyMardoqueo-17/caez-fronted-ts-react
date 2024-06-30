@@ -11,16 +11,16 @@ import { ModalProps } from '../../interfaces/ModalProps';
  * @param showModal - Boolean value indicating whether the modal should be shown or hidden.
  * @param setShowModal - Function to toggle the visibility of the modal.
  * @param title - The title of the modal.
- * @param content - The content of the modal.
+ * @param body - The dynamic content of the modal body passed as React node.
  * @param confirmText - The text to display on the confirm button.
  * @param cancelText - The text to display on the cancel button.
  * @param onConfirm - Optional callback function to be called when the confirm button is clicked.
  *
  * @returns The Modal component.
  */
-export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, content, confirmText, cancelText, onConfirm }) => {
+export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, body, confirmText, cancelText, onConfirm }) => {
     useEffect(() => {
-        (showModal)? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto';
+        showModal ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto';
         return () => {
             document.body.style.overflow = 'auto';
         };
@@ -52,7 +52,6 @@ export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, co
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 dark:border-darkTheme-background rounded-t">
                                     <CustomTypography
-                                        variant=""
                                         fontBold="font-bold"
                                         fontSize="text-3xl"
                                         className="text-darkTheme-background dark:text-lightTheme-background"
@@ -70,9 +69,7 @@ export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, co
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
-                                    <p className="my-4 text-blueGray-500 dark:text-darkTheme-gray text-lg leading-relaxed">
-                                        {content}
-                                    </p>
+                                    {body}
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 dark:border-darkTheme-background rounded-b">
@@ -107,7 +104,7 @@ Modal.propTypes = {
     showModal: PropTypes.bool.isRequired,
     setShowModal: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    body: PropTypes.node.isRequired,
     confirmText: PropTypes.string,
     cancelText: PropTypes.string,
     onConfirm: PropTypes.func

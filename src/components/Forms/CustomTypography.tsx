@@ -11,7 +11,7 @@ import { CustomTypographyProps } from '../../interfaces/CustomTypographyProps';
  * @param {ReactNode} props.children - Contenido del componente.
  * @returns {JSX.Element} Componente de tipografía personalizada.
  */
-export const CustomTypography: FC<CustomTypographyProps> = ({ variant,fontSize,  children, fontBold }) => {
+export const CustomTypography: FC<CustomTypographyProps> = ({ fontSize,  children, fontBold }) => {
     return (
         <Typography
             className={`mb-2 ${fontBold} ${fontSize} text-darkTheme-background dark:text-darkTheme-gray`}

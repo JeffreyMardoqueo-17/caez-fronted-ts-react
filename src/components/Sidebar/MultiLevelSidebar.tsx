@@ -44,7 +44,7 @@ const MultiLevelSidebar: React.FC<MultiLevelSidebarProps> = ({ toggleTheme, them
     };
 
     return (
-        <div className={`h-full w-2/12 max-w-[20rem] p-4 bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-white ${isOpen ? 'block' : 'hidden'}`}>
+        <div className={`h-screen w-2/12 max-w-[20rem] p-4 bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-white ${isOpen ? 'block' : 'hidden'}`}>
             <ul className="space-y-3">
                 <h1 className="text-xl font-bold text-blue-gray-900 dark:text-white">Sidebar</h1>
                 {menuItems.map((item, index) => (

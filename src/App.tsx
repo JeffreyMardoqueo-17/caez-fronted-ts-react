@@ -8,6 +8,7 @@ import LoginForm from './components/views/public/LoginForm';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MultiLevelSidebar from './components/Sidebar/MultiLevelSidebar';
 import Account1 from './components/acout/acout';
+import ShowTipoDocumento from './components/showTipoDocumento/ShowTipoDocumento';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -37,6 +38,7 @@ const App: React.FC = () => {
                         <Routes>
                             <Route path="/" element={<Navigate to="/home" replace />} />
                             <Route path="/home" element={<Dashboard />} />
+                            <Route path='/TipoDocumento' element={<ShowTipoDocumento />}/>
                             <Route path="/alumnos" element={<AlumnosPage />} />
                             <Route path="/formulario" element={<Account1 />} />
                         </Routes>

@@ -6,7 +6,7 @@ import { TotalCard } from '../../../Cards/TotalesCards';
 import { FaUserPlus, FaFileAlt, FaUser, FaMoneyBillAlt, FaGraduationCap, FaEye } from 'react-icons/fa';
 import { Boton } from '../../../inputs/Buttoom/Boton';
 import { Modal } from '../../../modales/Modal';
-import { AlumnoForm } from '../../../Forms/AlumnoForm/AlumnoForm';
+import AlumnoCreate from './AlumnoCreate';
 
 export default function AlumnosPage() {
     const [Data, setData] = useState<{ [key: string]: unknown }[]>([]);
@@ -14,6 +14,7 @@ export default function AlumnosPage() {
     const [totalBecados, setTotalBecados] = useState<number>(0);
     const [totalNoBecados, setTotalNoBecados] = useState<number>(0);
     const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null); // Estado para almacenar el alumno seleccionado
+    const [showCreateModal, setShowCreateModal] = useState<boolean>(false); // Estado para controlar la visibilidad del modal de creación
 
     useEffect(() => {
         const getAlumnos = async () => {
@@ -58,6 +59,10 @@ export default function AlumnosPage() {
         setSelectedAlumno(null); // Cerrar el modal al limpiar el alumno seleccionado
     };
 
+    const handleOpenCreateModal = () => {
+        setShowCreateModal(true); // Mostrar el modal de creación de alumno
+    };
+
     const tableHead = ['Nombre', 'Apellido', 'Encargado', 'Tipo Doc', 'N° Documento', 'Grupo', 'Becado', 'Turno', 'Fecha Nacimiento', 'Acciones'];
 
     return (
@@ -70,7 +75,7 @@ export default function AlumnosPage() {
                         <TotalCard title="Total de alumnos no becados" total={totalNoBecados} icon={<FaMoneyBillAlt className="text-4xl text-center text-green-500 mb-2" />} />
                     </div>
                     <div className="flex flex-col justify-end p-2">
-                        <Boton color='bg-green-400' texto="Crear Alumno" icono={<FaUserPlus />} onClick={() => console.log("Agregando Alumno")} />
+                        <Boton color='bg-green-400' texto="Crear Alumno" icono={<FaUserPlus />} onClick={handleOpenCreateModal} />
                         <Boton color='bg-indigo-500' texto="Informe de Alumnado" icono={<FaFileAlt />} onClick={() => console.log("Informe")} />
                     </div>
                 </div>
@@ -87,6 +92,20 @@ export default function AlumnosPage() {
                     confirmText="Aceptar"
                     cancelText="Cancelar"
                     onConfirm={handleCloseModal}
+                />
+            )}
+            {showCreateModal && ( // Mostrar el modal de creación de alumno si showCreateModal es true
+                <Modal
+                    showModal={true}
+                    setShowModal={setShowCreateModal}
+                    title="Crear Alumno"
+                    body={<AlumnoCreate />} // Pasar el componente AlumnoCreate como cuerpo del modal
+                    confirmText="Guardar"
+                    cancelText="Cancelar"
+                    onConfirm={() => {
+                        // Aquí puedes agregar lógica adicional al guardar el alumno
+                        setShowCreateModal(false); // Cierra el modal después de guardar
+                    }}
                 />
             )}
         </>

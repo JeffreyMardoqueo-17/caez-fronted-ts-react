@@ -52,7 +52,7 @@ export default function AlumnoCreate() {
 
     return (
         <div className="mx-auto max-w-6xl">
-            <form onSubmit={handleSubmit} className="space-y-5 bg-lightTheme-primary dark:bg-darkTheme-formulario p-10 rounded-lg shadow-md">
+            <form onSubmit={handleSubmit} className="space-y-5 bg-lightTheme-primary dark:bg-darkTheme-formulario p-10 rounded-lg">
                 <div className='grid grid-cols-12 gap-5'>
                     <div className="col-span-6">
                         <label htmlFor="Nombre" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Nombre</label>
@@ -94,7 +94,7 @@ export default function AlumnoCreate() {
                     </div>
                     <div className="col-span-3">
                         <label htmlFor="NumDocumento" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Número de Documento</label>
-                        <input type="number" required name="NumDocumento" value={alumno.NumDocumento} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.NumDocumento)}`} placeholder="12345678" />
+                        <input type="number" maxLength={12} required name="NumDocumento" value={alumno.NumDocumento} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.NumDocumento)}`} placeholder="12345678" />
                     </div>
                     <div className="col-span-3">
                         <label htmlFor="IdGrado" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Grado</label>
@@ -134,14 +134,14 @@ export default function AlumnoCreate() {
                         <input type="text" name="IdPadrino" value={alumno.IdPadrino} onChange={handleChange} disabled={!alumno.EsBecado} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${alumno.EsBecado ? 'bg-white' : 'bg-gray-50 cursor-not-allowed text-gray-500'}`} placeholder="Padrino" />
                     </div>
                 </div>
-                <div className="flex justify-center gap-2">
+                {/* <div className="flex justify-center gap-2">
                     <div className='flex-1'>
                         <button type="button" className="flex items-center justify-center gap-2 rounded-lg w-full border border-violet-500 bg-violet-500 px-5 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-violet-700 hover:bg-violet-700 focus:ring focus:ring-violet-200 disabled:cursor-not-allowed disabled:border-violet-300 disabled:bg-violet-300">
                             <IoSaveSharp className='text-3xl text-white' /> 
                             Registrar
                         </button>
                     </div>
-                </div>
+                </div> */}
             </form>
         </div>
     );

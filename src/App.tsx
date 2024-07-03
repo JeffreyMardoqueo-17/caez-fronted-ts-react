@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import MultiLevelSidebar from './components/Sidebar/MultiLevelSidebar';
 import Account1 from './components/acout/acout';
 import ShowTipoDocumento from './components/showTipoDocumento/ShowTipoDocumento';
+import AlumnoCreate from './components/views/public/Alumno/AlumnoCreate';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -39,6 +40,7 @@ const App: React.FC = () => {
                             <Route path="/" element={<Navigate to="/home" replace />} />
                             <Route path="/home" element={<Dashboard />} />
                             <Route path='/TipoDocumento' element={<ShowTipoDocumento />}/>
+                            <Route path='/alumnos/create' element = {<AlumnoCreate />} />
                             <Route path="/alumnos" element={<AlumnosPage />} />
                             <Route path="/formulario" element={<Account1 />} />
                         </Routes>

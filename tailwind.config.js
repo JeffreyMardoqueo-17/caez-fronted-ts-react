@@ -15,6 +15,8 @@ module.exports = {
     current: 'currentColor',
     extend: {
       colors: {
+        //  primary: colors.blue,
+        // secondary: colors.slate,
         lightTheme: {
           primary: '#FFFF', // Color de contraste
           background: '#F5F5F5', // Blanco
@@ -157,6 +159,7 @@ module.exports = {
   ],
   plugins: [
     require('@headlessui/tailwindcss'),
-    require('@tailwindcss/forms')
+    require('@tailwindcss/forms'),
+    require("@tailwindcss/typography"), require("@tailwindcss/forms")
   ],
 };

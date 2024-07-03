@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Modal } from '../modales/Modal';
-import { CustomTypography } from '../Forms/CustomTypography'; // Ajusta la ruta según corresponda
+import { CustomTypography } from '../Forms/CustomTypography'; 
 
 interface TipoDocumento {
   Id: number;
@@ -132,6 +132,7 @@ const ShowTipoDocumento: React.FC = () => {
       }
     }
   };
+
 
   return (
     <div className="">

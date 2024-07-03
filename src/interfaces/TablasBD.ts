@@ -17,3 +17,8 @@ export interface Alumno {
     FechaRegistro: Date;
     EsBecado: boolean;
 }
+ // types.ts
+export interface TipoDocumento {
+  id: string;
+  name: string;
+}

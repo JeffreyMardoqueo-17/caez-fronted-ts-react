@@ -35,7 +35,7 @@ module.exports = {
           hover:'#212121',
           border: '#6366F1',
           icono: '#6669F1',
-          
+          input: '#2F2F2F'
         },
         yellow: {
           '500': '#f59e0b',

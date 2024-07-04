@@ -1,3 +1,17 @@
+export interface Encargado {
+    Id: number;
+    Nombre: string;
+    Apellido: string;
+    Role: string;
+    Telefono: string;
+    TelEmergencia: string;
+    Correo: string;
+    TipoDocumento: string;
+    NumDocumento: string;
+    Administrador: boolean;
+    FechaRegistro: string;
+}
+
 export interface Alumno {
     Id: number;
     Nombre: string;

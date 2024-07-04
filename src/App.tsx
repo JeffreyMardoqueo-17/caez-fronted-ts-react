@@ -11,6 +11,8 @@ import Account1 from './components/acout/acout';
 import ShowTipoDocumento from './components/showTipoDocumento/ShowTipoDocumento';
 import AlumnoCreate from './components/views/public/Alumno/AlumnoCreate';
 import EncargadoPage from './components/views/public/Encargado/EncargadoPage';
+import Cabecera from './components/header/Cabecera';
+import Loader from './components/views/public/Loader';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -26,10 +28,11 @@ const App: React.FC = () => {
     }, []);
 
     const sidebar = <MultiLevelSidebar toggleTheme={toggleTheme} theme={theme} isOpen={true} />;
-    const headerContent = <header />;
+    // const sidebar = "Aqui va el sidebar"
+    const headerContent = <Cabecera />
 
     if (loading) {
-        return <div>Cargando...</div>;
+        return <Loader />
     }
 
     return (
@@ -45,6 +48,7 @@ const App: React.FC = () => {
                             <Route path="/alumnos" element={<AlumnosPage />} />
                             <Route path="/formulario" element={<Account1 />} />
                             <Route path='Encargados' element={<EncargadoPage />}/>
+                            <Route path="/Loader" element={<Loader/>} />
                         </Routes>
                     </MainTemplate>
                 </div>

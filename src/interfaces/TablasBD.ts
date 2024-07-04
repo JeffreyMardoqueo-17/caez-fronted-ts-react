@@ -16,21 +16,22 @@ export interface Alumno {
     Id: number;
     Nombre: string;
     Apellido: string;
-    FechaNacimiento: Date;
-    IdSexo: number;
-    IdRole: number;
-    IdEncargado: number;
-    IdEnfermedad: number | null;
-    IdTipoDocumento: number;
+    FechaNacimiento: string;
+    Sexo: string;
+    Role: string;
+    Encargado: string;
+    Enfermedad: string | null;
+    TipoDocumento: string;
     NumDocumento: string;
-    IdGrado: number;
-    IdGrupo: number | null;
-    IdTurno: number;
-    IdAdministrador: number;
-    IdPadrino: number | null;
-    FechaRegistro: Date;
+    Grado: string;
+    Grupo: string | null;
+    Turno: string;
+    Administrador: string;
+    Padrino: string | null;
+    FechaRegistro: string;
     EsBecado: boolean;
 }
+
  // types.ts
 export interface TipoDocumento {
   id: string;

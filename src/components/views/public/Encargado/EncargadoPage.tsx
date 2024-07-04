@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from '../../../Table/Table';
 import { Encargado } from '../../../../interfaces/TablasBD';
+import { FaDownload } from "react-icons/fa6";//icono de Descarga
+import { FaUserPlus } from "react-icons/fa";//icono de Usuario agregar
+import { CustomTypography } from '../../../Forms/CustomTypography';
 
 const EncargadoPage = () => {
     const [encargados, setEncargados] = useState<Encargado[]>([]);
@@ -58,7 +61,7 @@ const EncargadoPage = () => {
 
     return (
         <div className="p-4 h-full flex flex-col">
-            <div className='top-1 bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-10 p-4'>
+            <div className='top-1 bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-1 p-4'>
                 <form className="flex justify-between items-center">
                     <div className="relative flex-grow">
                         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -76,7 +79,7 @@ const EncargadoPage = () => {
                         <input
                             type="search"
                             id="Buscar"
-                            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-darkTheme-icono focus:border-darkTheme-icono dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-darkTheme-icono dark:focus:border-darkTheme-icono"
                             placeholder="Buscar por nombre o apellido"
                             required
                             value={busqueda}
@@ -84,13 +87,28 @@ const EncargadoPage = () => {
                         />
                     </div>
                     <div className="flex space-x-2 ml-4">
-                        <button type="button" className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Crear</button>
-                        <button type="button" className="text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Generar Informe</button>
+                        <button type="button" className="flex items-center justify-center space-x-2 rounded-lg border border-violet-500 bg-violet-500 px-5 py-2.5 text-center text-base font-medium text-white shadow-sm transition-all hover:border-violet-700 hover:bg-violet-700 focus:ring focus:ring-violet-200 disabled:cursor-not-allowed disabled:border-violet-300 disabled:bg-violet-300">
+                            <FaUserPlus className='text-2xl'/>
+                            <span>Agregar</span>
+                        </button>
+                        <button type="button" className="flex items-center justify-center space-x-2 rounded-lg border border-violet-500 bg-violet-500 px-5 py-2.5 text-center text-base font-medium text-white shadow-sm transition-all hover:border-violet-700 hover:bg-violet-700 focus:ring focus:ring-violet-200 disabled:cursor-not-allowed disabled:border-violet-300 disabled:bg-violet-300">
+                            <FaDownload className='text-2xl'/>
+                            <span>Informe</span>
+                        </button>
                     </div>
                 </form>
             </div>
-            <div className="bg-white dark:bg-darkTheme-background rounded-lg shadow overflow-auto flex-grow">
-                <Table tableHead={tableHead} tableRows={tableRows} />
+            <div className="bg-white dark:bg-darkTheme-background rounded-lg shadow overflow-auto flex-grow p-3">
+                <CustomTypography
+                    fontBold="font-bold"
+                    fontSize="text-3xl"
+                    className="text-darkTheme-background mb-7 dark:text-lightTheme-background"
+                >
+                    Listado de encargados
+                </CustomTypography>
+                <div className="mt-7">
+                    <Table tableHead={tableHead} tableRows={tableRows} />
+                </div>
             </div>
         </div>
     );

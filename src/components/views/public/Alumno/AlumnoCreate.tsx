@@ -168,11 +168,6 @@ export default function AlumnoCreate() {
                         </div>
                     )}
                 </div>
-                <div className="flex justify-end">
-                    <button type="submit" className="flex items-center bg-primary-500 text-white font-bold py-2 px-4 rounded-md shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-primary-300">
-                        <IoSaveSharp className="mr-2" /> Guardar
-                    </button>
-                </div>
             </form>
         </div>
     );

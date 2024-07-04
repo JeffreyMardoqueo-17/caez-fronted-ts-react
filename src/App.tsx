@@ -10,6 +10,7 @@ import MultiLevelSidebar from './components/Sidebar/MultiLevelSidebar';
 import Account1 from './components/acout/acout';
 import ShowTipoDocumento from './components/showTipoDocumento/ShowTipoDocumento';
 import AlumnoCreate from './components/views/public/Alumno/AlumnoCreate';
+import EncargadoPage from './components/views/public/Encargado/EncargadoPage';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -43,6 +44,7 @@ const App: React.FC = () => {
                             <Route path='/alumnos/create' element = {<AlumnoCreate />} />
                             <Route path="/alumnos" element={<AlumnosPage />} />
                             <Route path="/formulario" element={<Account1 />} />
+                            <Route path='Encargados' element={<EncargadoPage />}/>
                         </Routes>
                     </MainTemplate>
                 </div>
@@ -52,10 +54,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-//   <Route path="/home" element={<MainTemplate sidebar={sidebar} header={headerContent} />}>
-//                             <Route index element={<Dashboard />} />
-//                             <Route path="alumnos" element={<AlumnosPage />} />
-//                             <Route path="formulario" element={<Account1 />} />
-//                         </Route>

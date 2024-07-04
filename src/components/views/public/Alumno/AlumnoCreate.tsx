@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { validateInput } from '../../../../fuctions/Funciones';
 import { IoSaveSharp } from "react-icons/io5";
@@ -22,15 +22,32 @@ export default function AlumnoCreate() {
         EsBecado: false,
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const [enfermedades, setEnfermedades] = useState([]);
+    const [textoBusqueda, setTextoBusqueda] = useState('');
+
+    const handleChange = async (e) => {
         const { name, value, type, checked } = e.target;
         setAlumno({
             ...alumno,
             [name]: type === 'checkbox' ? checked : value,
         });
+
+        if (name === 'IdEnfermedad') {
+            setTextoBusqueda(value);
+            if (value) {
+                try {
+                    const response = await axios.post('http://localhost:5000/enfermedad/Buscar', { textoBusqueda: value });
+                    setEnfermedades(response.data);
+                } catch (error) {
+                    console.error('Error al buscar enfermedades:', error);
+                }
+            } else {
+                setEnfermedades([]);
+            }
+        }
     };
 
-    const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleRadioChange = (e) => {
         const { value } = e.target;
         setAlumno((prevAlumno) => ({
             ...prevAlumno,
@@ -39,7 +56,7 @@ export default function AlumnoCreate() {
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.post('http://localhost:5000/alumnos', alumno);
@@ -83,67 +100,80 @@ export default function AlumnoCreate() {
                     <div className="col-span-6">
                         <label htmlFor="Enfermedad" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Enfermedad</label>
                         <input type="text" name="IdEnfermedad" value={alumno.IdEnfermedad} onChange={handleChange} className={`block w-full dark:bg-darkTheme-input  dark:text-darkTheme-gray rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.IdEnfermedad)}`} placeholder="Enfermedad" />
+                        {textoBusqueda && (
+                            <ul className="bg-white dark:bg-darkTheme-formulario border border-gray-300 dark:border-gray-700 rounded-md mt-1">
+                                {enfermedades.map((enfermedad, index) => (
+                                    <li key={index} onClick={() => setAlumno({ ...alumno, IdEnfermedad: enfermedad.Nombre })} className="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">{enfermedad.Nombre}</li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
                     <div className="col-span-3">
                         <label htmlFor="IdTipoDocumento" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Tipo Documento</label>
-                        <select id="sexo" required name="IdTipoDocumento" value={alumno.IdTipoDocumento} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdTipoDocumento)}`}>
+                        <select id="IdTipoDocumento" required name="IdTipoDocumento" value={alumno.IdTipoDocumento} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdTipoDocumento)}`}>
                             <option value="">Seleccione</option>
-                            <option value="NIE">NIE</option>
-                            <option value="NIT">NIT</option>
+                            <option value="1">DUI</option>
+                            <option value="2">NIE</option>
                         </select>
                     </div>
                     <div className="col-span-3">
-                        <label htmlFor="NumDocumento" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Número de Documento</label>
-                        <input type="number" maxLength={12} required name="NumDocumento" value={alumno.NumDocumento} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.NumDocumento)}`} placeholder="12345678" />
+                        <label htmlFor="NumDocumento" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Número Documento</label>
+                        <input type="text" required name="NumDocumento" value={alumno.NumDocumento} onChange={handleChange} className={`block w-full rounded-md dark:bg-darkTheme-input  dark:text-darkTheme-gray shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.NumDocumento)}`} placeholder="Número de Documento" />
                     </div>
                     <div className="col-span-3">
                         <label htmlFor="IdGrado" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Grado</label>
-                        <select id="Grado" required name="IdGrado" value={alumno.IdGrado} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdGrado)}`}>
+                        <select id="IdGrado" required name="IdGrado" value={alumno.IdGrado} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdGrado)}`}>
                             <option value="">Seleccione</option>
-                            <option value="Primer Grado">Primer Grado</option>
-                            <option value="Segundo Grado">Segundo Grado</option>
+                            <option value="1">1er Grado</option>
+                            <option value="2">2do Grado</option>
+                        </select>
+                    </div>
+                    <div className="col-span-3">
+                        <label htmlFor="IdGrupo" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Grupo</label>
+                        <select id="IdGrupo" required name="IdGrupo" value={alumno.IdGrupo} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdGrupo)}`}>
+                            <option value="">Seleccione</option>
+                            <option value="1">Grupo A</option>
+                            <option value="2">Grupo B</option>
                         </select>
                     </div>
                     <div className="col-span-3">
                         <label htmlFor="IdTurno" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Turno</label>
-                        <select id="Turno" required name="IdTurno" value={alumno.IdTurno} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdTurno)}`}>
+                        <select id="IdTurno" required name="IdTurno" value={alumno.IdTurno} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdTurno)}`}>
                             <option value="">Seleccione</option>
-                            <option value="Mañana">Mañana</option>
-                            <option value="Tarde">Tarde</option>
+                            <option value="1">Mañana</option>
+                            <option value="2">Tarde</option>
                         </select>
                     </div>
-                    <div className="col-span-6">
-                        <label htmlFor="Administrador" className="mb-1 block  text-base font-medium text-gray-700 dark:text-gray-400">Administrador</label>
+                    <div className="col-span-3">
+                        <label htmlFor="IdAdministrador" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Administrador</label>
                         <input type="text" required name="IdAdministrador" value={alumno.IdAdministrador} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.IdAdministrador)}`} placeholder="Administrador" />
                     </div>
                     <div className="col-span-6">
-                        <label htmlFor="EsBecado" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">¿Es Becado?</label>
-                        <div className="flex items-center space-x-4">
-                            <label className="flex items-center space-x-2">
-                                <input type="radio" name="EsBecado" value="SI" checked={alumno.EsBecado === true} onChange={handleRadioChange} />
-                                <span className='dark:text-darkTheme-gray'>Sí</span>
+                        <label className="block mb-1 text-base font-medium text-gray-700 dark:text-gray-400">¿Es Becado?</label>
+                        <div className="flex space-x-4">
+                            <label className="inline-flex items-center">
+                                <input type="radio" name="EsBecado" value="SI" checked={alumno.EsBecado === true} onChange={handleRadioChange} className="form-radio" />
+                                <span className="ml-2 dark:text-darkTheme-gray">Sí</span>
                             </label>
-                            <label className="flex items-center space-x-2">
-                                <input type="radio" name="EsBecado" value="NO" checked={alumno.EsBecado === false} onChange={handleRadioChange} />
-                                <span className='text-darkTheme-gray'>No</span>
+                            <label className="inline-flex items-center">
+                                <input type="radio" name="EsBecado" value="NO" checked={alumno.EsBecado === false} onChange={handleRadioChange} className="form-radio" />
+                                <span className="ml-2 dark:text-darkTheme-gray">No</span>
                             </label>
                         </div>
                     </div>
-                    <div className="col-span-6">
-                        <label htmlFor="Padrino" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Padrino</label>
-                        <input type="text" name="IdPadrino" value={alumno.IdPadrino} onChange={handleChange} disabled={!alumno.EsBecado} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${alumno.EsBecado ? 'bg-white' : 'bg-gray-50 cursor-not-allowed text-gray-500'}`} placeholder="Padrino" />
-                    </div>
+                    {alumno.EsBecado && (
+                        <div className="col-span-6">
+                            <label htmlFor="IdPadrino" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Padrino</label>
+                            <input type="text" required={alumno.EsBecado} name="IdPadrino" value={alumno.IdPadrino} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.IdPadrino)}`} placeholder="Padrino" />
+                        </div>
+                    )}
                 </div>
-                {/* <div className="flex justify-center gap-2">
-                    <div className='flex-1'>
-                        <button type="button" className="flex items-center justify-center gap-2 rounded-lg w-full border border-violet-500 bg-violet-500 px-5 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:border-violet-700 hover:bg-violet-700 focus:ring focus:ring-violet-200 disabled:cursor-not-allowed disabled:border-violet-300 disabled:bg-violet-300">
-                            <IoSaveSharp className='text-3xl text-white' /> 
-                            Registrar
-                        </button>
-                    </div>
-                </div> */}
+                <div className="flex justify-end">
+                    <button type="submit" className="flex items-center bg-primary-500 text-white font-bold py-2 px-4 rounded-md shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-primary-300">
+                        <IoSaveSharp className="mr-2" /> Guardar
+                    </button>
+                </div>
             </form>
         </div>
     );
 }
-

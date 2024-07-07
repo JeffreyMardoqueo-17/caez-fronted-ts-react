@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from '../../../Table/Table';
 import { Alumno } from '../../../../interfaces/TablasBD';
-import { FaDownload, FaUserPlus, FaEye } from 'react-icons/fa';
+import { FaDownload, FaUserPlus, FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { CustomTypography } from '../../../Forms/CustomTypography';
 import { Modal } from '../../../modales/Modal';
 import AlumnoCreate from './AlumnoCreate';
-
+import { ActionButton } from '../../../inputs/Buttoom/ActionButton';
 
 const AlumnosPage = () => {
     const [alumnos, setAlumnos] = useState<Alumno[]>([]);
     const [tablaAlumnos, setTablaAlumnos] = useState<Alumno[]>([]);
     const [busqueda, setBusqueda] = useState<string>("");
-    const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null); // Para almacenar el alumno seleccionado
-    const [showCreateModal, setShowCreateModal] = useState<boolean>(false); // Para controlar la visibilidad del modal de creación
+    const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
+    const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
+    // Función para obtener los alumnos
     const getAlumnos = async () => {
         try {
             const url = 'http://localhost:3000/Alumnos';
@@ -27,42 +28,61 @@ const AlumnosPage = () => {
         }
     };
 
+    // Llama a getAlumnos al cargar el componente
     useEffect(() => {
         getAlumnos();
     }, []);
 
+    // Maneja el cambio en el input de búsqueda
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
         filtrar(e.target.value);
-        console.log("Busqueda", + e.target.value);
+        console.log("Búsqueda", e.target.value);
     };
 
+    // Filtra los alumnos según el término de búsqueda
     const filtrar = (terminoBusqueda: string) => {
         const resultadosBusqueda = tablaAlumnos.filter((elemento) => {
-            if (elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-                elemento.Apellido.toLowerCase().includes(terminoBusqueda.toLowerCase())) {
-                return elemento;
-            }
-            return null;
+            return (
+                elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+                elemento.Apellido.toLowerCase().includes(terminoBusqueda.toLowerCase())
+            );
         });
         setAlumnos(resultadosBusqueda);
     };
 
+    // Cierra el modal de detalles del alumno
+    const handleCloseModal = () => {
+        setSelectedAlumno(null);
+    };
+
+    // Abre el modal para crear un nuevo alumno
+    const handleOpenCreateModal = () => {
+        setShowCreateModal(true);
+    };
+
+    // Maneja el clic en "Eliminar" (acción ficticia)
+    const handleDelete = (alumno: Alumno) => {
+        console.log("Eliminar:", alumno);
+        // Aquí puedes agregar la lógica para eliminar el alumno
+    };
+
+      // Maneja el clic en "Ver más"
     const handleVerMas = (alumno: Alumno) => {
         console.log("Ver más sobre:", alumno);
-        setSelectedAlumno(alumno); // Establecer el alumno seleccionado para mostrar en el modal
+        // setSelectedAlumno(alumno);
     };
 
-    const handleCloseModal = () => {
-        setSelectedAlumno(null); // Cerrar el modal al limpiar el alumno seleccionado
+    // Maneja el clic en "Editar" (acción ficticia)
+    const handleEdit = (alumno: Alumno) => {
+        console.log("Editar:", alumno);
+        // Aquí puedes agregar la lógica para editar el alumno
     };
 
-    const handleOpenCreateModal = () => {
-        setShowCreateModal(true); // Mostrar el modal de creación de alumno
-    };
-
+    // Cabecera de la tabla
     const tableHead = ["Nombre", "Apellido", "Encargado", "NIE", "GRADO", "Turno", "Es Becado", "Acciones"];
 
+    // Filas de la tabla con acciones (botones)
     const tableRows = alumnos.map(alumno => [
         alumno.Nombre,
         alumno.Apellido,
@@ -71,11 +91,11 @@ const AlumnosPage = () => {
         alumno.Grado,
         alumno.Turno,
         alumno.EsBecado ? 'SI' : 'NO',
-        {
-            icon: <FaEye />,
-            color: 'blue',
-            onClick: () => handleVerMas(alumno)
-        }
+        [
+            { icon: <FaEye />, onClick: () => handleVerMas(alumno) },
+            { icon: <FaEdit />, onClick: () => handleEdit(alumno) },
+            { icon: <FaTrash />, onClick: () => handleDelete(alumno) }
+        ]
     ]);
 
     return (
@@ -83,7 +103,7 @@ const AlumnosPage = () => {
             <div className='top-1 bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-1 p-4'>
                 <form className="flex justify-between items-center">
                     <div className="relative flex-grow">
-                        <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                        <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
                         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path
@@ -134,7 +154,7 @@ const AlumnosPage = () => {
                     showModal={true}
                     setShowModal={handleCloseModal}
                     title={`${selectedAlumno.Nombre} ${selectedAlumno.Apellido}`}
-                    body={<AlumnoForm alumno={selectedAlumno} />} // Asegúrate de tener este componente
+                    body={<AlumnoForm alumno={selectedAlumno} />}
                     confirmText="Aceptar"
                     cancelText="Cancelar"
                     onConfirm={handleCloseModal}
@@ -145,12 +165,11 @@ const AlumnosPage = () => {
                     showModal={true}
                     setShowModal={setShowCreateModal}
                     title="Crear Alumno"
-                    body={<AlumnoCreate />} // Asegúrate de tener este componente
+                    body={<AlumnoCreate />}
                     confirmText="Guardar"
                     cancelText="Cancelar"
                     onConfirm={() => {
-                        // Aquí puedes agregar lógica adicional al guardar el alumno
-                        setShowCreateModal(false); // Cierra el modal después de guardar
+                        setShowCreateModal(false);
                     }}
                 />
             )}

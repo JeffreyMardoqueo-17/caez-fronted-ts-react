@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table } from '../../../Table/Table';
 import { Encargado } from '../../../../interfaces/TablasBD';
-import { FaDownload } from "react-icons/fa6";//icono de Descarga
-import { FaUserPlus } from "react-icons/fa";//icono de Usuario agregar
+import { FaDownload, FaUserPlus } from "react-icons/fa";
 import { CustomTypography } from '../../../Forms/CustomTypography';
+import { Modal } from '../../../modales/Modal';
 
 const EncargadoPage = () => {
     const [encargados, setEncargados] = useState<Encargado[]>([]);
     const [tablaEncargados, setTablaEncargados] = useState<Encargado[]>([]);
     const [busqueda, setBusqueda] = useState<string>("");
+    const [selectedEncargado, setSelectedEncargado] = useState<Encargado | null>(null);
+    const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
-    const getTiposDocumentos = async () => {
+    // Función para obtener los encargados
+    const getEncargados = async () => {
         try {
-            const url = 'http://localhost:3000/Encargados';
+            const url = 'http://localhost:3000/Encargados'; // Ajusta la URL según tu backend
             const respuesta = await axios.get<Encargado[]>(url);
             setEncargados(respuesta.data);
             setTablaEncargados(respuesta.data);
@@ -23,48 +26,66 @@ const EncargadoPage = () => {
         }
     };
 
+    // Llama a getEncargados al cargar el componente
     useEffect(() => {
-        getTiposDocumentos();
+        getEncargados();
     }, []);
 
+    // Maneja el cambio en el input de búsqueda
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
         filtrar(e.target.value);
-        console.log("Busqueda", + e.target.value);
+        console.log("Búsqueda", e.target.value);
     };
 
+    // Filtra los encargados según el término de búsqueda
     const filtrar = (terminoBusqueda: string) => {
         const resultadosBusqueda = tablaEncargados.filter((elemento) => {
-            if (elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-                elemento.Apellido.toLowerCase().includes(terminoBusqueda.toLowerCase())) {
-                return elemento;
-            }
-            return null;
+            return (
+                elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+                elemento.Apellido.toLowerCase().includes(terminoBusqueda.toLowerCase())
+            );
         });
         setEncargados(resultadosBusqueda);
     };
 
-    const tableHead = ["Nombre", "Apellido", "Cargo", "Telefono", "Tel. Emergencia", "Correo", "Tip. Documento", "#", "Administrador", "Fecha Registro"];
+    // Cierra el modal de detalles del encargado
+    const handleCloseModal = () => {
+        setSelectedEncargado(null);
+    };
 
+    // Abre el modal para crear un nuevo encargado
+    const handleOpenCreateModal = () => {
+        setShowCreateModal(true);
+    };
+
+    // Cabecera de la tabla
+    const tableHead = ["Nombre", "Apellido", "Teléfono", "Dirección","Correo", "DUI", "Acciones"];
+
+    // Filas de la tabla con acciones (botones)
     const tableRows = encargados.map(encargado => [
         encargado.Nombre,
         encargado.Apellido,
-        encargado.Role,
         encargado.Telefono,
-        encargado.TelEmergencia,
+        encargado.Direccion,
         encargado.Correo,
-        encargado.TipoDocumento,
         encargado.NumDocumento,
-        encargado.Administrador,
-        new Date(encargado.FechaRegistro).toLocaleDateString()
+        [
+            { icon: <FaUserPlus />, onClick: () => handleEdit(encargado) }
+        ]
     ]);
+    // Maneja el clic en "Editar" (acción ficticia)
+    const handleEdit = (encargado: Encargado) => {
+        console.log("Editar:", encargado);
+        // Aquí puedes agregar la lógica para editar el encargado
+    };
 
     return (
         <div className="p-4 h-full flex flex-col">
             <div className='top-1 bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-1 p-4'>
                 <form className="flex justify-between items-center">
                     <div className="relative flex-grow">
-                        <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                        <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
                         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path
@@ -78,8 +99,8 @@ const EncargadoPage = () => {
                         </div>
                         <input
                             type="search"
-                            id="Buscar"
-                            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-darkTheme-icono focus:border-darkTheme-icono dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-darkTheme-icono dark:focus:border-darkTheme-icono"
+                            id="default-search"
+                            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500"
                             placeholder="Buscar por nombre o apellido"
                             required
                             value={busqueda}
@@ -87,12 +108,12 @@ const EncargadoPage = () => {
                         />
                     </div>
                     <div className="flex space-x-2 ml-4">
-                        <button type="button" className="flex items-center justify-center space-x-2 rounded-lg border border-violet-500 bg-violet-500 px-5 py-2.5 text-center text-base font-medium text-white shadow-sm transition-all hover:border-violet-700 hover:bg-violet-700 focus:ring focus:ring-violet-200 disabled:cursor-not-allowed disabled:border-violet-300 disabled:bg-violet-300">
-                            <FaUserPlus className='text-2xl'/>
+                        <button type="button" className="flex items-center justify-center space-x-2 rounded-lg border border-violet-500 bg-violet-500 px-5 py-2.5 text-center text-base font-medium text-white shadow-sm transition-all hover:border-violet-700 hover:bg-violet-700 focus:ring focus:ring-violet-200 disabled:cursor-not-allowed disabled:border-violet-300 disabled:bg-violet-300" onClick={handleOpenCreateModal}>
+                            <FaUserPlus className='text-2xl' />
                             <span>Agregar</span>
                         </button>
                         <button type="button" className="flex items-center justify-center space-x-2 rounded-lg border border-violet-500 bg-violet-500 px-5 py-2.5 text-center text-base font-medium text-white shadow-sm transition-all hover:border-violet-700 hover:bg-violet-700 focus:ring focus:ring-violet-200 disabled:cursor-not-allowed disabled:border-violet-300 disabled:bg-violet-300">
-                            <FaDownload className='text-2xl'/>
+                            <FaDownload className='text-2xl' />
                             <span>Informe</span>
                         </button>
                     </div>
@@ -104,15 +125,38 @@ const EncargadoPage = () => {
                     fontSize="text-3xl"
                     className="text-darkTheme-background mb-7 dark:text-lightTheme-background"
                 >
-                    Listado de encargados
+                    Listado de Encargados
                 </CustomTypography>
                 <div className="mt-7">
                     <Table tableHead={tableHead} tableRows={tableRows} />
                 </div>
             </div>
+            {selectedEncargado && (
+                <Modal
+                    showModal={true}
+                    setShowModal={handleCloseModal}
+                    title={`${selectedEncargado.Nombre} ${selectedEncargado.Apellido}`}
+                    body={<EncargadoForm encargado={selectedEncargado} />}
+                    confirmText="Aceptar"
+                    cancelText="Cancelar"
+                    onConfirm={handleCloseModal}
+                />
+            )}
+            {showCreateModal && (
+                <Modal
+                    showModal={true}
+                    setShowModal={setShowCreateModal}
+                    title="Crear Encargado"
+                    body={<EncargadoCreate />}
+                    confirmText="Guardar"
+                    cancelText="Cancelar"
+                    onConfirm={() => {
+                        setShowCreateModal(false);
+                    }}
+                />
+            )}
         </div>
     );
 }
 
 export default EncargadoPage;
-

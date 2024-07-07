@@ -3,11 +3,15 @@ import { CustomTypography } from "../Forms/CustomTypography";
 import { ActionButton } from "../inputs/Buttoom/ActionButton";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
+interface Action {
+    icon: React.ReactNode;
+    color: string;
+    onClick: () => void;
+}
 interface TableProps {
     tableHead: string[];
-    tableRows: { [key: string]: unknown }[];
+    tableRows: (string | Action[])[];
 }
-
 export function Table({ tableHead, tableRows }: TableProps) {
     return (
         <div className="overflow-x-auto">
@@ -21,9 +25,8 @@ export function Table({ tableHead, tableRows }: TableProps) {
                             >
                                 <CustomTypography
                                     variant=""
-                                    fontBold="font-bold"
-                                    fontSize="text-lg"
-                                    className="text-gray-900 dark:text-darkTheme-text"
+                                    fontSize="text-sm"
+                                    className="leading-none opacity-70 text-lightTheme-text dark:text-darkTheme-text"
                                 >
                                     {head}
                                 </CustomTypography>
@@ -32,22 +35,27 @@ export function Table({ tableHead, tableRows }: TableProps) {
                     </tr>
                 </thead>
                 <tbody>
-                    {tableRows.map((row: { [key: string]: unknown }, index: number) => (
-                        <tr
-                            key={index}
-                            className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-darkTheme-background"
-                        >
-                            {Object.keys(row).map((key: string, i: number) => (
-                                <td key={i} className="p-4 sm:px-6 lg:px-8">
-                                    {key === 'Acciones' ? (
-                                        <div className="flex gap-2">
-                                            {(row[key] as { icon: React.ReactNode, color: string, onClick: () => void }[]).map((action, actionIndex) => (
-                                                <ActionButton key={actionIndex} icon={action.icon} className={`bg-${action.color}-500 hover:bg-${action.color}-600`} onClick={action.onClick} />
+                    {tableRows.map((row: (string | Action[]), index: number) => (
+                        <tr key={index} className="border-b border-gray-200 dark:border-gray-800">
+                            {row.map((cell: string | Action[], cellIndex: number) => (
+                                <td key={cellIndex} className="px-6 py-3">
+                                    {Array.isArray(cell) ? (
+                                        <div className="flex space-x-2">
+                                            {cell.map((action, actionIndex) => (
+                                                <ActionButton
+                                                    key={actionIndex}
+                                                    icon={action.icon}
+                                                    onClick={action.onClick}
+                                                />
                                             ))}
                                         </div>
                                     ) : (
-                                        <CustomTypography variant="small" color="blue-gray" className="font-normal text-gray-800 dark:text-darkTheme-text">
-                                            {String(row[key])}
+                                        <CustomTypography
+                                            variant=""
+                                            fontSize="text-sm"
+                                            className="leading-none text-lightTheme-text dark:text-darkTheme-text"
+                                        >
+                                            {cell}
                                         </CustomTypography>
                                     )}
                                 </td>

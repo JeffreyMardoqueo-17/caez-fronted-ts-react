@@ -2,10 +2,12 @@ export interface Encargado {
     Id: number;
     Nombre: string;
     Apellido: string;
+    sexo: string;
     Role: string;
     Telefono: string;
     TelEmergencia: string;
     Correo: string;
+    Direccion: string;
     TipoDocumento: string;
     NumDocumento: string;
     Administrador: boolean;

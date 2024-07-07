@@ -39,3 +39,8 @@ export interface TipoDocumento {
   id: string;
   name: string;
 }
+export interface Enfermedad {
+  id: string;
+  Nombre: string;
+  Descripcion: string;
+}

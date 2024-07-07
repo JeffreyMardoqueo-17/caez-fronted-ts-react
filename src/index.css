@@ -6,9 +6,8 @@
 
 /* //estilo de la barra de desplasamiento */
 ::selection {
-    background-color: red;
-    /* Cambia el color de fondo de la selección */
-    color: #fff;
+    background-color: #F5F5F5;
+    /* Cambia el color de fondo de la selección */  
     /* Cambia el color del texto seleccionado */
 }
 

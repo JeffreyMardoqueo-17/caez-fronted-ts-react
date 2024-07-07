@@ -48,7 +48,7 @@ export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, bo
                     >
                         <div className="relative w-auto my-6 mx-auto">
                             {/*content*/}
-                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-lightTheme-primary dark:bg-darkTheme-formulario outline-none focus:outline-none border-2 border-lightTheme-text">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-lightTheme-primary dark:bg-darkTheme-formulario outline-none focus:outline-none border-2 border-darkTheme-icono">
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 dark:border-darkTheme-background rounded-t">
                                     <CustomTypography

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Table } from '../../../Table/Table';
 import { Encargado } from '../../../../interfaces/TablasBD';
 import { FaDownload, FaUserPlus } from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { CustomTypography } from '../../../Forms/CustomTypography';
 import { Modal } from '../../../modales/Modal';
 
@@ -71,7 +72,9 @@ const EncargadoPage = () => {
         encargado.Correo,
         encargado.NumDocumento,
         [
-            { icon: <FaUserPlus />, onClick: () => handleEdit(encargado) }
+            {icon: <FaEye />, onClick: ()=> handleVerMas(encargado)},
+            { icon: <FaEdit />, onClick: () => handleEdit(encargado) },
+            {icon: <FaTrash />, onClick: ()=> handleEliminar(encargado)}
         ]
     ]);
     // Maneja el clic en "Editar" (acción ficticia)
@@ -79,7 +82,14 @@ const EncargadoPage = () => {
         console.log("Editar:", encargado);
         // Aquí puedes agregar la lógica para editar el encargado
     };
-
+    //esto maneja al hacer clic con el ver mas
+    const handleVerMas = (encargado: Encargado)=>{
+        console.log("Ver mas", encargado)
+    }
+    //esto maneja con hacer clic al eliminar
+    const handleEliminar = (encargado: Encargado)=>{
+        console.log("Eliminar", encargado)
+    }
     return (
         <div className="p-4 h-full flex flex-col">
             <div className='top-1 bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-1 p-4'>

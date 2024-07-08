@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { validateInput } from '../../../../fuctions/Funciones';
 import { IoSaveSharp } from "react-icons/io5";
+import { Alumno, Enfermedad } from '../../../../interfaces/TablasBD';
+import SearchComponent from '../../../inputs/SearchComponent/SearchComponent';
 
 export default function AlumnoCreate() {
     const [alumno, setAlumno] = useState({
@@ -21,8 +23,7 @@ export default function AlumnoCreate() {
         IdPadrino: '',
         EsBecado: false,
     });
-
-    const [enfermedades, setEnfermedades] = useState([]);
+    const [selectedEnfermedad, setSelectedEnfermedad] = useState<Enfermedad | null>(null);
     const [textoBusqueda, setTextoBusqueda] = useState('');
 
     const handleChange = async (e) => {
@@ -30,21 +31,7 @@ export default function AlumnoCreate() {
         setAlumno({
             ...alumno,
             [name]: type === 'checkbox' ? checked : value,
-        });
-
-        if (name === 'IdEnfermedad') {
-            setTextoBusqueda(value);
-            if (value) {
-                try {
-                    const response = await axios.post('http://localhost:5000/enfermedad/Buscar', { textoBusqueda: value });
-                    setEnfermedades(response.data);
-                } catch (error) {
-                    console.error('Error al buscar enfermedades:', error);
-                }
-            } else {
-                setEnfermedades([]);
-            }
-        }
+        })
     };
 
     const handleRadioChange = (e) => {
@@ -99,14 +86,12 @@ export default function AlumnoCreate() {
                     </div>
                     <div className="col-span-6">
                         <label htmlFor="Enfermedad" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Enfermedad</label>
-                        <input type="text" name="IdEnfermedad" value={alumno.IdEnfermedad} onChange={handleChange} className={`block w-full dark:bg-darkTheme-input  dark:text-darkTheme-gray rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.IdEnfermedad)}`} placeholder="Enfermedad" />
-                        {textoBusqueda && (
-                            <ul className="bg-white dark:bg-darkTheme-formulario border border-gray-300 dark:border-gray-700 rounded-md mt-1">
-                                {enfermedades.map((enfermedad, index) => (
-                                    <li key={index} onClick={() => setAlumno({ ...alumno, IdEnfermedad: enfermedad.Nombre })} className="cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">{enfermedad.Nombre}</li>
-                                ))}
-                            </ul>
-                        )}
+                        <SearchComponent<Enfermedad>
+                            route="http://localhost:3000/enfermedad/buscar"
+                            renderResult={(enfermedad) => <span>{enfermedad.Nombre}</span>}
+                            onSelect={(enfermedad) => setSelectedEnfermedad(enfermedad)}
+                            getResultText={(enfermedad) => enfermedad.Nombre}
+                        />
                     </div>
                     <div className="col-span-3">
                         <label htmlFor="IdTipoDocumento" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Tipo Documento</label>

@@ -13,6 +13,7 @@ import AlumnoCreate from './components/views/public/Alumno/AlumnoCreate';
 import EncargadoPage from './components/views/public/Encargado/EncargadoPage';
 import Cabecera from './components/header/Cabecera';
 import Loader from './components/views/public/Loader';
+import EnfermedadesBuscar from './components/views/EnfermedadesBuscar';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -49,6 +50,7 @@ const App: React.FC = () => {
                             <Route path="/formulario" element={<Account1 />} />
                             <Route path='Encargados' element={<EncargadoPage />}/>
                             <Route path="/Loader" element={<Loader/>} />
+                            <Route path = "enfermedad/" element = {<EnfermedadesBuscar />}/>
                         </Routes>
                     </MainTemplate>
                 </div>

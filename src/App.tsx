@@ -13,6 +13,7 @@ import EncargadoPage from './components/views/public/Encargado/EncargadoPage';
 import Cabecera from './components/header/Cabecera';
 import Loader from './components/views/public/Loader';
 import EnfermedadesBuscar from './components/views/EnfermedadesBuscar';
+import Confirmacion from './components/notificaciones/confirmacion';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -50,6 +51,7 @@ const App: React.FC = () => {
                             <Route path='Encargados' element={<EncargadoPage />}/>
                             <Route path="/Loader" element={<Loader/>} />
                             <Route path = "enfermedad/" element = {<EnfermedadesBuscar />}/>
+                            <Route path='/confirmar' element={<Confirmacion />}/>
                         </Routes>
                     </MainTemplate>
                 </div>

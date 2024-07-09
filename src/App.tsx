@@ -4,7 +4,6 @@ import { useTheme } from './components/hooks/theme';
 import MainTemplate from './components/views/public/MainTemplate';
 import Dashboard from './components/views/public/Home/Dashboard';
 import AlumnosPage from './components/views/public/Alumno/AlumnosPage';
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import {MultiLevelSidebar} from './components/Sidebar/MultiLevelSidebar';
 import Account1 from './components/acout/acout';

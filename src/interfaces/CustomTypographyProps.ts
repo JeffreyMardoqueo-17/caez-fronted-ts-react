@@ -1,8 +1,7 @@
 export interface CustomTypographyProps {
-    variant: string;
     children: React.ReactNode;
-    className: string;
+    className?: string;
     fontBold: string;
     fontSize: string;
-    color: string
+    color: string;
 }

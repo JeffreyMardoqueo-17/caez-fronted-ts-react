@@ -2,7 +2,7 @@ export interface ModalProps {
     showModal: boolean;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     title: string;
-    content: string;
+    body: React.ReactNode;
     confirmText?: string;
     cancelText?: string;
     onConfirm?: () => void;

@@ -6,6 +6,7 @@ import { FaDownload, FaUserPlus, FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { CustomTypography } from '../../../Forms/CustomTypography';
 import { Modal } from '../../../modales/Modal';
 import AlumnoCreate from './AlumnoCreate';
+import { AlumnoForm } from '../../../Forms/AlumnoForm/AlumnoForm';
 import { ActionButton } from '../../../inputs/Buttoom/ActionButton';
 
 const AlumnosPage = () => {
@@ -15,7 +16,7 @@ const AlumnosPage = () => {
     const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
-    // Función para obtener los alumnos
+    // Función para obtener a los alumnos
     const getAlumnos = async () => {
         try {
             const url = 'http://localhost:3000/Alumnos';
@@ -33,14 +34,14 @@ const AlumnosPage = () => {
         getAlumnos();
     }, []);
 
-    // Maneja el cambio en el input de búsqueda
+    // Maneja el cambio en el input de busquedaa :)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
         filtrar(e.target.value);
         console.log("Búsqueda", e.target.value);
     };
 
-    // Filtra los alumnos según el término de búsqueda
+    // Filtra los alumnos segun lo que se escriba en el input (Busqueda)
     const filtrar = (terminoBusqueda: string) => {
         const resultadosBusqueda = tablaAlumnos.filter((elemento) => {
             return (
@@ -67,7 +68,7 @@ const AlumnosPage = () => {
         // Aquí puedes agregar la lógica para eliminar el alumno
     };
 
-      // Maneja el clic en "Ver más"
+    // Maneja el clic en "Ver más"
     const handleVerMas = (alumno: Alumno) => {
         console.log("Ver más sobre:", alumno);
         // setSelectedAlumno(alumno);
@@ -142,9 +143,11 @@ const AlumnosPage = () => {
                     fontBold="font-bold"
                     fontSize="text-3xl"
                     className="text-darkTheme-background mb-7 dark:text-lightTheme-background"
+                    color="text-darkTheme-background" // Añade el color adecuado
                 >
                     Listado de Alumnos
                 </CustomTypography>
+
                 <div className="mt-7">
                     <Table tableHead={tableHead} tableRows={tableRows} />
                 </div>

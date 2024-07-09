@@ -15,7 +15,7 @@ export interface Encargado {
 }
 
 export interface Alumno {
-    Id: number;
+    Id: string;
     Nombre: string;
     Apellido: string;
     FechaNacimiento: string;

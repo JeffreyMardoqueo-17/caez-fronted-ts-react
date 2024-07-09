@@ -1,6 +1,6 @@
 import React from 'react';
 import { CustomTypography } from '../CustomTypography'
-import { Alumno } from '../../../class/Alumno';
+import { Alumno } from '../../../interfaces/TablasBD';
 
 interface AlumnoFormProps {
     alumno: Alumno; // Tipo de datos para el objeto alumno

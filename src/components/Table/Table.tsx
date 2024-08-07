@@ -3,33 +3,40 @@ import { CustomTypography } from "../Forms/CustomTypography";
 import { ActionButton } from "../inputs/Buttoom/ActionButton";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 
+// Interfaz para definir la estructura de las acciones en la tabla
 interface Action {
-    icon: React.ReactNode;
-    onClick: () => void;
+    icon: React.ReactNode; // Icono que representa la acción (ej. FaEye, FaEdit)
+    onClick: () => void; // Función que se ejecutará cuando se haga clic en la acción
 }
 
+// Interfaz para definir las propiedades del componente Table
 interface TableProps {
-    tableHead: string[];
-    tableRows: Array<{ [key: string]: string | Action[] }>;
+    tableHead: string[]; // Array de cadenas para los encabezados de la tabla
+    tableRows: Array<{ [key: string]: string | Action[] }>; // Array de objetos representando las filas, donde cada valor puede ser una cadena o un array de acciones
 }
 
+// Componente Table que recibe los encabezados y las filas de la tabla como propiedades
 export function Table({ tableHead, tableRows }: TableProps) {
+    // Estado para controlar la página actual y el número de elementos por página
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
+    // Calcular el total de páginas en función del número de filas y elementos por página
     const totalPages = Math.ceil(tableRows.length / itemsPerPage);
 
+    // Función para cambiar la página actual
     const handleChangePage = (newPage: number) => {
-        if (newPage > 0 && newPage <= totalPages) {
+        if (newPage > 0 && newPage <= totalPages)
             setCurrentPage(newPage);
-        }
     };
 
+    // Función para cambiar el número de elementos por página
     const handleChangeItemsPerPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setItemsPerPage(Number(event.target.value));
-        setCurrentPage(1);
+        setCurrentPage(1); // Reiniciar a la primera página cuando se cambia el número de elementos por página
     };
 
+    // Calcular el índice de inicio y obtener las filas actuales según la página
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentRows = tableRows.slice(startIndex, startIndex + itemsPerPage);
 

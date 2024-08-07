@@ -1,95 +1,105 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table } from '../../../Table/Table';
-import { Encargado } from '../../../../interfaces/TablasBD';
-import { FaDownload, FaUserPlus } from "react-icons/fa";
-import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
-import { CustomTypography } from '../../../Forms/CustomTypography';
-import { Modal } from '../../../modales/Modal';
+import { Table } from '../../../components/Table/Table';
+import { Alumno } from '../../../interfaces/TablasBD';
+import { FaDownload, FaUserPlus, FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { CustomTypography } from '../../../components/Forms/CustomTypography';
+import { Modal } from '../../../components/modales/Modal';
+import AlumnoCreate from './AlumnoCreate';
+import { AlumnoForm } from '../../../components/Forms/AlumnoForm/AlumnoForm';
+import { ActionButton } from '../../../components/inputs/Buttoom/ActionButton';
 
-const EncargadoPage = () => {
-    const [encargados, setEncargados] = useState<Encargado[]>([]);
-    const [tablaEncargados, setTablaEncargados] = useState<Encargado[]>([]);
+const AlumnosPage = () => {
+    const [alumnos, setAlumnos] = useState<Alumno[]>([]);
+    const [tablaAlumnos, setTablaAlumnos] = useState<Alumno[]>([]);
     const [busqueda, setBusqueda] = useState<string>("");
-    const [selectedEncargado, setSelectedEncargado] = useState<Encargado | null>(null);
+    const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
-    // Función para obtener los encargados
-    const getEncargados = async () => {
+    // Función para obtener a los alumnos
+    const getAlumnos = async () => {
         try {
-            const url = 'http://localhost:3000/Encargados'; // Ajusta la URL según tu backend
-            const respuesta = await axios.get<Encargado[]>(url);
-            setEncargados(respuesta.data);
-            setTablaEncargados(respuesta.data);
+            // const url = 'http://localhost:3000/Alumnos';
+            const url = 'https://jsonplaceholder.typicode.com/todos/';
+            const respuesta = await axios.get<Alumno[]>(url);
+            setAlumnos(respuesta.data);
+            setTablaAlumnos(respuesta.data);
             console.log('Datos recibidos:', respuesta.data);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
     };
 
-    // Llama a getEncargados al cargar el componente
+    // Llama a getAlumnos al cargar el componente
     useEffect(() => {
-        getEncargados();
+        getAlumnos();
     }, []);
 
-    // Maneja el cambio en el input de búsqueda
+    // Maneja el cambio en el input de busquedaa :)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
         filtrar(e.target.value);
         console.log("Búsqueda", e.target.value);
     };
 
-    // Filtra los encargados según el término de búsqueda
+    // Filtra los alumnos segun lo que se escriba en el input (Busqueda)
     const filtrar = (terminoBusqueda: string) => {
-        const resultadosBusqueda = tablaEncargados.filter((elemento) => {
+        const resultadosBusqueda = tablaAlumnos.filter((elemento) => {
             return (
                 elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
                 elemento.Apellido.toLowerCase().includes(terminoBusqueda.toLowerCase())
             );
         });
-        setEncargados(resultadosBusqueda);
+        setAlumnos(resultadosBusqueda);
     };
 
-    // Cierra el modal de detalles del encargado
+    // Cierra el modal de detalles del alumno
     const handleCloseModal = () => {
-        setSelectedEncargado(null);
+        setSelectedAlumno(null);
     };
 
-    // Abre el modal para crear un nuevo encargado
+    // Abre el modal para crear un nuevo alumno
     const handleOpenCreateModal = () => {
         setShowCreateModal(true);
     };
 
+    // Maneja el clic en "Eliminar" (acción ficticia)
+    const handleDelete = (alumno: Alumno) => {
+        console.log("Eliminar:", alumno);
+        // Aquí puedes agregar la lógica para eliminar el alumno
+    };
+
+    // Maneja el clic en "Ver más"
+    const handleVerMas = (alumno: Alumno) => {
+        console.log("Ver más sobre:", alumno);
+        // setSelectedAlumno(alumno);
+    };
+
+    // Maneja el clic en "Editar" (acción ficticia)
+    const handleEdit = (alumno: Alumno) => {
+        console.log("Editar:", alumno);
+        // Aquí puedes agregar la lógica para editar el alumno
+    };
+
     // Cabecera de la tabla
-    const tableHead = ["Nombre", "Apellido", "Teléfono", "Dirección","Correo", "DUI", "Acciones"];
+    const tableHead = ["Nombre", "Apellido", "Encargado", "NIE", "GRADO", "Turno", "Es Becado", "Acciones"];
 
     // Filas de la tabla con acciones (botones)
-    const tableRows = encargados.map(encargado => [
-        encargado.Nombre,
-        encargado.Apellido,
-        encargado.Telefono,
-        encargado.Direccion,
-        encargado.Correo,
-        encargado.NumDocumento,
-        [
-            {icon: <FaEye />, onClick: ()=> handleVerMas(encargado)},
-            { icon: <FaEdit />, onClick: () => handleEdit(encargado) },
-            {icon: <FaTrash />, onClick: ()=> handleEliminar(encargado)}
+    const tableRows = alumnos.map(alumno => ({
+        Nombre: alumno.Nombre,
+        Apellido: alumno.Apellido,
+        Encargado: alumno.Encargado,
+        NumDocumento: alumno.NumDocumento,
+        Grado: alumno.Grado,
+        Turno: alumno.Turno,
+        "Es Becado": alumno.EsBecado ? 'SI' : 'NO',
+        Acciones: [
+            { icon: <FaEye />, onClick: () => handleVerMas(alumno) },
+            { icon: <FaEdit />, onClick: () => handleEdit(alumno) },
+            { icon: <FaTrash />, onClick: () => handleDelete(alumno) }
         ]
-    ]);
-    // Maneja el clic en "Editar" (acción ficticia)
-    const handleEdit = (encargado: Encargado) => {
-        console.log("Editar:", encargado);
-        // Aquí puedes agregar la lógica para editar el encargado
-    };
-    //esto maneja al hacer clic con el ver mas
-    const handleVerMas = (encargado: Encargado)=>{
-        console.log("Ver mas", encargado)
-    }
-    //esto maneja con hacer clic al eliminar
-    const handleEliminar = (encargado: Encargado)=>{
-        console.log("Eliminar", encargado)
-    }
+    }));
+
     return (
         <div className="p-4 h-full flex flex-col">
             <div className='top-1 bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-1 p-4'>
@@ -109,8 +119,8 @@ const EncargadoPage = () => {
                         </div>
                         <input
                             type="search"
-                            id="default-search"
-                            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500"
+                            id="Buscar"
+                            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-darkTheme-icono focus:border-darkTheme-icono dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-darkTheme-icono dark:focus:border-darkTheme-icono"
                             placeholder="Buscar por nombre o apellido"
                             required
                             value={busqueda}
@@ -134,19 +144,20 @@ const EncargadoPage = () => {
                     fontBold="font-bold"
                     fontSize="text-3xl"
                     className="text-darkTheme-background mb-7 dark:text-lightTheme-background"
+                    color="text-darkTheme-background" // Añade el color adecuado
                 >
-                    Listado de Encargados
+                    Listado de Alumnos
                 </CustomTypography>
                 <div className="mt-7">
                     <Table tableHead={tableHead} tableRows={tableRows} />
                 </div>
             </div>
-            {selectedEncargado && (
+            {selectedAlumno && (
                 <Modal
                     showModal={true}
                     setShowModal={handleCloseModal}
-                    title={`${selectedEncargado.Nombre} ${selectedEncargado.Apellido}`}
-                    body={<EncargadoForm encargado={selectedEncargado} />}
+                    title={`${selectedAlumno.Nombre} ${selectedAlumno.Apellido}`}
+                    body={<AlumnoForm alumno={selectedAlumno} />}
                     confirmText="Aceptar"
                     cancelText="Cancelar"
                     onConfirm={handleCloseModal}
@@ -156,8 +167,8 @@ const EncargadoPage = () => {
                 <Modal
                     showModal={true}
                     setShowModal={setShowCreateModal}
-                    title="Crear Encargado"
-                    body={<EncargadoCreate />}
+                    title="Crear Alumno"
+                    body={<AlumnoCreate />}
                     confirmText="Guardar"
                     cancelText="Cancelar"
                     onConfirm={() => {
@@ -169,4 +180,4 @@ const EncargadoPage = () => {
     );
 }
 
-export default EncargadoPage;
+export default AlumnosPage;

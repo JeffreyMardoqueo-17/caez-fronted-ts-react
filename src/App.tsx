@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import 'tailwindcss/tailwind.css';
-import { useTheme } from './components/hooks/theme';
-import MainTemplate from './components/views/public/MainTemplate';
-import Dashboard from './components/views/public/Home/Dashboard';
-import AlumnosPage from './components/views/public/Alumno/AlumnosPage';
+import { useTheme } from './hooks/theme';
+import MainTemplate from './views/public/MainTemplate';
+import Dashboard from './views/public/Home/Dashboard';
+import AlumnosPage from './views/public/Alumno/AlumnosPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MultiLevelSidebar } from './components/Sidebar/MultiLevelSidebar';
 import Account1 from './components/acout/acout';
 import ShowTipoDocumento from './components/showTipoDocumento/ShowTipoDocumento';
-import AlumnoCreate from './components/views/public/Alumno/AlumnoCreate';
-import EncargadoPage from './components/views/public/Encargado/EncargadoPage';
+import AlumnoCreate from './views/public/Alumno/AlumnoCreate';
+import EncargadoPage from './views/public/Encargado/EncargadoPage';
 import Cabecera from './components/header/Cabecera';
-import Loader from './components/views/public/Loader';
+import Loader from './views/public/Loader';
 import Confirmacion from './components/notificaciones/confirmacion';
-import EnfermedadPage from './components/views/public/Enfermedad/EnfermedadPage ';
+import EnfermedadPage from './views/public/Enfermedad/EnfermedadPage ';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();

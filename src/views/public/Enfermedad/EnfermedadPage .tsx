@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table } from '../../../Table/Table';
+import { Table } from '../../../components/Table/Table';
 import { FaDownload, FaUserPlus, FaEye, FaEdit, FaTrash } from "react-icons/fa";
-import { CustomTypography } from '../../../Forms/CustomTypography';
-import { Modal } from '../../../modales/Modal';
+import { CustomTypography } from '../../../components/Forms/CustomTypography';
+import { Modal } from '../../../components/modales/Modal';
 import EnfermedadForm from './EnfermedadForm';
 import { EnfermedadCreate } from './EnfermedadCreate';
 

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { DashboardCard } from '../../../Cards/DashboardCard';
+import { DashboardCard } from '../../../components/Cards/DashboardCard';
 import { FaMoneyBill, FaUser, FaEdit, FaEye, FaTrash, } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6"; //total de alumno becados
 import { FaUsersBetweenLines } from "react-icons/fa6"; //total de alumnos
 import { FaUsersRays } from "react-icons/fa6"; //total de alumnos en deuda
-import { Table } from '../../../Table/Table'
-import { BarChartBarras } from '../../../Graficos/BarChart';
-import { AreaChartUsage } from '../../../Graficos/AreaChartUsage';
-import { Modal } from '../../../modales/Modal';
-import { CustomTypography } from '../../../Forms/CustomTypography';
+import { Table } from '../../../components/Table/Table';
+import { BarChartBarras } from '../../../components/Graficos/BarChart';
+import { AreaChartUsage } from '../../../components/Graficos/AreaChartUsage';
+import { Modal } from '../../../components/modales/Modal';
+import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
-import { Alumno } from '../../../../interfaces/TablasBD';
+import { Alumno } from '../../../interfaces/TablasBD';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);

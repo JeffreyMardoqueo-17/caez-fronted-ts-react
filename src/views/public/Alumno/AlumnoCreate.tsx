@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { validateInput } from '../../../../fuctions/Funciones';
+import { validateInput } from '../../../fuctions/Funciones';
 import { IoSaveSharp } from "react-icons/io5";
-import { Alumno, Enfermedad } from '../../../../interfaces/TablasBD';
-import SearchComponent from '../../../inputs/SearchComponent/SearchComponent';
-
+import { Alumno, Enfermedad } from '../../../interfaces/TablasBD';
+import SearchComponent from '../../../components/inputs/SearchComponent/SearchComponent';
 export default function AlumnoCreate() {
     const [alumno, setAlumno] = useState({
         Nombre: '',

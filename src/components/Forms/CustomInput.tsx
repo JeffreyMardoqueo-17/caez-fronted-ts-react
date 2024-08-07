@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Input } from '@material-tailwind/react';
 import { CustomInputProps } from '../../interfaces/CustomInputProps';
-import { useHasValue } from '../hooks/useHasValue';
+import { useHasValue } from '../../hooks/useHasValue';
 
 /**
  * Un componente de entrada personalizado.
@@ -20,7 +20,7 @@ export const CustomInput: FC<CustomInputProps> = ({ label, placeholder, initialV
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-        if (onChange) 
+        if (onChange)
             onChange(e);
     };
 
@@ -35,9 +35,9 @@ export const CustomInput: FC<CustomInputProps> = ({ label, placeholder, initialV
                 value={value}
                 onChange={handleChange}
                 className={`text-lightTheme-gray dark:text-darkTheme-gray rounded-md border border-lightTheme-gray`}
-                onPointerEnterCapture={() => { } }
-                onPointerLeaveCapture={() => { } } 
-                crossOrigin={undefined}            
+                onPointerEnterCapture={() => { }}
+                onPointerLeaveCapture={() => { }}
+                crossOrigin={undefined}
             />
         </div>
     );

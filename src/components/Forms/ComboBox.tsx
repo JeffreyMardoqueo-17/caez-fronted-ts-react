@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { ComboBoxProps } from '../../interfaces/ComboBoxProps';
-import { useHasValue } from '../hooks/useHasValue';
+import { useHasValue } from '../../hooks/useHasValue';
 
 export const ComboBox: FC<ComboBoxProps> = ({ label, options, selectedValue, onChange }) => {
     const { hasValue, setValue } = useHasValue(selectedValue);
@@ -42,11 +42,10 @@ export const ComboBox: FC<ComboBoxProps> = ({ label, options, selectedValue, onC
                         {options.map((option) => (
                             <li
                                 key={option.value}
-                                className={`cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-blue-100 dark:hover:bg-darkTheme-hover text-black dark:text-darkTheme-gray cursor-pointer ${
-                                    selectedValue === option.value
+                                className={`cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-blue-100 dark:hover:bg-darkTheme-hover text-black dark:text-darkTheme-gray cursor-pointer ${selectedValue === option.value
                                         ? 'text-lightTheme-primary bg-lightTheme-hover dark:text-white dark:bg-black'
                                         : 'text-black dark:text-darkTheme-gray dark:hover:bg-darkTheme-formulario dark:hover:text-white'
-                                }`}
+                                    }`}
                                 onClick={() => handleSelect(option.value)}
                             >
                                 <span className={`block truncate ${selectedValue === option.value ? 'font-semibold' : 'font-normal'}`}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CustomTypography } from "../Forms/CustomTypography";
 import { ActionButton } from "../inputs/Buttoom/ActionButton";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
@@ -13,17 +13,62 @@ interface TableProps {
     tableRows: Array<{ [key: string]: string | Action[] }>;
 }
 
-/**
- * Table component to display data in a tabular format.
- *
- * @param {TableProps} props - The props for the table component.
- * @param {string[]} props.tableHead - An array of strings representing the headers of the table.
- * @param {Array<{ [key: string]: string | Action[] }>} props.tableRows - An array of rows, where each row can contain strings or Action arrays.
- * @returns {JSX.Element} The Table component.
- */
 export function Table({ tableHead, tableRows }: TableProps) {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+
+    const totalPages = Math.ceil(tableRows.length / itemsPerPage);
+
+    const handleChangePage = (newPage: number) => {
+        if (newPage > 0 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
+    const handleChangeItemsPerPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setItemsPerPage(Number(event.target.value));
+        setCurrentPage(1);
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentRows = tableRows.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <div className="overflow-x-auto">
+            <div className="flex justify-between items-center mb-4">
+                <div>
+                    <label htmlFor="itemsPerPage" className="mr-2">Mostrar:</label>
+                    <select
+                        id="itemsPerPage"
+                        value={itemsPerPage}
+                        onChange={handleChangeItemsPerPage}
+                        className="border rounded p-1"
+                    >
+                        {[10, 20, 30, 50, 100].map((option) => (
+                            <option key={option} value={option}>
+                                {option}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <button
+                        onClick={() => handleChangePage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="border rounded px-2 py-1 mr-2"
+                    >
+                        Anterior
+                    </button>
+                    <span>{`Página ${currentPage} de ${totalPages}`}</span>
+                    <button
+                        onClick={() => handleChangePage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="border rounded px-2 py-1 ml-2"
+                    >
+                        Siguiente
+                    </button>
+                </div>
+            </div>
             <table className="w-full table-auto text-left rounded-md">
                 <thead>
                     <tr>
@@ -45,7 +90,7 @@ export function Table({ tableHead, tableRows }: TableProps) {
                     </tr>
                 </thead>
                 <tbody>
-                    {tableRows.map((row, index) => (
+                    {currentRows.map((row, index) => (
                         <tr key={index} className="border-b border-gray-200 dark:border-gray-800 dark:hover:bg-darkTheme-formulario hover:cursor-pointer">
                             {tableHead.map((key, cellIndex) => (
                                 <td key={cellIndex} className="px-6 py-3">

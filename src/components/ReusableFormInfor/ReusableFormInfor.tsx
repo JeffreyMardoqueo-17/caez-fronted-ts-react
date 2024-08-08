@@ -10,6 +10,14 @@ interface FormProps {
     fields: FieldConfig[];
 }
 
+/**
+ * Componente reutilizable de formulario de información.
+ * @param {FieldConfig[]} fields - Campos del formulario que serian label y los valores.
+ * @component
+ * @param {FormProps} props - Propiedades del formulario.
+ * @param {Array<Field>} props.fields - Campos del formulario.
+ * @returns {JSX.Element} Elemento JSX que representa el formulario de información reutilizable.
+ */
 const ReusableFormInfor: React.FC<FormProps> = ({ fields }) => {
     return (
         <div className="bg-lightTheme-primary dark:bg-darkTheme-background p-4 rounded-lg">

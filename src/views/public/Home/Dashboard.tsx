@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
+import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { FaUsersLine, FaUsersBetweenLines, FaUsersRays } from "react-icons/fa6";
 import { DashboardCard } from '../../../components/Cards/DashboardCard';
-import { FaMoneyBill, FaUser, FaEdit, FaEye, FaTrash, } from "react-icons/fa";
-import { FaUsersLine } from "react-icons/fa6"; //total de alumno becados
-import { FaUsersBetweenLines } from "react-icons/fa6"; //total de alumnos
-import { FaUsersRays } from "react-icons/fa6"; //total de alumnos en deuda
 import { Table } from '../../../components/Table/Table';
 import { BarChartBarras } from '../../../components/Graficos/BarChart';
 import { AreaChartUsage } from '../../../components/Graficos/AreaChartUsage';
 import { Modal } from '../../../components/modales/Modal';
 import { CustomTypography } from '../../../components/Forms/CustomTypography';
-import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import ReusableFormInfor from '../../../components/ReusableFormInfor/ReusableFormInfor';
 import { Alumno } from '../../../interfaces/TablasBD';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
-    const [modalContent, setModalContent] = useState("");
+    const [modalContent, setModalContent] = useState<JSX.Element | string>("");
     const [modalTitle, setModalTitle] = useState("");
     const [modalType, setModalType] = useState(""); // "delete" or "info"
     const [alumno, setAlumno] = useState<Alumno>({
@@ -46,25 +44,14 @@ const Dashboard = () => {
 
     const handleShowInfo = (alumno: Alumno) => {
         setModalTitle("Información del Alumno");
-        setModalContent(`
-            Nombre: ${alumno.Nombre}
-            Apellido: ${alumno.Apellido}
-            FechaNacimiento : ${alumno.FechaNacimiento}
-            Sexo: ${alumno.Sexo}
-            Role: ${alumno.Role}
-            Encargado: ${alumno.Encargado}
-            Enfermedad: ${alumno.Enfermedad}
-            TipoDocumento: ${alumno.TipoDocumento}
-            NumDocumento: ${alumno.NumDocumento}
-            Grupo: ${alumno.Grupo}
-            Grado: ${alumno.Grado}
-            Turno: ${alumno.Turno}
-            Administrador: ${alumno.Administrador}
-            Padrino: ${alumno.Padrino}
-            FechaRegistro: ${alumno.FechaRegistro}
-            EsBecado: ${alumno.EsBecado}
-            
-        `);
+        const fields = [
+            { label: 'Nombre', value: alumno.Nombre },
+            { label: 'Apellido', value: alumno.Apellido },
+            { label: 'Fecha de Nacimiento', value: alumno.FechaNacimiento },
+            { label: 'Sexo', value: alumno.Sexo },
+            // Agrega más campos según sea necesario
+        ];
+        setModalContent(<ReusableFormInfor fields={fields} />);
         setModalType("info");
         setShowModal(true);
     };
@@ -75,13 +62,13 @@ const Dashboard = () => {
             Nombre: "Juan",
             Apellido: "Pérez",
             Grado: "10",
+            EsBecado: "true",
             Acciones: [
                 { icon: <FaEdit />, onClick: () => console.log('Editar') },
                 { icon: <FaEye />, onClick: () => handleShowInfo({ Nombre: "Juan", Apellido: "Pérez", FechaNacimiento: "1/6/2007", Sexo: "M", Role: "alumnos", Encargado: "Jeffrey", Enfermedad: "Calentura", TipoDocumento: "Nie", NumDocumento: "1245566", Grupo: "1 FRUPO", Grado: "aas", Turno: "Mañaa", Administrador: "Jefey", Padrino: "", EsBecado: false, FechaRegistro: "1/06", Id: "" }) },
                 { icon: <FaTrash />, onClick: () => handleDelete('Juan Pérez') }
             ]
         },
-
     ];
 
     const tableHead2 = ["Nombre", "Apellido", "Acciones"];

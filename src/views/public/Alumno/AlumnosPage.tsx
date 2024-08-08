@@ -7,7 +7,6 @@ import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import { Modal } from '../../../components/modales/Modal';
 import AlumnoCreate from './AlumnoCreate';
 import { AlumnoForm } from '../../../components/Forms/AlumnoForm/AlumnoForm';
-import { ActionButton } from '../../../components/inputs/Buttoom/ActionButton';
 
 const AlumnosPage = () => {
     const [alumnos, setAlumnos] = useState<Alumno[]>([]);
@@ -152,6 +151,8 @@ const AlumnosPage = () => {
                     <Table tableHead={tableHead} tableRows={tableRows} />
                 </div>
             </div>
+
+
             {selectedAlumno && (
                 <Modal
                     showModal={true}

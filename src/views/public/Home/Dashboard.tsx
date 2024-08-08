@@ -15,25 +15,7 @@ const Dashboard = () => {
     const [modalContent, setModalContent] = useState<JSX.Element | string>("");
     const [modalTitle, setModalTitle] = useState("");
     const [modalType, setModalType] = useState(""); // "delete" or "info"
-    const [alumno, setAlumno] = useState<Alumno>({
-        Id: "",
-        Nombre: "",
-        Apellido: "",
-        FechaNacimiento: "",
-        Sexo: "",
-        Role: "",
-        Encargado: "",
-        Enfermedad: "",
-        TipoDocumento: "",
-        NumDocumento: "",
-        Grupo: "",
-        Turno: "",
-        Grado: "",
-        Administrador: "",
-        Padrino: "",
-        FechaRegistro: "",
-        EsBecado: false
-    });
+    const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
 
     const handleDelete = (nombre: string) => {
         setModalTitle("Eliminar Alumno");
@@ -43,13 +25,25 @@ const Dashboard = () => {
     };
 
     const handleShowInfo = (alumno: Alumno) => {
+        setSelectedAlumno(alumno); // Actualiza el estado del alumno seleccionado
         setModalTitle("Información del Alumno");
         const fields = [
             { label: 'Nombre', value: alumno.Nombre },
             { label: 'Apellido', value: alumno.Apellido },
             { label: 'Fecha de Nacimiento', value: alumno.FechaNacimiento },
             { label: 'Sexo', value: alumno.Sexo },
-            // Agrega más campos según sea necesario
+            { label: 'Role', value: alumno.Role },
+            { label: 'Encargado', value: alumno.Encargado },
+            { label: 'Enfermedad', value: alumno.Enfermedad },
+            { label: 'Tipo de Documento', value: alumno.TipoDocumento },
+            { label: 'Número de Documento', value: alumno.NumDocumento },
+            { label: 'Grupo', value: alumno.Grupo },
+            { label: 'Turno', value: alumno.Turno },
+            { label: 'Grado', value: alumno.Grado },
+            { label: 'Administrador', value: alumno.Administrador },
+            { label: 'Padrino', value: alumno.Padrino },
+            { label: 'Fecha de Registro', value: alumno.FechaRegistro },
+            { label: 'Es Becado', value: alumno.EsBecado ? "Sí" : "No" },
         ];
         setModalContent(<ReusableFormInfor fields={fields} />);
         setModalType("info");
@@ -62,10 +56,14 @@ const Dashboard = () => {
             Nombre: "Juan",
             Apellido: "Pérez",
             Grado: "10",
-            EsBecado: "true",
+            EsBecado: "Sí",
             Acciones: [
                 { icon: <FaEdit />, onClick: () => console.log('Editar') },
-                { icon: <FaEye />, onClick: () => handleShowInfo({ Nombre: "Juan", Apellido: "Pérez", FechaNacimiento: "1/6/2007", Sexo: "M", Role: "alumnos", Encargado: "Jeffrey", Enfermedad: "Calentura", TipoDocumento: "Nie", NumDocumento: "1245566", Grupo: "1 FRUPO", Grado: "aas", Turno: "Mañaa", Administrador: "Jefey", Padrino: "", EsBecado: false, FechaRegistro: "1/06", Id: "" }) },
+                {
+                    icon: <FaEye />, onClick: () => handleShowInfo({
+                        Id: "1", Nombre: "Juan", Apellido: "Pérez", FechaNacimiento: "2007-06-01", Sexo: "M", Role: "alumno", Encargado: "Jeffrey", Enfermedad: "Calentura", TipoDocumento: "DNI", NumDocumento: "1245566", Grupo: "Grupo 1", Turno: "Mañana", Grado: "10", Administrador: "Jeffrey", Padrino: "", FechaRegistro: "2023-06-01", EsBecado: true
+                    })
+                },
                 { icon: <FaTrash />, onClick: () => handleDelete('Juan Pérez') }
             ]
         },

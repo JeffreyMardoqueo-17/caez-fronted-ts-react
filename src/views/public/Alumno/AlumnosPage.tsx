@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Table } from '../../../components/Table/Table';
 import { Alumno } from '../../../interfaces/TablasBD';
 import { FaDownload, FaUserPlus, FaEye, FaEdit, FaTrash } from 'react-icons/fa';
@@ -7,6 +6,7 @@ import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import { Modal } from '../../../components/modales/Modal';
 import AlumnoCreate from './AlumnoCreate';
 import { AlumnoForm } from '../../../components/Forms/AlumnoForm/AlumnoForm';
+import { getAlumnos, filtrarAlumnos } from '../../../utils/Alumno';
 
 const AlumnosPage = () => {
     const [alumnos, setAlumnos] = useState<Alumno[]>([]);
@@ -15,75 +15,45 @@ const AlumnosPage = () => {
     const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
-    // Función para obtener a los alumnos
-    const getAlumnos = async () => {
-        try {
-            // const url = 'http://localhost:3000/Alumnos';
-            const url = 'https://jsonplaceholder.typicode.com/todos/';
-            const respuesta = await axios.get<Alumno[]>(url);
-            setAlumnos(respuesta.data);
-            setTablaAlumnos(respuesta.data);
-            console.log('Datos recibidos:', respuesta.data);
-        } catch (error) {
-            console.error('Error al obtener los datos:', error);
-        }
-    };
-
-    // Llama a getAlumnos al cargar el componente
     useEffect(() => {
-        getAlumnos();
+        const fetchAlumnos = async () => {
+            const alumnosData = await getAlumnos();
+            setAlumnos(alumnosData);
+            setTablaAlumnos(alumnosData);
+        };
+
+        fetchAlumnos();
     }, []);
 
-    // Maneja el cambio en el input de busquedaa :)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
-        filtrar(e.target.value);
+        const resultadosBusqueda = filtrarAlumnos(tablaAlumnos, e.target.value);
+        setAlumnos(resultadosBusqueda);
         console.log("Búsqueda", e.target.value);
     };
 
-    // Filtra los alumnos segun lo que se escriba en el input (Busqueda)
-    const filtrar = (terminoBusqueda: string) => {
-        const resultadosBusqueda = tablaAlumnos.filter((elemento) => {
-            return (
-                elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-                elemento.Apellido.toLowerCase().includes(terminoBusqueda.toLowerCase())
-            );
-        });
-        setAlumnos(resultadosBusqueda);
-    };
-
-    // Cierra el modal de detalles del alumno
     const handleCloseModal = () => {
         setSelectedAlumno(null);
     };
 
-    // Abre el modal para crear un nuevo alumno
     const handleOpenCreateModal = () => {
         setShowCreateModal(true);
     };
 
-    // Maneja el clic en "Eliminar" (acción ficticia)
     const handleDelete = (alumno: Alumno) => {
         console.log("Eliminar:", alumno);
-        // Aquí puedes agregar la lógica para eliminar el alumno
     };
 
-    // Maneja el clic en "Ver más"
     const handleVerMas = (alumno: Alumno) => {
         console.log("Ver más sobre:", alumno);
-        // setSelectedAlumno(alumno);
     };
 
-    // Maneja el clic en "Editar" (acción ficticia)
     const handleEdit = (alumno: Alumno) => {
         console.log("Editar:", alumno);
-        // Aquí puedes agregar la lógica para editar el alumno
     };
 
-    // Cabecera de la tabla
     const tableHead = ["Nombre", "Apellido", "Encargado", "NIE", "GRADO", "Turno", "Es Becado", "Acciones"];
 
-    // Filas de la tabla con acciones (botones)
     const tableRows = alumnos.map(alumno => ({
         Nombre: alumno.Nombre,
         Apellido: alumno.Apellido,
@@ -143,7 +113,7 @@ const AlumnosPage = () => {
                     fontBold="font-bold"
                     fontSize="text-3xl"
                     className="text-darkTheme-background mb-7 dark:text-lightTheme-background"
-                    color="text-darkTheme-background" // Añade el color adecuado
+                    color="text-darkTheme-background"
                 >
                     Listado de Alumnos
                 </CustomTypography>
@@ -151,7 +121,6 @@ const AlumnosPage = () => {
                     <Table tableHead={tableHead} tableRows={tableRows} />
                 </div>
             </div>
-
 
             {selectedAlumno && (
                 <Modal

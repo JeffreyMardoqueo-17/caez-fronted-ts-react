@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import 'tailwindcss/tailwind.css';
 import { useTheme } from './hooks/theme';
-import MainTemplate from './views/public/MainTemplate';
+// import MainTemplate from './views/public/MainTemplate';
+import MainTemplate from './views/public/layout/MainTemplate';
 import Dashboard from './views/public/Home/Dashboard';
 import AlumnosPage from './views/public/Alumno/AlumnosPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';

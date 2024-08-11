@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Table } from '../../../components/Table/Table';
 import { Encargado } from '../../../interfaces/TablasBD';
 import { FaDownload, FaUserPlus } from "react-icons/fa";
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import { Modal } from '../../../components/modales/Modal';
+import { getEncargados, filtrarEncargados } from '../../../utils/Encargado';
 
 const EncargadoPage = () => {
     const [encargados, setEncargados] = useState<Encargado[]>([]);
@@ -14,39 +14,26 @@ const EncargadoPage = () => {
     const [selectedEncargado, setSelectedEncargado] = useState<Encargado | null>(null);
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
-    // Función para obtener los encargados
-    const getEncargados = async () => {
+    // Función para obtener los encargados utilizando el servicio
+    const cargarEncargados = async () => {
         try {
-            const url = 'http://localhost:3000/Encargados'; // Ajusta la URL según tu backend
-            const respuesta = await axios.get<Encargado[]>(url);
-            setEncargados(respuesta.data);
-            setTablaEncargados(respuesta.data);
-            console.log('Datos recibidos:', respuesta.data);
+            const datosEncargados = await getEncargados();
+            setEncargados(datosEncargados);
+            setTablaEncargados(datosEncargados);
         } catch (error) {
-            console.error('Error al obtener los datos:', error);
+            console.error('Error al cargar los encargados:', error);
         }
     };
 
-    // Llama a getEncargados al cargar el componente
+    // Llama a cargarEncargados al cargar el componente
     useEffect(() => {
-        getEncargados();
+        cargarEncargados();
     }, []);
 
     // Maneja el cambio en el input de búsqueda
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
-        filtrar(e.target.value);
-        console.log("Búsqueda", e.target.value);
-    };
-
-    // Filtra los encargados según el término de búsqueda
-    const filtrar = (terminoBusqueda: string) => {
-        const resultadosBusqueda = tablaEncargados.filter((elemento) => {
-            return (
-                elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-                elemento.Apellido.toLowerCase().includes(terminoBusqueda.toLowerCase())
-            );
-        });
+        const resultadosBusqueda = filtrarEncargados(tablaEncargados, e.target.value);
         setEncargados(resultadosBusqueda);
     };
 
@@ -64,32 +51,38 @@ const EncargadoPage = () => {
     const tableHead = ["Nombre", "Apellido", "Teléfono", "Dirección", "Correo", "DUI", "Acciones"];
 
     // Filas de la tabla con acciones (botones)
-    const tableRows = encargados.map(encargado => [
-        encargado.Nombre,
-        encargado.Apellido,
-        encargado.Telefono,
-        encargado.Direccion,
-        encargado.Correo,
-        encargado.NumDocumento,
-        [
+    const tableRows = encargados.map(encargado => ({
+        Nombre: encargado.Nombre,
+        Apellido: encargado.Apellido,
+        Teléfono: encargado.Telefono,
+        Dirección: encargado.Direccion,
+        Correo: encargado.Correo,
+        DUI: encargado.NumDocumento,
+        Acciones: [
             { icon: <FaEye />, onClick: () => handleVerMas(encargado) },
             { icon: <FaEdit />, onClick: () => handleEdit(encargado) },
             { icon: <FaTrash />, onClick: () => handleEliminar(encargado) }
         ]
-    ]);
+    }));
+
     // Maneja el clic en "Editar" (acción ficticia)
     const handleEdit = (encargado: Encargado) => {
         console.log("Editar:", encargado);
         // Aquí puedes agregar la lógica para editar el encargado
     };
-    //esto maneja al hacer clic con el ver mas
+
+    // Maneja el clic en "Ver más"
     const handleVerMas = (encargado: Encargado) => {
-        console.log("Ver mas", encargado)
-    }
-    //esto maneja con hacer clic al eliminar
+        console.log("Ver más", encargado);
+        // Aquí puedes agregar la lógica para ver más detalles del encargado
+    };
+
+    // Maneja el clic en "Eliminar"
     const handleEliminar = (encargado: Encargado) => {
-        console.log("Eliminar", encargado)
-    }
+        console.log("Eliminar", encargado);
+        // Aquí puedes agregar la lógica para eliminar el encargado
+    };
+
     return (
         <div className="p-4 h-full flex flex-col">
             <div className='top-1 bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-1 p-4'>

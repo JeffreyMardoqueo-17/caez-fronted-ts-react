@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Table } from '../../../components/Table/Table';
 import { FaDownload, FaUserPlus, FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { Table } from '../../../components/Table/Table';
 import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import { Modal } from '../../../components/modales/Modal';
-import EnfermedadForm from './EnfermedadForm';
-import { EnfermedadCreate } from './EnfermedadCreate';
-
-interface Enfermedad {
-    Id: number;
-    Nombre: string;
-    Descripcion: string;
-}
+import EnfermedadCreate from './EnfermedadCreate';
+import { Enfermedad } from '../../../interfaces/TablasBD';
+import { getEnfermedades, filtrarEnfermedades } from '../../../utils/Enfermedad';
 
 const EnfermedadPage: React.FC = () => {
     const [enfermedades, setEnfermedades] = useState<Enfermedad[]>([]);
@@ -20,35 +14,24 @@ const EnfermedadPage: React.FC = () => {
     const [selectedEnfermedad, setSelectedEnfermedad] = useState<Enfermedad | null>(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
 
-    const getEnfermedades = async () => {
+    //llamo  a la funcion de obtencion de enfermedades
+    const cargarEnfermedades = async () => {
         try {
-            const url = 'http://localhost:3000/enfermedad';
-            const respuesta = await axios.get(url);
-            setEnfermedades(respuesta.data);
-            setTablaEnfermedades(respuesta.data);
-            console.log('Datos recibidos:', respuesta.data);
+            const enfermedades = await getEnfermedades();
+            setEnfermedades(enfermedades);
+            setTablaEnfermedades(enfermedades);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
     };
-
+    //esto cargao o hace la peticion de las enfermedades
     useEffect(() => {
-        getEnfermedades();
+        cargarEnfermedades();
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
-        filtrar(e.target.value);
-        console.log("Búsqueda", e.target.value);
-    };
-
-    const filtrar = (terminoBusqueda: string) => {
-        const resultadosBusqueda = tablaEnfermedades.filter((elemento) => {
-            return (
-                elemento.Nombre.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-                elemento.Descripcion.toLowerCase().includes(terminoBusqueda.toLowerCase())
-            );
-        });
+        const resultadosBusqueda = filtrarEnfermedades(tablaEnfermedades, e.target.value);
         setEnfermedades(resultadosBusqueda);
     };
 
@@ -62,22 +45,33 @@ const EnfermedadPage: React.FC = () => {
 
     const tableHead = ["Nombre", "Descripción", "Acciones"];
 
-    const tableRows = enfermedades.map(enfermedad => [
-        enfermedad.Nombre,
-        enfermedad.Descripcion,
-        [
-            { icon: <FaEye />, onClick: () => handleVerMas(enfermedad) },
-            { icon: <FaEdit />, onClick: () => handleEdit(enfermedad) },
-            { icon: <FaTrash />, onClick: () => handleEliminar(enfermedad) }
+    const tableRows = enfermedades.map(enfermedad => ({
+        Nombre: enfermedad.Nombre,
+        Descripcion: enfermedad.Descripcion,
+        Acciones: [
+            {
+                label: 'Editar',
+                onClick: () => handleEdit(enfermedad),
+                icon: <FaEdit />,
+            },
+            {
+                label: 'Ver más',
+                onClick: () => handleVerMas(enfermedad),
+                icon: <FaEye />,
+            },
+            {
+                label: 'Eliminar',
+                onClick: () => handleEliminar(enfermedad),
+                icon: <FaTrash />,
+            }
         ]
-    ]);
+    }));
 
     const handleEdit = (enfermedad: Enfermedad) => {
         console.log("Editar:", enfermedad);
     };
 
     const handleVerMas = (enfermedad: Enfermedad) => {
-        console.log("Ver más", enfermedad);
         setSelectedEnfermedad(enfermedad);
     };
 
@@ -125,7 +119,6 @@ const EnfermedadPage: React.FC = () => {
                         </button>
                     </div>
                 </form>
-
             </div>
             <div className="bg-white dark:bg-darkTheme-background rounded-lg shadow overflow-auto flex-grow p-3 mt-4 md:mt-7">
                 <CustomTypography
@@ -161,7 +154,7 @@ const EnfermedadPage: React.FC = () => {
                     cancelText="Cancelar"
                     onConfirm={() => {
                         setShowCreateModal(false);
-                        getEnfermedades();
+                        cargarEnfermedades(); // Recargar las enfermedades después de crear una nueva
                     }}
                 />
             )}

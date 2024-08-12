@@ -52,7 +52,7 @@ const App: React.FC = () => {
                             <Route path="/formulario" element={<Account1 />} />
                             <Route path='Encargados' element={<EncargadoPage />} />
                             <Route path="/Loader" element={<Loader />} />
-                            <Route path="enfermedad/" element={<EnfermedadCreate />} />
+                            <Route path="enfermedad/" element={<EnfermedadPage />} />
                             <Route path='/confirmar' element={<Confirmacion />} />
                         </Routes>
                     </MainTemplate>

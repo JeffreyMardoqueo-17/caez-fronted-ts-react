@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Padrino, Sexo } from '../../../interfaces/TablasBD';
+import { Padrino, Sexo, Role, Direccion } from '../../../interfaces/TablasBD';
 import { getSexos } from '../../../utils/Sexo';
+import { getRoles } from '../../../utils/Roles';
 import { createPadrino } from '../../../utils/Padrino';
 import { validateInput } from '../../../fuctions/Funciones';
+import { getDirecciones } from '../../../utils/Direccion';
 
 export default function PadrinoCreate() {
     const [padrino, setPadrino] = useState<Omit<Padrino, 'Id' | 'FechaRegistro'>>({
@@ -15,9 +17,8 @@ export default function PadrinoCreate() {
         IdDireccion: '',
         IdAdministrador: '',
     });
-
+    //PARA OBTENER LOS SEXOS DE LA BASE DE DATOS
     const [sexos, setSexos] = useState<Sexo[]>([]);
-
     useEffect(() => {
         const fetchSexos = async () => {
             try {
@@ -29,6 +30,33 @@ export default function PadrinoCreate() {
         };
         fetchSexos();
     }, []);
+
+    //PARA OBTENER LOS rOLES DE LA BASE DE DATOS
+    const [roles, setRoles] = useState<Role[]>([]);
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const data = await getRoles();
+                setRoles(data);
+            } catch (error) {
+                console.error('Error al obtener los roles:', error);
+            }
+        };
+        fetchRoles();
+    }, []);
+
+    //para obtener las direcciones
+    const [direcciones, setDirecciones] = useState<Direccion[]>([]);
+    useEffect(() => {
+        const fetchDirecciones = async () => {
+            try {
+                const data = await getDirecciones();
+                setDirecciones(data);
+            } catch (error) {
+                console.error('Error al obtener las direcciones:', error);
+            }
+        }
+    });
 
     const procesarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -94,6 +122,41 @@ export default function PadrinoCreate() {
                             ))}
                         </select>
                     </div>
+                    {/* conbobox de los roles */}
+                    <div>
+                        <label htmlFor="IdRole" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Rol - Cargo</label>
+                        <select
+                            name="IdRole"
+                            id="IdRole"
+                            value={padrino.IdRole}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdRole)}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {roles.map((role) => (
+                                <option key={role.Id} value={role.Id}>{role.Name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* conbobox de la direccion */}
+                    <div>
+                        <label htmlFor="IdDireccion" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Direcciones</label>
+                        <select
+                            name="IdDireccion"
+                            id="IdDireccion"
+                            value={padrino.IdDireccion}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdRole)}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {direcciones.map((direccion) => (
+                                <option key={direccion.Id} value={direccion.Id}>{direccion.Nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     {/* Agregar aquí los demás campos como Role, Telefono, etc. */}
                     <div>
                         <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Crear Padrino</button>

@@ -52,11 +52,19 @@ export interface TipoDocumento {
   name: string;
 }
 export interface Enfermedad {
-  Id: number;
+  Id: string;
   Nombre: string;
   Descripcion: string;
 }
 export interface Sexo {
-  Id: number;
+  Id: string;
   Nombre: string;
+}
+export interface Direccion {
+  Id: string;
+  Nombre: string;
+}
+export interface Role {
+  Id: string;
+  Name: string;
 }

@@ -37,12 +37,12 @@ export interface Padrino {
   Id: string;
   Nombre: string;
   Apellido: string;
-  sexo: string;
-  Role: string;
+  IdSexo: string;
+  IdRole: string;
   Telefono: string;
   Correo: string;
-  Direccion: string;
-  Administrador: string;
+  IdDireccion: string;
+  IdAdministrador: string;
   FechaRegistro: string;
 }
 
@@ -55,4 +55,8 @@ export interface Enfermedad {
   Id: number;
   Nombre: string;
   Descripcion: string;
+}
+export interface Sexo {
+  Id: number;
+  Nombre: string;
 }

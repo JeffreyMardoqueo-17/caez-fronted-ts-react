@@ -10,17 +10,18 @@ import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import ReusableFormInfor from '../../../components/ReusableFormInfor/ReusableFormInfor';
 import { Alumno, Padrino } from '../../../interfaces/TablasBD';
 import { getAlumnos } from '../../../utils/Alumno';
+import { getPadrinos } from '../../../utils/Padrino';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState<JSX.Element | string>("");
     const [modalTitle, setModalTitle] = useState("");
     const [modalType, setModalType] = useState(""); // "delete" or "info"
-    const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
+    const [, setSelectedAlumno] = useState<Alumno | null>(null);
 
     //para traer a el alumno 
     const [alumnos, setAlumnos] = useState<Alumno[]>([]);
-    const [tablaAlumnos, setTablaAlumnos] = useState<Alumno[]>([]);
+    const [, setTablaAlumnos] = useState<Alumno[]>([]);
     useEffect(() => {
         const fetchAlumnos = async () => {
             const alumnosData = await getAlumnos();
@@ -30,8 +31,18 @@ const Dashboard = () => {
         fetchAlumnos();
     }, []);
 
-    //para traer a los padrinos
+
+    //para traer a los padrinos 
     const [padrinos, setPadrinos] = useState<Padrino[]>([]);
+    const [, setTablaPadrinos] = useState<Padrino[]>([]);
+    useEffect(() => {
+        const fetchPadrinos = async () => {
+            const padrinosData = await getPadrinos();
+            setPadrinos(padrinosData);
+            setTablaPadrinos(padrinosData);
+        };
+        fetchPadrinos();
+    }, []);
 
 
     const handleDelete = (nombre: string) => {
@@ -79,37 +90,11 @@ const Dashboard = () => {
         "Es Becado": alumno.EsBecado ? 'SI' : 'NO',
     }));
 
-    const tableHead2 = ["Nombre", "Apellido", "Acciones"];
-    const tableRows2 = [
-        {
-            Nombre: "Jeffrey",
-            Apellido: "Mardoqueo",
-            Acciones: [
-                { icon: <FaEye />, onClick: () => console.log('Editar') },
-            ]
-        },
-        {
-            Nombre: "Jeffrey",
-            Apellido: "Mardoqueo",
-            Acciones: [
-                { icon: <FaEye />, onClick: () => console.log('Editar') },
-            ]
-        },
-        {
-            Nombre: "Jeffrey",
-            Apellido: "Mardoqueo",
-            Acciones: [
-                { icon: <FaEye />, onClick: () => console.log('Editar') },
-            ]
-        },
-        {
-            Nombre: "Jeffrey",
-            Apellido: "Mardoqueo",
-            Acciones: [
-                { icon: <FaEye />, onClick: () => console.log('Editar') },
-            ]
-        },
-    ];
+    const tableHead2 = ["Nombre", "Apellido"];
+    const tableRows2 = padrinos.map(padrino => ({
+        Nombre: padrino.Nombre,
+        Apellido: padrino.Apellido,
+    }));
 
     return (
         <div className='flex flex-col w-full h-full p-4 gap-4'>

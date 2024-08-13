@@ -18,7 +18,6 @@ const onFocus = (foco: string) => {
 }
 
 // validateInput.ts, calida si ya tiene Datos y cambia el color del borde
-// validateInput.ts
 export function validateInput(value: string): string {
     return value.trim() !== '' ? 'border-darkTheme-icono' : 'border-gray-300 dark:border-darkTheme-opacidad';
 }

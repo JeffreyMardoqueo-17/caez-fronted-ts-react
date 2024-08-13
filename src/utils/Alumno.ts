@@ -4,7 +4,7 @@ import { Alumno } from '../interfaces/TablasBD';
 
 export const getAlumnos = async (): Promise<Alumno[]> => {
     try {
-        const url = 'https://jsonplaceholder.typicode.com/todos/';
+        const url = 'http://localhost:3000/Alumnos';
         const respuesta = await axios.get<Alumno[]>(url);
         console.log('Datos recibidos:', respuesta.data);
         return respuesta.data;

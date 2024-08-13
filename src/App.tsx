@@ -16,6 +16,8 @@ import Loader from './views/public/Loader';
 import Confirmacion from './components/notificaciones/confirmacion';
 import EnfermedadPage from './views/public/Enfermedad/EnfermedadPage ';
 import EnfermedadCreate from './views/public/Enfermedad/EnfermedadCreate';
+import PadrinosPage from './views/public/Padrinos/PadrinosPage';
+import PadrinoCreate from './views/public/Padrinos/PadrinoCreate';
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -48,12 +50,13 @@ const App: React.FC = () => {
                             <Route path="/" element={<Dashboard />} />
                             <Route path='/TipoDocumento' element={<ShowTipoDocumento />} />
                             <Route path='/alumnos/create' element={<AlumnoCreate />} />
-                            <Route path="/alumnos" element={<AlumnosPage />} />
+                            <Route path="/alumnos" element={<AlumnoCreate />} />
                             <Route path="/formulario" element={<Account1 />} />
                             <Route path='Encargados' element={<EncargadoPage />} />
                             <Route path="/Loader" element={<Loader />} />
                             <Route path="enfermedad/" element={<EnfermedadPage />} />
                             <Route path='/confirmar' element={<Confirmacion />} />
+                            <Route path='/Padrino' element={<PadrinoCreate />} />
                         </Routes>
                     </MainTemplate>
                 </div>

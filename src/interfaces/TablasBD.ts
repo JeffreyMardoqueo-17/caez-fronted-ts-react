@@ -33,6 +33,18 @@ export interface Alumno {
   FechaRegistro: string;
   EsBecado: boolean;
 }
+export interface Padrino {
+  Id: string;
+  Nombre: string;
+  Apellido: string;
+  sexo: string;
+  Role: string;
+  Telefono: string;
+  Correo: string;
+  Direccion: string;
+  Administrador: string;
+  FechaRegistro: string;
+}
 
 // types.ts
 export interface TipoDocumento {

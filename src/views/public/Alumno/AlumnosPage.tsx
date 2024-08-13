@@ -21,7 +21,6 @@ const AlumnosPage = () => {
             setAlumnos(alumnosData);
             setTablaAlumnos(alumnosData);
         };
-
         fetchAlumnos();
     }, []);
 

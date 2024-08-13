@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { FaUsersLine, FaUsersBetweenLines, FaUsersRays } from "react-icons/fa6";
 import { DashboardCard } from '../../../components/Cards/DashboardCard';
@@ -8,7 +8,8 @@ import { AreaChartUsage } from '../../../components/Graficos/AreaChartUsage';
 import { Modal } from '../../../components/modales/Modal';
 import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import ReusableFormInfor from '../../../components/ReusableFormInfor/ReusableFormInfor';
-import { Alumno } from '../../../interfaces/TablasBD';
+import { Alumno, Padrino } from '../../../interfaces/TablasBD';
+import { getAlumnos } from '../../../utils/Alumno';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
@@ -16,6 +17,22 @@ const Dashboard = () => {
     const [modalTitle, setModalTitle] = useState("");
     const [modalType, setModalType] = useState(""); // "delete" or "info"
     const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
+
+    //para traer a el alumno 
+    const [alumnos, setAlumnos] = useState<Alumno[]>([]);
+    const [tablaAlumnos, setTablaAlumnos] = useState<Alumno[]>([]);
+    useEffect(() => {
+        const fetchAlumnos = async () => {
+            const alumnosData = await getAlumnos();
+            setAlumnos(alumnosData);
+            setTablaAlumnos(alumnosData);
+        };
+        fetchAlumnos();
+    }, []);
+
+    //para traer a los padrinos
+    const [padrinos, setPadrinos] = useState<Padrino[]>([]);
+
 
     const handleDelete = (nombre: string) => {
         setModalTitle("Eliminar Alumno");
@@ -50,24 +67,17 @@ const Dashboard = () => {
         setShowModal(true);
     };
 
-    const tableHead1 = ["Nombre", "Apellido", "Grado", "EsBecado", "Acciones"];
-    const tableRows1 = [
-        {
-            Nombre: "Juan",
-            Apellido: "Pérez",
-            Grado: "10",
-            EsBecado: "Sí",
-            Acciones: [
-                { icon: <FaEdit />, onClick: () => console.log('Editar') },
-                {
-                    icon: <FaEye />, onClick: () => handleShowInfo({
-                        Id: "1", Nombre: "Juan", Apellido: "Pérez", FechaNacimiento: "2007-06-01", Sexo: "M", Role: "alumno", Encargado: "Jeffrey", Enfermedad: "Calentura", TipoDocumento: "DNI", NumDocumento: "1245566", Grupo: "Grupo 1", Turno: "Mañana", Grado: "10", Administrador: "Jeffrey", Padrino: "", FechaRegistro: "2023-06-01", EsBecado: true
-                    })
-                },
-                { icon: <FaTrash />, onClick: () => handleDelete('Juan Pérez') }
-            ]
-        },
-    ];
+    const tableHead = ["Nombre", "Apellido", "Encargado", "NIE", "GRADO", "Turno", "Es Becado", "Acciones"];
+
+    const tableRows = alumnos.map(alumno => ({
+        Nombre: alumno.Nombre,
+        Apellido: alumno.Apellido,
+        Encargado: alumno.Encargado,
+        NumDocumento: alumno.NumDocumento,
+        Grado: alumno.Grado,
+        Turno: alumno.Turno,
+        "Es Becado": alumno.EsBecado ? 'SI' : 'NO',
+    }));
 
     const tableHead2 = ["Nombre", "Apellido", "Acciones"];
     const tableRows2 = [
@@ -126,7 +136,7 @@ const Dashboard = () => {
                         />
                     </div>
                     <div className='bg-lightTheme-primary dark:bg-darkTheme-background p-4 w-auto rounded-lg'>
-                        <Table tableHead={tableHead1} tableRows={tableRows1} />
+                        <Table tableHead={tableHead} tableRows={tableRows} />
                     </div>
                     <div className='bg-lightTheme-pry dark:bg-darkTheme-background p-4  rounded-lg'>
                         <BarChartBarras />

@@ -56,6 +56,7 @@ export default function PadrinoCreate() {
                 console.error('Error al obtener las direcciones:', error);
             }
         }
+        fetchDirecciones();
     });
 
     const procesarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

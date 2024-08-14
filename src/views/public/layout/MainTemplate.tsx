@@ -13,7 +13,7 @@ const MainTemplate: React.FC<MainTemplateProps> = ({ sidebar, header, children }
                 {header}
             </div>
             <div className="flex flex-1 overflow-hidden mt-16">
-                <div className="w-1/6 bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-light-50 h-full">
+                <div className="hidden lg:block lg:w-1/6 bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-light-50 h-full">
                     {sidebar}
                 </div>
                 <div className="flex-1 p-4 bg-lightTheme-background dark:bg-darkTheme-background">

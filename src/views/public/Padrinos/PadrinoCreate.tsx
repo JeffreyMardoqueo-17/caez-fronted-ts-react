@@ -97,10 +97,10 @@ export default function PadrinoCreate() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-darkTheme-formulario shadow-md rounded-md">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Crear Padrino</h2>
-            <form onSubmit={CrearPadrino}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-md mx-auto p-4 sm:p-6 bg-white dark:bg-darkTheme-formulario shadow-md rounded-md">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Crear Padrino</h2>
+            <form onSubmit={CrearPadrino} className="space-y-4">
+                <div className="grid grid-cols-1 gap-4">
                     <div>
                         <label htmlFor="Nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Nombre</label>
                         <input
@@ -110,7 +110,7 @@ export default function PadrinoCreate() {
                             value={padrino.Nombre}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.Nombre)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.Nombre)}`}
                         />
                     </div>
                     <div>
@@ -122,7 +122,7 @@ export default function PadrinoCreate() {
                             value={padrino.Apellido}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.Apellido)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.Apellido)}`}
                         />
                     </div>
                     <div>
@@ -133,7 +133,7 @@ export default function PadrinoCreate() {
                             value={padrino.IdSexo}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdSexo)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.IdSexo)}`}
                         >
                             <option value="">Seleccione</option>
                             {sexos.map((sexo) => (
@@ -149,7 +149,7 @@ export default function PadrinoCreate() {
                             value={padrino.IdRole}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdRole)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.IdRole)}`}
                         >
                             <option value="">Seleccione</option>
                             {roles.map((role) => (
@@ -158,14 +158,14 @@ export default function PadrinoCreate() {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="IdDireccion" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Direcciones</label>
+                        <label htmlFor="IdDireccion" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Dirección</label>
                         <select
                             name="IdDireccion"
                             id="IdDireccion"
                             value={padrino.IdDireccion}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdDireccion)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.IdDireccion)}`}
                         >
                             <option value="">Seleccione</option>
                             {direcciones.map((direccion) => (
@@ -174,14 +174,14 @@ export default function PadrinoCreate() {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="IdAdministrador" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administradores</label>
+                        <label htmlFor="IdAdministrador" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administrador</label>
                         <select
                             name="IdAdministrador"
                             id="IdAdministrador"
                             value={padrino.IdAdministrador}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark:disabled:bg-gray-50 ${validateInput(padrino.IdAdministrador)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.IdAdministrador)}`}
                         >
                             <option value="">Seleccione</option>
                             {administradores.map(administrador => (
@@ -200,7 +200,7 @@ export default function PadrinoCreate() {
                             value={padrino.Telefono}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.Telefono)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.Telefono)}`}
                         />
                     </div>
                     <div>
@@ -212,27 +212,17 @@ export default function PadrinoCreate() {
                             value={padrino.Correo}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.Correo)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(padrino.Correo)}`}
                         />
-                    </div>
-                    {/* Agregar el campo de Fecha de Registro como solo lectura */}
-                    <div>
-                        <label htmlFor="FechaRegistro" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Fecha de Registro</label>
-                        <input
-                            type="text"
-                            name="FechaRegistro"
-                            id="FechaRegistro"
-                            value={new Date().toISOString().split('T')[0]} // Fecha actual en formato YYYY-MM-DD
-                            readOnly
-                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark:disabled:bg-gray-50 border-darkTheme-icono"
-                        />
-                    </div>
-                    <div className="col-span-2">
-                        <button type="submit" className="w-full px-4 py-2 bg-darkTheme-icono text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ">Crear Padrino</button>
                     </div>
                 </div>
+                <button
+                    type="submit"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                    Crear Padrino
+                </button>
             </form>
         </div>
-
     );
 }

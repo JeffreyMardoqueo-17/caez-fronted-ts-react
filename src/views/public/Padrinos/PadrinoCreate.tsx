@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Padrino, Sexo, Role, Direccion } from '../../../interfaces/TablasBD';
+import { Padrino, Sexo, Role, Direccion, User } from '../../../interfaces/TablasBD';
 import { getSexos } from '../../../utils/Sexo';
 import { getRoles } from '../../../utils/Roles';
 import { createPadrino } from '../../../utils/Padrino';
 import { validateInput } from '../../../fuctions/Funciones';
 import { getDirecciones } from '../../../utils/Direccion';
+import { getAdministradores } from '../../../utils/Administrador';
 
 export default function PadrinoCreate() {
     const [padrino, setPadrino] = useState<Omit<Padrino, 'Id' | 'FechaRegistro'>>({
@@ -17,6 +18,7 @@ export default function PadrinoCreate() {
         IdDireccion: '',
         IdAdministrador: '',
     });
+
     //PARA OBTENER LOS SEXOS DE LA BASE DE DATOS
     const [sexos, setSexos] = useState<Sexo[]>([]);
     useEffect(() => {
@@ -53,11 +55,25 @@ export default function PadrinoCreate() {
                 const data = await getDirecciones();
                 setDirecciones(data);
             } catch (error) {
-                console.error('Error al obtener las direcciones:', error);
+                console.error(' Error al obtener las direcciones:', error);
             }
         }
         fetchDirecciones();
     });
+
+    //para obtener a los administradores
+    const [administradores, setAdministradores] = useState<User[]>([]);
+    useEffect(() => {
+        const fetchAdministradores = async () => {
+            try {
+                const data = await getAdministradores();
+                setAdministradores(data);
+            } catch (error) {
+                console.error('Error al obtener los administradores:', error);
+            }
+        };
+        fetchAdministradores();
+    }, []);
 
     const procesarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -149,7 +165,7 @@ export default function PadrinoCreate() {
                             value={padrino.IdDireccion}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdRole)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdDireccion)}`}
                         >
                             <option value="">Seleccione</option>
                             {direcciones.map((direccion) => (
@@ -157,7 +173,23 @@ export default function PadrinoCreate() {
                             ))}
                         </select>
                     </div>
-
+                    {/* conbobox de los administradores */}
+                    <div>
+                        <label htmlFor="IdAdministradores" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administradores</label>
+                        <select
+                            name="IdAdministradores"
+                            id="IdAdministradores"
+                            value={padrino.IdAdministrador}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdAdministrador)}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {administradores.map((administrador) => (
+                                <option key={administrador.Id} value={administrador.Id}>{administrador.Name}{administrador.LastName}</option>
+                            ))}
+                        </select>
+                    </div>
                     {/* Agregar aquí los demás campos como Role, Telefono, etc. */}
                     <div>
                         <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Crear Padrino</button>

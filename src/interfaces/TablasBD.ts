@@ -1,3 +1,13 @@
+export interface User {
+  Id: string;
+  Name: string;
+  LastName: string;
+  Login: string;
+  Password: string;
+  Status: string;
+  RegistrationDate: string;
+  IdRole: string;
+}
 export interface Encargado {
   Id: number;
   Nombre: string;

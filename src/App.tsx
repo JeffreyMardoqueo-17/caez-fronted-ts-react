@@ -56,7 +56,7 @@ const App: React.FC = () => {
                             <Route path="/Loader" element={<Loader />} />
                             <Route path="enfermedad/" element={<EnfermedadPage />} />
                             <Route path='/confirmar' element={<Confirmacion />} />
-                            <Route path='/Padrino' element={<PadrinoCreate />} />
+                            <Route path='/Padrino' element={<PadrinosPage />} />
                         </Routes>
                     </MainTemplate>
                 </div>

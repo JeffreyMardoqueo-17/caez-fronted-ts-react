@@ -59,7 +59,7 @@ export default function PadrinoCreate() {
             }
         }
         fetchDirecciones();
-    });
+    }, []);
 
     //para obtener a los administradores
     const [administradores, setAdministradores] = useState<User[]>([]);
@@ -67,14 +67,16 @@ export default function PadrinoCreate() {
         const fetchAdministradores = async () => {
             try {
                 const data = await getAdministradores();
+                console.log("Administradores recibidos:", data);
                 setAdministradores(data);
             } catch (error) {
                 console.error('Error al obtener los administradores:', error);
             }
         };
         fetchAdministradores();
-    }, []);
+    }, []); // Dependencias vacías aseguran que se ejecute solo una vez
 
+    //para que ponga en el inputs el dato que quiera el susaurio y se procese el cambio
     const procesarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setPadrino({
@@ -82,7 +84,7 @@ export default function PadrinoCreate() {
             [name]: value,
         });
     };
-
+    //lo que le pasare al formulario para que cree un padrino, usando la funcion de crear padrino
     const CrearPadrino = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -95,10 +97,10 @@ export default function PadrinoCreate() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-md">
+        <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-darkTheme-formulario shadow-md rounded-md">
             <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Crear Padrino</h2>
             <form onSubmit={CrearPadrino}>
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label htmlFor="Nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Nombre</label>
                         <input
@@ -139,7 +141,6 @@ export default function PadrinoCreate() {
                             ))}
                         </select>
                     </div>
-                    {/* conbobox de los roles */}
                     <div>
                         <label htmlFor="IdRole" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Rol - Cargo</label>
                         <select
@@ -156,7 +157,6 @@ export default function PadrinoCreate() {
                             ))}
                         </select>
                     </div>
-                    {/* conbobox de la direccion */}
                     <div>
                         <label htmlFor="IdDireccion" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Direcciones</label>
                         <select
@@ -173,29 +173,66 @@ export default function PadrinoCreate() {
                             ))}
                         </select>
                     </div>
-                    {/* conbobox de los administradores */}
                     <div>
-                        <label htmlFor="IdAdministradores" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administradores</label>
+                        <label htmlFor="IdAdministrador" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administradores</label>
                         <select
-                            name="IdAdministradores"
-                            id="IdAdministradores"
+                            name="IdAdministrador"
+                            id="IdAdministrador"
                             value={padrino.IdAdministrador}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.IdAdministrador)}`}
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark:disabled:bg-gray-50 ${validateInput(padrino.IdAdministrador)}`}
                         >
                             <option value="">Seleccione</option>
-                            {administradores.map((administrador) => (
-                                <option key={administrador.Id} value={administrador.Id}>{administrador.Name}{administrador.LastName}</option>
+                            {administradores.map(administrador => (
+                                <option key={administrador.Id} value={administrador.Id}>
+                                    {administrador.Name} {administrador.LastName}
+                                </option>
                             ))}
                         </select>
                     </div>
-                    {/* Agregar aquí los demás campos como Role, Telefono, etc. */}
                     <div>
-                        <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Crear Padrino</button>
+                        <label htmlFor="Telefono" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Teléfono</label>
+                        <input
+                            type="text"
+                            name="Telefono"
+                            id="Telefono"
+                            value={padrino.Telefono}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.Telefono)}`}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="Correo" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Correo</label>
+                        <input
+                            type="email"
+                            name="Correo"
+                            id="Correo"
+                            value={padrino.Correo}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(padrino.Correo)}`}
+                        />
+                    </div>
+                    {/* Agregar el campo de Fecha de Registro como solo lectura */}
+                    <div>
+                        <label htmlFor="FechaRegistro" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Fecha de Registro</label>
+                        <input
+                            type="text"
+                            name="FechaRegistro"
+                            id="FechaRegistro"
+                            value={new Date().toISOString().split('T')[0]} // Fecha actual en formato YYYY-MM-DD
+                            readOnly
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark:disabled:bg-gray-50 border-darkTheme-icono"
+                        />
+                    </div>
+                    <div className="col-span-2">
+                        <button type="submit" className="w-full px-4 py-2 bg-darkTheme-icono text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ">Crear Padrino</button>
                     </div>
                 </div>
             </form>
         </div>
+
     );
 }

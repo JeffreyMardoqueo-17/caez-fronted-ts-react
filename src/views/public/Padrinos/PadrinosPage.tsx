@@ -23,10 +23,14 @@ export default function PadrinosPage() {
     }, []);
 
     //DATOS PARA LLENAR LAS TABLAS, LOS HEADER Y LAS FILAAS
-    const tableHead = ["Nombre", "Apellido"];
+    const tableHead = ["Nombre", "Apellido", "Telefono", "Correo", "Acciones"];
     const tableRows = padrinos.map(padrino => ({
         Nombre: padrino.Nombre,
         Apellido: padrino.Apellido,
+        Telefono: padrino.Telefono,
+        Correo: padrino.Correo,
+        // Direccion: padrino.IdDireccion,
+
     }));
 
     //para llenar el termino de busqueda
@@ -88,7 +92,7 @@ export default function PadrinosPage() {
                     className="text-darkTheme-background mb-7 dark:text-lightTheme-background"
                     color="text-darkTheme-background"
                 >
-                    Listado de Alumnos
+                    Listado de Padrinos
                 </CustomTypography>
                 <div className="mt-7">
                     <Table tableHead={tableHead} tableRows={tableRows} />

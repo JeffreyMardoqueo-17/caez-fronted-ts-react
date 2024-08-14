@@ -7,7 +7,6 @@ interface MainTemplateProps {
     sidebar?: React.ReactNode;
 }
 
-
 const MainTemplate: React.FC<MainTemplateProps> = ({ children, sidebar }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -15,17 +14,17 @@ const MainTemplate: React.FC<MainTemplateProps> = ({ children, sidebar }) => {
         setIsSidebarOpen(prev => !prev);
     };
 
-
     return (
         <div className="flex flex-col min-h-screen bg-lightTheme-background dark:bg-darkTheme-background">
-            <div className="relative">
-                <Cabecera onToggleSidebar={toggleSidebar} />
-                <div className={`fixed top-16 left-0 lg:hidden w-64 h-full bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-light-50 z-40 transition-transform ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}>
+            <Cabecera onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+            <div className="flex flex-1 overflow-hidden">
+                {/* Sidebar siempre visible en pantallas grandes */}
+                <div className={`fixed top-16 left-0 h-full bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-light-50 z-40 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                    } lg:relative lg:translate-x-0 lg:w-64`}>
                     {sidebar}
                 </div>
-            </div>
-            <div className="flex flex-1 overflow-hidden mt-16">
-                <div className="flex-1 p-4 bg-lightTheme-background dark:bg-darkTheme-background">
+                {/* Contenido principal */}
+                <div className="flex-1 p-4 bg-lightTheme-background dark:bg-darkTheme-background mt-16 lg:ml-64">
                     {children}
                 </div>
             </div>

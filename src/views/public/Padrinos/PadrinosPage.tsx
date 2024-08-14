@@ -5,14 +5,17 @@ import { filtrarPadrinos, getPadrinos } from '../../../utils/Padrino';
 import { FaUserPlus, FaDownload } from 'react-icons/fa';
 import { CustomTypography } from '../../../components/Forms/CustomTypography';
 import { Table } from '../../../components/Table/Table';
+import { Modal } from '../../../components/modales/Modal';
+import PadrinoCreate from './PadrinoCreate';
 
 export default function PadrinosPage() {
-    //Para abrir o cerrar a el modal
+    // Para abrir o cerrar el modal
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
-    //para traer a los padrinos 
+    // Para traer a los padrinos
     const [padrinos, setPadrinos] = useState<Padrino[]>([]);
     const [tablaPadrino, setTablaPadrinos] = useState<Padrino[]>([]);
+
     useEffect(() => {
         const fetchPadrinos = async () => {
             const padrinosData = await getPadrinos();
@@ -22,18 +25,16 @@ export default function PadrinosPage() {
         fetchPadrinos();
     }, []);
 
-    //DATOS PARA LLENAR LAS TABLAS, LOS HEADER Y LAS FILAAS
+    // Datos para llenar las tablas, los header y las filas
     const tableHead = ["Nombre", "Apellido", "Telefono", "Correo", "Acciones"];
     const tableRows = padrinos.map(padrino => ({
         Nombre: padrino.Nombre,
         Apellido: padrino.Apellido,
         Telefono: padrino.Telefono,
         Correo: padrino.Correo,
-        // Direccion: padrino.IdDireccion,
-
     }));
 
-    //para llenar el termino de busqueda
+    // Para llenar el término de búsqueda
     const [busqueda, setBusqueda] = useState<string>("");
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBusqueda(e.target.value);
@@ -44,6 +45,10 @@ export default function PadrinosPage() {
 
     const handleOpenCreateModal = () => {
         setShowCreateModal(true);
+    };
+
+    const handleCloseCreateModal = () => {
+        setShowCreateModal(false);
     };
 
     return (
@@ -99,6 +104,16 @@ export default function PadrinosPage() {
                 </div>
             </div>
 
+            {/* Modal para crear un padrino */}
+            <Modal
+                showModal={showCreateModal}
+                setShowModal={setShowCreateModal}
+                title="Agregar Padrino"
+                body={<PadrinoCreate />}
+                confirmText="Guardar"
+                cancelText="Cancelar"
+                onConfirm={handleCloseCreateModal}
+            />
         </div>
-    )
+    );
 }

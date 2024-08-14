@@ -25,6 +25,7 @@ const RoutesComponent: React.FC = () => {
             <Route path={RoutePaths.ENFERMEDAD} element={<EnfermedadPage />} />
             <Route path={RoutePaths.CONFIRMACION} element={<Confirmacion />} />
             <Route path={RoutePaths.PADRINO_CREATE} element={<PadrinoCreate />} />
+            <Route path={RoutePaths.Padrino} element={<PadrinosPage />} />
         </Routes>
     );
 };

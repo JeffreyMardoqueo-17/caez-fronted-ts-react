@@ -8,5 +8,6 @@ export const RoutePaths = {
     LOADER: '/Loader',
     ENFERMEDAD: '/enfermedad',
     CONFIRMACION: '/confirmar',
-    PADRINO_CREATE: '/Padrino'
+    PADRINO_CREATE: '/padrino/create',
+    Padrino: '/padrino'
 };

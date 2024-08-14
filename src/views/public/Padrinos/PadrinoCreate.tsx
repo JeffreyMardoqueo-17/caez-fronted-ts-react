@@ -100,7 +100,7 @@ export default function PadrinoCreate() {
         <div className="max-w-md mx-auto p-4 sm:p-6 bg-white dark:bg-darkTheme-formulario shadow-md rounded-md">
             <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Crear Padrino</h2>
             <form onSubmit={CrearPadrino} className="space-y-4">
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label htmlFor="Nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Nombre</label>
                         <input

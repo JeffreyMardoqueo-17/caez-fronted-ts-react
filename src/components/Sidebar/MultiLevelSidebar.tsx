@@ -30,7 +30,7 @@ const menuItems: MenuItem[] = [
         title: 'Users',
         icon: <UserCircleIcon className="h-6 w-6" />,
         submenu: [
-            { title: 'List', path: '/alumnos', icon: <ChevronRightIcon className="h-4 w-4" /> },
+            { title: 'List', path: '/alumno', icon: <ChevronRightIcon className="h-4 w-4" /> },
             { title: 'Create', path: '/alumnos/create', icon: <ChevronRightIcon className="h-4 w-4" /> }
         ]
     },

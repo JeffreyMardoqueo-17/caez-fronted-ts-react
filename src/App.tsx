@@ -23,7 +23,7 @@ const App: React.FC = () => {
     }, []);
 
     const sidebar = <MultiLevelSidebar toggleTheme={toggleTheme} theme={theme} />;
-    const headerContent = <Cabecera />;
+    // const headerContent = <Cabecera />;
 
     if (loading) {
         return <Loader />;
@@ -33,7 +33,7 @@ const App: React.FC = () => {
         <Router>
             <div className={theme === 'dark' ? 'dark' : ''}>
                 <div className="bg-lightTheme-background dark:bg-darkTheme-background min-h-screen flex flex-col">
-                    <MainTemplate sidebar={sidebar} header={headerContent}>
+                    <MainTemplate sidebar={sidebar}>
                         <RoutesComponent />
                     </MainTemplate>
                 </div>

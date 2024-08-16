@@ -97,10 +97,13 @@ const Dashboard = () => {
     }));
 
     return (
-        <div className='flex flex-col w-full h-full p-4 gap-4'>
-            <div className='flex flex-col lg:flex-row w-full h-full gap-4'>
-                <div className='w-full h-auto lg:w-2/3 flex flex-col gap-4 shadow-xl p-2'>
-                    <div className='flex flex-wrap gap-2'>
+        <div className="flex flex-col w-full h-full  gap-1">
+            {/* Contenedor Principal: Distribución de Contenidos */}
+            <div className="flex flex-col lg:flex-row w-full h-full gap-1">
+                {/* Columna Izquierda: Tarjetas, Tabla y Gráfico */}
+                <div className="w-full h-full lg:w-2/3 flex flex-col gap-4 shadow-xl p-1 ">
+                    {/* Tarjetas de Información */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4">
                         <DashboardCard
                             title="Total alumnos Becados"
                             amount="60"
@@ -120,36 +123,39 @@ const Dashboard = () => {
                             iconColor="text-darkTheme-icono"
                         />
                     </div>
-                    <div className='bg-lightTheme-primary dark:bg-darkTheme-background p-4 w-auto rounded-lg'>
+                    {/* Tabla de Alumnos */}
+                    <div className="bg-lightTheme-primary dark:bg-darkTheme-background p-4 w-full rounded-lg overflow-x-auto">
                         <Table tableHead={tableHead} tableRows={tableRows} />
                     </div>
-                    <div className='bg-lightTheme-pry dark:bg-darkTheme-background p-4  rounded-lg'>
+                    {/* Gráfico de Barras */}
+                    <div className="bg-lightTheme-pry dark:bg-darkTheme-background p-1 rounded-lg h-full">
                         <BarChartBarras />
                     </div>
                 </div>
-                <div className='w-full lg:w-1/3 flex flex-col '>
-                    <div className='bg-lightTheme-background dark:bg-darkTheme-background p-4 shadow-xl rounded-lg h-full gap-3'>
-                        <div className='bg-lightTheme-primary dark:bg-darkTheme-background p-4  rounded-lg'>
+                {/* Columna Derecha: Gráficos y Tabla */}
+                <div className="w-full lg:w-1/3 flex flex-col gap-4">
+                    <div className="bg-lightTheme-background dark:bg-darkTheme-background p-1 shadow-xl rounded-lg flex flex-col gap-4 h-full">
+                        {/* Gráfico de Área */}
+                        <div className="bg-lightTheme-primary dark:bg-darkTheme-background p-4 rounded-lg">
                             <AreaChartUsage />
                         </div>
-
-                        <div className='mt-4'>
-                            <div className='bg-lightTheme-primary dark:bg-darkTheme-background p-4  rounded-lg'>
-                                <CustomTypography
-                                    color=''
-                                    fontBold="font-bold"
-                                    fontSize="font-base"
-                                    className="text-darkTheme-background dark:text-lightTheme-background"
-                                >
-                                    Padrinos
-                                </CustomTypography>
-                                <Table tableHead={tableHead2} tableRows={tableRows2} />
-                            </div>
-
+                        {/* Tabla de Padrinos */}
+                        <div className="bg-lightTheme-primary dark:bg-darkTheme-background p-4 rounded-lg mt-4">
+                            <CustomTypography
+                                color=""
+                                fontBold="font-bold"
+                                fontSize="font-base"
+                                className="text-darkTheme-background dark:text-lightTheme-background"
+                            >
+                                Padrinos
+                            </CustomTypography>
+                            <Table tableHead={tableHead2} tableRows={tableRows2} />
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Modal */}
             <Modal
                 showModal={showModal}
                 setShowModal={setShowModal}
@@ -160,6 +166,7 @@ const Dashboard = () => {
                 onConfirm={modalType === "delete" ? () => console.log('Item deleted') : undefined}
             />
         </div>
+
     );
 };
 

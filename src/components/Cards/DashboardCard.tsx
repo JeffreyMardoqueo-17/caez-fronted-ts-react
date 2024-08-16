@@ -6,13 +6,13 @@ interface CardProps {
     title: string;
     amount: string;
     Icon: IconType;
-    iconColor?: string;  // Añadimos una propiedad opcional para el color del icono
+    iconColor?: string;
 }
 
 export const DashboardCard: React.FC<CardProps> = ({ title, amount, Icon, iconColor }) => {
     return (
         <Card
-            className={`mx-auto w-auto ${iconColor} bg-lightTheme-primary dark:bg-darkTheme-formulario dark:hover:bg-darkTheme-hover cursor-pointer flex items-center justify-between hover:bg-lightTheme-hover`}
+            className={` w-auto ${iconColor} bg-lightTheme-primary dark:bg-darkTheme-formulario dark:hover:bg-darkTheme-hover cursor-pointer flex items-center justify-between hover:bg-lightTheme-hover`}
             decoration="top"
             decorationColor="indigo"
         >

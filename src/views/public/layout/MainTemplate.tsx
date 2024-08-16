@@ -20,7 +20,7 @@ const MainTemplate: React.FC<MainTemplateProps> = ({ children, sidebar }) => {
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar siempre visible en pantallas grandes */}
                 <div className={`fixed top-16 left-0 h-full bg-lightTheme-primary dark:bg-darkTheme-formulario text-black dark:text-light-50 z-40 transition-transform transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-                    } lg:relative lg:translate-x-0 lg:w-64`}>
+                    } w-{4%}`}>
                     {sidebar}
                 </div>
                 {/* Contenido principal */}

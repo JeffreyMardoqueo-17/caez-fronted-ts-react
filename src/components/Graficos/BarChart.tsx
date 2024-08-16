@@ -65,7 +65,7 @@ const chartdata = [
 
 export function BarChartBarras() {
     return (
-        <div className='bg-lightTheme-primary dark:bg-darkTheme-formulario p-2 rounded-d shadow-md'>
+        <div className='bg-lightTheme-primary dark:bg-darkTheme-formulario  rounded-d shadow-md'>
             <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
                 Pagos de Alumnos por Mes
             </h3>

@@ -78,7 +78,7 @@ const Dashboard = () => {
         setShowModal(true);
     };
 
-    const tableHead = ["Nombre", "Apellido", "Encargado", "NIE", "GRADO", "Turno", "Es Becado", "Acciones"];
+    const tableHead = ["Nombre", "Apellido", "Encargado", "Numero Documento", "GRADO", "Turno", "Es Becado", "Acciones"];
 
     const tableRows = alumnos.map(alumno => ({
         Nombre: alumno.Nombre,
@@ -124,11 +124,11 @@ const Dashboard = () => {
                         />
                     </div>
                     {/* Tabla de Alumnos */}
-                    <div className="bg-lightTheme-primary dark:bg-darkTheme-background p-4 w-full rounded-lg overflow-x-auto">
+                    <div className="bg-lightTheme-primary dark:bg-darkTheme-background p-4 w-full h-{50%} rounded-lg overflow-x-auto">
                         <Table tableHead={tableHead} tableRows={tableRows} />
                     </div>
                     {/* Gráfico de Barras */}
-                    <div className="bg-lightTheme-pry dark:bg-darkTheme-background p-1 rounded-lg h-full">
+                    <div className="bg-lightTheme-pry dark:bg-darkTheme-background p-1 rounded-lg h-{50%}">
                         <BarChartBarras />
                     </div>
                 </div>

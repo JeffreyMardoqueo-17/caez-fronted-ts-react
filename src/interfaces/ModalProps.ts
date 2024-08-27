@@ -6,4 +6,6 @@ export interface ModalProps {
     confirmText?: string;
     cancelText?: string;
     onConfirm?: () => void;
+    onCancel?: () => void;
+    onSubmit?: () => void;
 }

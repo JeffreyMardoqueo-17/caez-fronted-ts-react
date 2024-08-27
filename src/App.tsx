@@ -24,7 +24,6 @@ const App: React.FC = () => {
 
     const sidebar = <MultiLevelSidebar toggleTheme={toggleTheme} theme={theme} />;
     // const headerContent = <Cabecera />;
-
     if (loading) {
         return <Loader />;
     }

@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { CustomTypography } from "../Forms/CustomTypography";
 import { ModalProps } from '../../interfaces/ModalProps';
 
@@ -9,7 +9,7 @@ import { ModalProps } from '../../interfaces/ModalProps';
  * @param {ModalProps} props - The props for the modal component.
  * @returns {JSX.Element} The Modal component.
  */
-export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, body, confirmText, cancelText, onConfirm }) => {
+export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, body, confirmText, cancelText, onConfirm, onSubmit }) => {
     useEffect(() => {
         showModal ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto';
         return () => {
@@ -76,6 +76,9 @@ export const Modal: React.FC<ModalProps> = ({ showModal, setShowModal, title, bo
                                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
                                         onClick={() => {
+                                            if (onSubmit) {
+                                                onSubmit();
+                                            }
                                             onConfirm?.();
                                             handleClose();
                                         }}
@@ -99,11 +102,13 @@ Modal.propTypes = {
     body: PropTypes.node.isRequired,
     confirmText: PropTypes.string,
     cancelText: PropTypes.string,
-    onConfirm: PropTypes.func
+    onConfirm: PropTypes.func,
+    onSubmit: PropTypes.func,
 };
 
 Modal.defaultProps = {
     confirmText: 'Confirm',
     cancelText: 'Cancel',
-    onConfirm: () => { }
+    onConfirm: () => { },
+    onSubmit: () => { },
 };

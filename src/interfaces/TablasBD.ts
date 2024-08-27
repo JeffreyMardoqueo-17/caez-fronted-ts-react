@@ -36,7 +36,6 @@ export interface Alumno {
   TipoDocumento: string;
   NumDocumento: string;
   Grado: string;
-  Grupo: string | null;
   Turno: string;
   Administrador: string;
   Padrino: string | null;
@@ -55,8 +54,10 @@ export interface Padrino {
   IdAdministrador: string;
   FechaRegistro: string;
 }
-
-// types.ts
+export interface Grado {
+  Id: string;
+  Nombre: string;
+}
 export interface TipoDocumento {
   id: string;
   name: string;
@@ -71,6 +72,11 @@ export interface Sexo {
   Nombre: string;
 }
 export interface Direccion {
+  Id: string;
+  Nombre: string;
+}
+
+export interface Turno {
   Id: string;
   Nombre: string;
 }

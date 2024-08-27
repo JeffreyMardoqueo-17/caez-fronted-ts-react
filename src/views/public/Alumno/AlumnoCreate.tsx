@@ -1,158 +1,388 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Alumno, Encargado, Enfermedad, Grado, Padrino, Role, Sexo, TipoDocumento, Turno, User } from '../../../interfaces/TablasBD'
+import { getSexos } from '../../../utils/Sexo';
+import { getRoles } from '../../../utils/Roles';
+import { getEncargados } from '../../../utils/Encargado';
+import { getEnfermedades } from '../../../utils/Enfermedad';
+import GetTiposDocumento from '../../../utils/TipoDocumento';
+import getGrados from '../../../utils/Grado';
+import getTurno from '../../../utils/Turno';
+import { getAdministradores } from '../../../utils/Administrador';
+import { getPadrinos } from '../../../utils/Padrino';
+import { createAlumno } from '../../../utils/Alumno';
 import { validateInput } from '../../../fuctions/Funciones';
-import { IoSaveSharp } from "react-icons/io5";
-import { Alumno, Enfermedad } from '../../../interfaces/TablasBD';
-import SearchComponent from '../../../components/inputs/SearchComponent/SearchComponent';
+
 export default function AlumnoCreate() {
-    const [alumno, setAlumno] = useState({
+
+    const [alumno, setAlumno] = useState<Omit<Alumno, 'Id' | 'FechaRegistro'>>({
         Nombre: '',
         Apellido: '',
         FechaNacimiento: '',
-        IdSexo: '',
-        IdRole: '',
-        IdEncargado: '',
-        IdEnfermedad: '',
-        IdTipoDocumento: '',
+        Sexo: '',
+        Role: '',
+        Encargado: '',
+        Enfermedad: '',
+        TipoDocumento: '',
         NumDocumento: '',
-        IdGrado: '',
-        IdGrupo: '',
-        IdTurno: '',
-        IdAdministrador: '',
-        IdPadrino: '',
-        EsBecado: false,
+        Grado: '',
+        Turno: '',
+        Administrador: '',
+        Padrino: '',
+        EsBecado: false
     });
-    const [selectedEnfermedad, setSelectedEnfermedad] = useState<Enfermedad | null>(null);
-    const [textoBusqueda, setTextoBusqueda] = useState('');
+    //PARA OBTENER LOS SEXOS DE LA BASE DE DATOS
+    const [sexos, setSexos] = useState<Sexo[]>([]);
+    useEffect(() => {
+        const fetchSexos = async () => {
+            try {
+                const data = await getSexos();
+                setSexos(data);
+            } catch (error) {
+                console.error('Error al obtener los sexos:', error);
+            }
+        };
+        fetchSexos();
+    }, []);
+    //PARA OBTENER LOS rOLES DE LA BASE DE DATOS
+    const [roles, setRoles] = useState<Role[]>([]);
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const data = await getRoles();
+                setRoles(data);
+            } catch (error) {
+                console.error('Error al obtener los roles:', error);
+            }
+        };
+        fetchRoles();
+    }, []);
+    //para obtener los encargados de la base de datos
+    const [encargados, setEncargados] = useState<Encargado[]>([]);
+    useEffect(() => {
+        const fetchEncargados = async () => {
+            try {
+                const data = await getEncargados();
+                setEncargados(data);
+                setEncargados(data);
+            } catch (error) {
+                console.error('Error al obtener los encargados:', error);
+            }
+        }
+    })
+    // para onteer las enferedad des la base de datoss
+    const [enfermedad, setEnfermedad] = useState<Enfermedad[]>([]);
+    useEffect(() => {
+        const fetchEnfermedad = async () => {
+            try {
+                const data = await getEnfermedades();
+                setEnfermedad(data);
+            } catch (error) {
+                console.error('Error al obtener las enfermedades:', error);
+            }
+        };
+    }, [])
+    // para obtener los tipos de documento de la base de datos
+    const [tipoDocumento, setTipoDocumento] = useState<TipoDocumento[]>([]);
+    useEffect(() => {
+        const fetchTipoDocumento = async () => {
+            try {
+                const data = await GetTiposDocumento();
+                setTipoDocumento(data);
+            } catch (error) {
+                console.error('Error al obtener los tipos de documento:', error);
+            }
+        };
+        fetchTipoDocumento();
+    }, []);
 
-    const handleChange = async (e) => {
-        const { name, value, type, checked } = e.target;
+    //para obtener los grados de la base de datos
+    const [grado, setGrado] = useState<Grado[]>([]);
+    useEffect(() => {
+        const fetchGrado = async () => {
+            try {
+                const data = await getGrados();
+                setGrado(data);
+            } catch (error) {
+                console.error('Error al obtener los tipos de documento:', error);
+            }
+        };
+        fetchGrado();
+    }, []);
+
+    // para obtener los turnos
+    const [turno, setTurno] = useState<Turno[]>([]);
+    useEffect(() => {
+        const fetchTurno = async () => {
+            try {
+                const data = await getTurno();
+                setTurno(data);
+            } catch (error) {
+                console.error('Error al obtener los turnos:', error);
+            }
+        };
+        fetchTurno();
+    }, [])
+
+    //para obtener a los administradores
+    const [administradores, setAdministradores] = useState<User[]>([]);
+    useEffect(() => {
+        const fetchAdministradores = async () => {
+            try {
+                const data = await getAdministradores();
+                console.log("Administradores recibidos:", data);
+                setAdministradores(data);
+            } catch (error) {
+                console.error('Error al obtener los administradores:', error);
+            }
+        };
+        fetchAdministradores();
+    }, []); // Dependencias vacías aseguran que se ejecute solo una vez
+
+    const [padrino, setPadrino] = useState<Padrino[]>([]);
+    useEffect(() => {
+        const fetchPadrino = async () => {
+            try {
+                const data = await getPadrinos();
+                setPadrino(data);
+            } catch (error) {
+                console.error('Error al obtener los padrinos:', error);
+            }
+        };
+        fetchPadrino();
+    }, [])
+
+    //para que ponga en el inputs el dato que quiera el susaurio y se procese el cambio
+    const procesarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
         setAlumno({
             ...alumno,
-            [name]: type === 'checkbox' ? checked : value,
-        })
+            [name]: value,
+        });
     };
 
-    const handleRadioChange = (e) => {
-        const { value } = e.target;
-        setAlumno((prevAlumno) => ({
-            ...prevAlumno,
-            EsBecado: value === 'SI',
-            IdPadrino: value === 'SI' ? prevAlumno.IdPadrino : '', // Limpia el campo IdPadrino si se selecciona "No"
-        }));
-    };
-
-    const handleSubmit = async (e) => {
+    //lo que le pasare al formulario para que cree un padrino, usando la funcion de crear padrino
+    const crearAlumno = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/alumnos', alumno);
-            alert('Alumno registrado con éxito');
+            await createAlumno(alumno);
+            alert('Alumno creado exitosamente');
         } catch (error) {
-            console.error('Hubo un error al registrar el alumno:', error);
-            alert('Error al registrar el alumno');
+            console.error('Error al crear el Alumno:', error);
+            alert('Error al crear el Alumno');
         }
     };
 
     return (
-        <div className="mx-auto max-w-6xl">
-            <form onSubmit={handleSubmit} className="space-y-5 bg-lightTheme-primary dark:bg-darkTheme-formulario p-10 rounded-lg">
-                <div className='grid grid-cols-12 gap-5'>
-                    <div className="col-span-6">
-                        <label htmlFor="Nombre" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Nombre</label>
-                        <input type="text" required name="Nombre" value={alumno.Nombre} onChange={handleChange} className={`block w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 dark:bg-darkTheme-input  dark:text-darkTheme-gray focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.Nombre)}`} placeholder="Nombre" />
-                    </div>
-                    <div className="col-span-6">
-                        <label htmlFor="Apellido" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Apellido</label>
-                        <input type="text" required name="Apellido" value={alumno.Apellido} onChange={handleChange} className={`block w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark:bg-darkTheme-input  dark:text-darkTheme-text disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.Apellido)}`} placeholder="Apellido" />
-                    </div>
-                    <div className="col-span-3">
-                        <label htmlFor="Sexo" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Sexo</label>
-                        <select id="sexo" required name="IdSexo" value={alumno.IdSexo} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed dark: disabled:bg-gray-50 ${validateInput(alumno.IdSexo)}`}>
-                            <option value="">Seleccione</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                        </select>
-                    </div>
-                    <div className="col-span-3">
-                        <label htmlFor="Rol" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Cargo</label>
-                        <select id="Rol" value="Estudiante" disabled className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 dark:bg-darkTheme-input dark:border-darkTheme-opacidad dark:text-darkTheme-gray ${validateInput(alumno.IdRole)}`}>
-                            <option value="Estudiante">Estudiante</option>
-                        </select>
-                    </div>
-                    <div className="col-span-6">
-                        <label htmlFor="Encargado" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Encargado</label>
-                        <input type="text" required name="IdEncargado" value={alumno.IdEncargado} onChange={handleChange} className={`block w-full rounded-md shadow-sm dark:bg-darkTheme-input  dark:text-darkTheme-gray focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.IdEncargado)}`} placeholder="Encargado" />
-                    </div>
-                    <div className="col-span-6">
-                        <label htmlFor="Enfermedad" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Enfermedad</label>
-                        <SearchComponent<Enfermedad>
-                            route="http://localhost:3000/enfermedad/buscar"
-                            renderResult={(enfermedad) => <span>{enfermedad.Nombre}</span>}
-                            onSelect={(enfermedad) => setSelectedEnfermedad(enfermedad)}
-                            getResultText={(enfermedad) => enfermedad.Nombre}
+        <div className="max-w-md mx-auto p-4 sm:p-6 bg-white dark:bg-darkTheme-formulario shadow-md rounded-md">
+            <form onSubmit={crearAlumno} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Nombre */}
+                    <div>
+                        <label htmlFor="Nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Nombre</label>
+                        <input
+                            type="text"
+                            name="Nombre"
+                            id="Nombre"
+                            value={alumno.Nombre}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Nombre)}`}
                         />
                     </div>
-                    <div className="col-span-3">
-                        <label htmlFor="IdTipoDocumento" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Tipo Documento</label>
-                        <select id="IdTipoDocumento" required name="IdTipoDocumento" value={alumno.IdTipoDocumento} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdTipoDocumento)}`}>
+                    {/* Apellido */}
+                    <div>
+                        <label htmlFor="Apellido" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Apellido</label>
+                        <input
+                            type="text"
+                            name="Apellido"
+                            id="Apellido"
+                            value={alumno.Apellido}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Apellido)}`}
+                        />
+                    </div>
+                    {/* fecha de naciemiento */}
+
+                    {/* Sexo */}
+                    <div>
+                        <label htmlFor="Sexo" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Sexo</label>
+                        <select
+                            name="Sexo"
+                            id="Sexo"
+                            value={alumno.Sexo}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Sexo)}`}
+                        >
                             <option value="">Seleccione</option>
-                            <option value="1">DUI</option>
-                            <option value="2">NIE</option>
+                            {sexos.map((sexo) => (
+                                <option key={sexo.Id} value={sexo.Id}>{sexo.Nombre}</option>
+                            ))}
                         </select>
                     </div>
-                    <div className="col-span-3">
-                        <label htmlFor="NumDocumento" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Número Documento</label>
-                        <input type="text" required name="NumDocumento" value={alumno.NumDocumento} onChange={handleChange} className={`block w-full rounded-md dark:bg-darkTheme-input  dark:text-darkTheme-gray shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.NumDocumento)}`} placeholder="Número de Documento" />
-                    </div>
-                    <div className="col-span-3">
-                        <label htmlFor="IdGrado" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Grado</label>
-                        <select id="IdGrado" required name="IdGrado" value={alumno.IdGrado} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdGrado)}`}>
+
+                    {/* Roles */}
+                    <div>
+                        <label htmlFor="Role" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Rol - Cargo</label>
+                        <select
+                            name="Role"
+                            id="Role"
+                            value={alumno.Role}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Role)}`}
+                        >
                             <option value="">Seleccione</option>
-                            <option value="1">1er Grado</option>
-                            <option value="2">2do Grado</option>
+                            {roles.map((role) => (
+                                <option key={role.Id} value={role.Id}>{role.Name}</option>
+                            ))}
                         </select>
                     </div>
-                    <div className="col-span-3">
-                        <label htmlFor="IdGrupo" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Grupo</label>
-                        <select id="IdGrupo" required name="IdGrupo" value={alumno.IdGrupo} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdGrupo)}`}>
+                    {/* Encargados  */}
+                    <div>
+                        <label htmlFor="Encargado" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Encargado</label>
+                        <select
+                            name="Encargado"
+                            id="Encargado"
+                            value={alumno.Encargado}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Encargado)}`}
+                        >
                             <option value="">Seleccione</option>
-                            <option value="1">Grupo A</option>
-                            <option value="2">Grupo B</option>
+                            {encargados.map((encargado) => (
+                                <option key={encargado.Id} value={encargado.Id}>{encargado.Nombre} {encargado.Apellido}</option>
+                            ))}
                         </select>
                     </div>
-                    <div className="col-span-3">
-                        <label htmlFor="IdTurno" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Turno</label>
-                        <select id="IdTurno" required name="IdTurno" value={alumno.IdTurno} onChange={handleChange} className={`block cursor-pointer dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 ${validateInput(alumno.IdTurno)}`}>
+                    {/* Enfermedad */}
+                    <div>
+                        <label htmlFor="Enfermedad" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Enfermedad</label>
+                        <select
+                            name="Enfermedad"
+                            id="Enfermedad"
+                            value={alumno.Enfermedad ?? ''}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Enfermedad ?? '')}`}
+                        >
                             <option value="">Seleccione</option>
-                            <option value="1">Mañana</option>
-                            <option value="2">Tarde</option>
+                            {enfermedad.map((enferedad) => (
+                                <option key={enferedad.Id} value={enferedad.Id}>{enferedad.Nombre}</option>
+                            ))}
                         </select>
                     </div>
-                    <div className="col-span-3">
-                        <label htmlFor="IdAdministrador" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Administrador</label>
-                        <input type="text" required name="IdAdministrador" value={alumno.IdAdministrador} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.IdAdministrador)}`} placeholder="Administrador" />
+                    {/* Tipo de Documento */}
+                    <div>
+                        <label htmlFor="TipoDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Tipo Doocumento</label>
+                        <select
+                            name="TipoDocumento"
+                            id="TipoDocumento"
+                            value={alumno.TipoDocumento}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.TipoDocumento)}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {tipoDocumento.map((tipoDocumento) => (
+                                <option key={tipoDocumento.id} value={tipoDocumento.id}>{tipoDocumento.name}</option>
+                            ))}
+                        </select>
                     </div>
-                    <div className="col-span-6">
-                        <label className="block mb-1 text-base font-medium text-gray-700 dark:text-gray-400">¿Es Becado?</label>
-                        <div className="flex space-x-4">
-                            <label className="inline-flex items-center">
-                                <input type="radio" name="EsBecado" value="SI" checked={alumno.EsBecado === true} onChange={handleRadioChange} className="form-radio" />
-                                <span className="ml-2 dark:text-darkTheme-gray">Sí</span>
-                            </label>
-                            <label className="inline-flex items-center">
-                                <input type="radio" name="EsBecado" value="NO" checked={alumno.EsBecado === false} onChange={handleRadioChange} className="form-radio" />
-                                <span className="ml-2 dark:text-darkTheme-gray">No</span>
-                            </label>
-                        </div>
+                    {/* nUMERO DE DOCUMENTO */}
+                    <div>
+                        <label htmlFor="NumDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Numero de Documento</label>
+                        <input
+                            type="text"
+                            name="NumDocumento"
+                            id="NumDocumento"
+                            value={alumno.NumDocumento}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.NumDocumento)}`}
+                        />
                     </div>
-                    {alumno.EsBecado && (
-                        <div className="col-span-6">
-                            <label htmlFor="IdPadrino" className="mb-1 block text-base font-medium text-gray-700 dark:text-gray-400">Padrino</label>
-                            <input type="text" required={alumno.EsBecado} name="IdPadrino" value={alumno.IdPadrino} onChange={handleChange} className={`block dark:bg-darkTheme-input  dark:text-darkTheme-gray w-full rounded-md shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 ${validateInput(alumno.IdPadrino)}`} placeholder="Padrino" />
-                        </div>
-                    )}
+                    {/* GRADO */}
+                    <div>
+                        <label htmlFor="Grado" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Grados</label>
+                        <select
+                            name="Grado"
+                            id="Grado"
+                            value={alumno.Grado}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Grado)}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {grado.map((grado) => (
+                                <option key={grado.Id} value={grado.Id}>{grado.Nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* <TURNOS></TURNOS> */}
+                    <div>
+                        <label htmlFor="Turno" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Turnos</label>
+                        <select
+                            name="Turno"
+                            id="Turno"
+                            value={alumno.Turno}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Turno)}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {turno.map((turno) => (
+                                <option key={turno.Id} value={turno.Id}>{turno.Nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* <PADRINOSSSS></PADRINOSSSS> */}
+                    <div>
+                        <label htmlFor="Padrino" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Padrino</label>
+                        <select
+                            name="Padrino"
+                            id="Padrino"
+                            value={alumno.Padrino ?? ''}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Padrino ?? '')}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {padrino.map((padrino) => (
+                                <option key={padrino.Id} value={padrino.Id}>{padrino.Nombre}{padrino.Apellido}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* ADMINISTRADOR */}
+                    <div>
+                        <label htmlFor="IdAdministrador" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administrador</label>
+                        <select
+                            name="IdAdministrador"
+                            id="IdAdministrador"
+                            value={alumno.Administrador}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Administrador)}`}
+                        >
+                            <option value="">Seleccione</option>
+                            {administradores.map(administrador => (
+                                <option key={administrador.Id} value={administrador.Id}>
+                                    {administrador.Name} {administrador.LastName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
                 </div>
+                <button
+                    type="submit"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                    Crear Alumno
+                </button>
             </form>
         </div>
-    );
+    )
 }

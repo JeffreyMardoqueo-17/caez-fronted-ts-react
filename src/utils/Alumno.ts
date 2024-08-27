@@ -14,6 +14,18 @@ export const getAlumnos = async (): Promise<Alumno[]> => {
     }
 };
 
+//para crear a un nuevo alumno
+export const createAlumno = async (nuevoAlumno: Omit<Alumno, 'Id' | 'FechaRegistro'>): Promise<void> => {
+    try {
+        const url = 'http://localhost:3000/alumnos';
+        await axios.post(url, nuevoAlumno);
+        console.log('Alumno creado exitosamente');
+    } catch (error) {
+        console.error('Error al crear el Alumno:', error);
+        throw error;
+    }
+};
+
 //esto es para fultrar a ls alumnos por nombre y apellido
 export const filtrarAlumnos = (tablaAlumnos: Alumno[], terminoBusqueda: string): Alumno[] => {
     try {

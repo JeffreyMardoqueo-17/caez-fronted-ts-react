@@ -173,7 +173,7 @@ export default function AlumnoCreate() {
     };
 
     return (
-        <div className="max-w-md mx-auto p-4 sm:p-6 bg-white dark:bg-darkTheme-formulario shadow-md rounded-md">
+        <div className="max-w-4xl mx-auto p-1 sm:p-6 bg-white dark:bg-darkTheme-formulario rounded-md">
             <form onSubmit={crearAlumno} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Nombre */}
@@ -252,7 +252,7 @@ export default function AlumnoCreate() {
                         >
                             <option value="">Seleccione</option>
                             {encargados.map((encargado) => (
-                                <option key={encargado.Id} value={encargado.Id}>{encargado.Nombre} {encargado.Apellido}</option>
+                                <option key={encargado.Id} value={encargado.Id}>{encargado.Nombre}</option>
                             ))}
                         </select>
                     </div>

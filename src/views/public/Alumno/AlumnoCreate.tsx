@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Alumno, Encargado, Enfermedad, Grado, Padrino, Role, Sexo, TipoDocumento, Turno, User } from '../../../interfaces/TablasBD'
 import { getSexos } from '../../../utils/Sexo';
 import { getRoles } from '../../../utils/Roles';
@@ -67,20 +67,26 @@ export default function AlumnoCreate() {
             } catch (error) {
                 console.error('Error al obtener los encargados:', error);
             }
-        }
+        };
+        fetchEncargados();
     })
     // para onteer las enferedad des la base de datoss
     const [enfermedad, setEnfermedad] = useState<Enfermedad[]>([]);
+    const isFetched = useRef(false);  // Bandera para controlar si ya se hizo la petición
+
     useEffect(() => {
         const fetchEnfermedad = async () => {
+            if (isFetched.current) return; // Si ya se hizo la petición, no la volvemos a hacer
             try {
                 const data = await getEnfermedades();
                 setEnfermedad(data);
+                isFetched.current = true; // Marcamos como que ya se ha realizado la petición
             } catch (error) {
                 console.error('Error al obtener las enfermedades:', error);
             }
         };
-    }, [])
+        fetchEnfermedad();
+    }, []); // Dependencias vacías aseguran que se ejecute solo una vez
     // para obtener los tipos de documento de la base de datos
     const [tipoDocumento, setTipoDocumento] = useState<TipoDocumento[]>([]);
     useEffect(() => {
@@ -203,6 +209,20 @@ export default function AlumnoCreate() {
                         />
                     </div>
                     {/* fecha de naciemiento */}
+                    {/* Fecha de Nacimiento */}
+                    <div>
+                        <label htmlFor="FechaNacimiento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Fecha de Nacimiento</label>
+                        <input
+                            type="date"
+                            name="FechaNacimiento"
+                            id="FechaNacimiento"
+                            value={alumno.FechaNacimiento}
+                            onChange={procesarCambio}
+                            required
+                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.FechaNacimiento)}`}
+                        />
+                    </div>
+
 
                     {/* Sexo */}
                     <div>
@@ -275,7 +295,7 @@ export default function AlumnoCreate() {
                     </div>
                     {/* Tipo de Documento */}
                     <div>
-                        <label htmlFor="TipoDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Tipo Doocumento</label>
+                        <label htmlFor="TipoDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Tipo Documento</label>
                         <select
                             name="TipoDocumento"
                             id="TipoDocumento"
@@ -285,11 +305,12 @@ export default function AlumnoCreate() {
                             className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.TipoDocumento)}`}
                         >
                             <option value="">Seleccione</option>
-                            {tipoDocumento.map((tipoDocumento) => (
-                                <option key={tipoDocumento.id} value={tipoDocumento.id}>{tipoDocumento.name}</option>
+                            {tipoDocumento.map((tipo) => (
+                                <option key={tipo.id} value={tipo.id}>{tipo.Nombre}</option>
                             ))}
                         </select>
                     </div>
+
                     {/* nUMERO DE DOCUMENTO */}
                     <div>
                         <label htmlFor="NumDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Numero de Documento</label>
@@ -356,10 +377,11 @@ export default function AlumnoCreate() {
                     </div>
 
                     {/* ADMINISTRADOR */}
+                    {/* ADMINISTRADOR */}
                     <div>
                         <label htmlFor="IdAdministrador" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administrador</label>
                         <select
-                            name="IdAdministrador"
+                            name="Administrador"  // Asegúrate de que el nombre coincide con la propiedad en el estado
                             id="IdAdministrador"
                             value={alumno.Administrador}
                             onChange={procesarCambio}
@@ -374,6 +396,7 @@ export default function AlumnoCreate() {
                             ))}
                         </select>
                     </div>
+
 
                 </div>
                 <button

@@ -12,6 +12,7 @@ import PadrinosPage from '../views/public/Padrinos/PadrinosPage';
 import PadrinoCreate from '../views/public/Padrinos/PadrinoCreate';
 import { RoutePaths } from './RoutePaths';
 import AlumnosPage from '../views/public/Alumno/AlumnosPage';
+import LoginForm from '../views/public/LoginForm';
 
 const RoutesComponent: React.FC = () => {
     return (
@@ -26,6 +27,7 @@ const RoutesComponent: React.FC = () => {
             <Route path={RoutePaths.CONFIRMACION} element={<Confirmacion />} />
             <Route path={RoutePaths.PADRINO_CREATE} element={<PadrinoCreate />} />
             <Route path={RoutePaths.Padrino} element={<PadrinosPage />} />
+            <Route path={RoutePaths.Login} element={<LoginForm />} />
         </Routes>
     );
 };

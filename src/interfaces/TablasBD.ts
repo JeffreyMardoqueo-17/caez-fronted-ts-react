@@ -60,7 +60,7 @@ export interface Grado {
 }
 export interface TipoDocumento {
   id: string;
-  name: string;
+  Nombre: string;
 }
 export interface Enfermedad {
   Id: string;

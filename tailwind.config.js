@@ -19,7 +19,7 @@ module.exports = {
         // secondary: colors.slate,
         lightTheme: {
           primary: '#FFFF', // Color de contraste
-          background: '#F5F5F5', // Blanco
+          background: '#f9fafb', // Blanco
           text: '#3182ce', // Azulito
           gray: '#4a5568', // Gris oscursa
           hover: '#F1F5F9',
@@ -32,7 +32,7 @@ module.exports = {
           gray: '#cbd5e0', // Grisito más claro
           formulario: '#171717',
           opacidad: '#08060651',
-          hover:'#212121',
+          hover: '#212121',
           border: '#6366F1',
           icono: '#6669F1',
           input: '#2F2F2F'

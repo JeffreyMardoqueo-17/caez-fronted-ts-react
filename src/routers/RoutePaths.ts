@@ -9,5 +9,6 @@ export const RoutePaths = {
     ENFERMEDAD: '/enfermedad',
     CONFIRMACION: '/confirmar',
     PADRINO_CREATE: '/padrino/create',
-    Padrino: '/padrino'
+    Padrino: '/padrino',
+    Login: '/login'
 };

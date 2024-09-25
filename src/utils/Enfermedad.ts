@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { Enfermedad } from '../interfaces/TablasBD';
 
-const API_URL = 'http://localhost:3000/enfermedad';
+const API_URL = 'http://localhost:9000/enfermedad';
 
 export const getEnfermedades = async (): Promise<Enfermedad[]> => {
     const response = await axios.get(API_URL);

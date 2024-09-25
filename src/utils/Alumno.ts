@@ -4,7 +4,7 @@ import { Alumno } from '../interfaces/TablasBD';
 
 export const getAlumnos = async (): Promise<Alumno[]> => {
     try {
-        const url = 'http://localhost:3000/Alumnos';
+        const url = 'http://localhost:9000/Alumnos';
         const respuesta = await axios.get<Alumno[]>(url);
         console.log('Datos recibidos:', respuesta.data);
         return respuesta.data;
@@ -17,7 +17,7 @@ export const getAlumnos = async (): Promise<Alumno[]> => {
 //para crear a un nuevo alumno
 export const createAlumno = async (nuevoAlumno: Omit<Alumno, 'Id' | 'FechaRegistro'>): Promise<void> => {
     try {
-        const url = 'http://localhost:3000/alumnos';
+        const url = 'http://localhost:9000/alumnos';
         await axios.post(url, nuevoAlumno);
         console.log('Alumno creado exitosamente');
     } catch (error) {

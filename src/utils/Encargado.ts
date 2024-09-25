@@ -4,7 +4,7 @@ import { Encargado } from '../interfaces/TablasBD';
 // Obtener los datos de los encargados desde una API
 export const getEncargados = async (): Promise<Encargado[]> => {
     try {
-        const url = 'http://localhost:3000/Encargados';
+        const url = 'http://localhost:9000/Encargados';
         const respuesta = await axios.get<Encargado[]>(url);
         console.log('Datos de Encargados recibidos:', respuesta.data);
         return respuesta.data;

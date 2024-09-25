@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FaBars, FaTimes, FaBell } from 'react-icons/fa'; // Íconos de barras, cerrar y notificaciones
-import { jwtDecode } from 'jwt-decode';
+import { FaBars, FaTimes, FaBell } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Para la redirección
 
 interface CabeceraProps {
     isSidebarOpen: boolean;
@@ -10,22 +10,40 @@ interface CabeceraProps {
 const Cabecera: React.FC<CabeceraProps> = ({ isSidebarOpen, onToggleSidebar }) => {
     const [userName, setUserName] = useState('');
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null); // Para el avatar del usuario
+    const navigate = useNavigate(); // Hook para redirigir
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
+        // Obtener el usuario guardado desde localStorage
+        const user = localStorage.getItem('user');
+        console.log("Obteniendo usuario desde localStorage:", user); // Para depuración
+
+        if (user) {
             try {
-                const decodedToken = jwtDecode<{ name: string, lastName: string, avatar?: string }>(token);
-                setUserName(`${decodedToken.name} ${decodedToken.lastName}`);
-                setAvatarUrl(decodedToken.avatar ?? null); // Si el avatar está en el token
+                const parsedUser = JSON.parse(user);
+                console.log("Usuario parseado:", parsedUser); // Para depuración
+                setUserName(`${parsedUser.name} ${parsedUser.lastName}`);
+                // Si tienes un avatar guardado en el token, puedes añadirlo aquí
+                setAvatarUrl(parsedUser.avatar ?? null);
             } catch (error) {
-                console.error('Error decoding token:', error);
+                console.error('Error parsing user from localStorage:', error);
             }
+        } else {
+            console.log("No se encontró el usuario en localStorage");
         }
-    }, []);
+    }, []); // Solo ejecutar una vez cuando el componente se monta
+
+    // Manejar el logout
+    const handleLogout = () => {
+        // Eliminar token y datos de usuario del localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        // Redirigir al usuario a la página de login
+        navigate('/login');
+    };
 
     return (
-        <div className="w-full flex items-center justify-between bg-white dark:bg-darkTheme-formulario  dark:border-gray-700 text-black dark:text-white p-4  fixed z-50">
+        <div className="w-full flex items-center justify-between bg-white dark:bg-darkTheme-formulario dark:border-gray-700 text-black dark:text-white p-4 fixed z-50">
             {/* Botón para colapsar/expandir sidebar */}
             <button
                 className="p-2 text-gray-600 dark:text-gray-300 focus:outline-none"
@@ -55,7 +73,7 @@ const Cabecera: React.FC<CabeceraProps> = ({ isSidebarOpen, onToggleSidebar }) =
                     />
                 ) : (
                     <div className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center text-sm">
-                        {userName.charAt(0)} {/* Mostrar la primera letra del nombre */}
+                        {userName ? userName.charAt(0) : "?"} {/* Mostrar la primera letra del nombre */}
                     </div>
                 )}
 
@@ -65,6 +83,14 @@ const Cabecera: React.FC<CabeceraProps> = ({ isSidebarOpen, onToggleSidebar }) =
                         {userName}
                     </div>
                 )}
+
+                {/* Botón de Logout */}
+                <button
+                    onClick={handleLogout} // Manejador de click para logout
+                    className="ml-4 text-white bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600"
+                >
+                    Cerrar sesión
+                </button>
             </div>
         </div>
     );

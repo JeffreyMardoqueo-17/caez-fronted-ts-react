@@ -2,7 +2,7 @@
 import { TipoDocumento } from '../interfaces/TablasBD';
 async function GetTiposDocumento(): Promise<TipoDocumento[]> {
     try {
-        const response = await fetch('http://localhost:3000/TiposDocumento');
+        const response = await fetch('http://localhost:9000/TiposDocumento');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

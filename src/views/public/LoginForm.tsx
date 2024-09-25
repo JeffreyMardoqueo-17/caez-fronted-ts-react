@@ -1,7 +1,53 @@
-import React from 'react';
-import Logo from '../../assets/png/logo-color.png'; // Asegúrate de que esta sea la ruta correcta
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate para la redirección
+import Logo from '../../assets/png/logo-color.png';
+import axios from 'axios';
 
 const LoginForm: React.FC = () => {
+    const [email, setEmail] = useState(''); // Maneja el estado del campo de correo
+    const [password, setPassword] = useState(''); // Maneja el estado del campo de contraseña
+    const [errorMessage, setErrorMessage] = useState(''); // Para mostrar mensajes de error
+    const navigate = useNavigate(); // Inicializa useNavigate para redirigir
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault(); // Previene que el formulario se envíe de forma tradicional
+
+        // Validar campos vacíos
+        if (!email || !password) {
+            setErrorMessage('Por favor, complete ambos campos');
+            return;
+        }
+
+        try {
+            // Enviar los datos al backend para autenticación
+            const response = await axios.post('http://localhost:9000/login', {
+                Login: email,
+                Password: password,
+            });
+
+            // Procesar la respuesta
+            if (response.data.token) {
+                // Guardar el token y la información del usuario en el localStorage
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.user)); // Guardamos los datos del usuario
+                console.log('Token guardado:', response.data.token);
+                console.log('Usuario guardado:', response.data.user);
+
+                // Limpiar los campos y los errores
+                setEmail('');
+                setPassword('');
+                setErrorMessage('');
+
+                // Redirigir a la vista principal "/"
+                navigate('/'); // Redirige al usuario a la ruta raíz
+            }
+        } catch (error) {
+            // Manejar errores (como credenciales incorrectas)
+            setErrorMessage('Error en el inicio de sesión. Por favor, verifique sus credenciales.');
+            console.error('Error de inicio de sesión:', error);
+        }
+    };
+
     return (
         <div className="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-white dark:bg-darkTheme-formulario rounded-2xl shadow-xl">
             {/* Logo y Título */}
@@ -9,11 +55,17 @@ const LoginForm: React.FC = () => {
                 <div>
                     <img src={Logo} width="76" alt="Logo" />
                 </div>
-                <h1 className="text-4xl font-bold text-black dark:text-white">Su empresa</h1>
             </div>
 
+            {/* Mensaje de error */}
+            {errorMessage && (
+                <div className="text-red-500 mb-4 text-center">
+                    {errorMessage}
+                </div>
+            )}
+
             {/* Formulario */}
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit}>
                 {/* Campo de Correo Electrónico */}
                 <div className="pb-2">
                     <label htmlFor="email" className="block mb-2 text-base font-medium text-gray-700 dark:text-gray-400">Correo electrónico</label>
@@ -28,6 +80,8 @@ const LoginForm: React.FC = () => {
                             type="email"
                             name="email"
                             id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)} // Actualiza el valor del email
                             className="pl-12 mb-2 bg-gray-50 dark:bg-darkTheme-input text-gray-600 dark:text-gray-300 border focus:border-transparent border-gray-300 dark:border-darkTheme-border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 dark:focus:ring-darkTheme-border block w-full p-2.5 py-3 px-4"
                             placeholder="nombre@empresa.com"
                             autoComplete="off"
@@ -51,6 +105,8 @@ const LoginForm: React.FC = () => {
                             type="password"
                             name="password"
                             id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)} // Actualiza el valor de la contraseña
                             placeholder="••••••••••"
                             className="pl-12 mb-2 bg-gray-50 dark:bg-darkTheme-input text-gray-600 dark:text-gray-300 border focus:border-transparent border-gray-300 dark:border-darkTheme-border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 dark:focus:ring-darkTheme-border block w-full p-2.5 py-3 px-4"
                             autoComplete="new-password"
@@ -64,16 +120,8 @@ const LoginForm: React.FC = () => {
                     type="submit"
                     className="w-full text-white bg-[#8b5cf6] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
                 >
-                    Inscribirse
+                    Iniciar sesión
                 </button>
-
-                {/* Texto de iniciar sesión */}
-                <div className="text-base text-black dark:text-white text-center">
-                    ¿Ya tienes una cuenta?{' '}
-                    <a href="#" className="font-medium text-[#8b5cf6] hover:underline">
-                        Iniciar sesión
-                    </a>
-                </div>
             </form>
         </div>
     );

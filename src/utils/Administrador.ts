@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User } from "../interfaces/TablasBD";
 
-const API_URL = 'http://localhost:3000/users/';
+const API_URL = 'http://localhost:9000/users/';
 
 export const getAdministradores = async (): Promise<User[]> => {
     try {

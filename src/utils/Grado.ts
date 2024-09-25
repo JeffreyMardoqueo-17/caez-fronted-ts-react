@@ -4,7 +4,7 @@ import { Grado } from '../interfaces/TablasBD';
 
 async function getGrados(): Promise<Grado[]> {
     try {
-        const response = await fetch('http://localhost:3000/grados');
+        const response = await fetch('http://localhost:9000/grados');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

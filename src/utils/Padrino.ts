@@ -4,7 +4,7 @@ import { Padrino } from '../interfaces/TablasBD';
 //traigo a todos los padrinos
 export const getPadrinos = async (): Promise<Padrino[]> => {
     try {
-        const url = 'http://localhost:3000/padrinos';
+        const url = 'http://localhost:9000/padrinos';
         const respuesta = await axios.get<Padrino[]>(url);
         console.log('Datos recibidos:', respuesta.data);
         return respuesta.data;

@@ -4,7 +4,7 @@ import { Turno } from '../interfaces/TablasBD';
 
 async function getTurno(): Promise<Turno[]> {
     try {
-        const response = await fetch('http://localhost:3000/Turnos');
+        const response = await fetch('http://localhost:9000/Turnos');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

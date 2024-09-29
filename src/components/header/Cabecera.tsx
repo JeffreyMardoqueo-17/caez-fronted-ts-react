@@ -39,7 +39,8 @@ const Cabecera: React.FC<CabeceraProps> = ({ isSidebarOpen, onToggleSidebar }) =
         localStorage.removeItem('user');
 
         // Redirigir al usuario a la página de login
-        navigate('/login');
+        // navigate('/login');
+        window.location.reload(); // Recarga la página
     };
 
     return (

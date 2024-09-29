@@ -15,6 +15,9 @@ import AlumnosPage from '../views/public/Alumno/AlumnosPage';
 import LoginForm from '../views/public/LoginForm';
 
 const RoutesComponent: React.FC = () => {
+    const handleLoginSuccess = () => {
+        setIsLoggedIn(true); // Actualizar el estado de isLoggedIn
+    };
     return (
         <Routes>
             <Route path={RoutePaths.DASHBOARD} element={<Dashboard />} />
@@ -27,7 +30,7 @@ const RoutesComponent: React.FC = () => {
             <Route path={RoutePaths.CONFIRMACION} element={<Confirmacion />} />
             <Route path={RoutePaths.PADRINO_CREATE} element={<PadrinoCreate />} />
             <Route path={RoutePaths.Padrino} element={<PadrinosPage />} />
-            <Route path={RoutePaths.Login} element={<LoginForm />} />
+            <Route path={RoutePaths.Login} element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
         </Routes>
     );
 };

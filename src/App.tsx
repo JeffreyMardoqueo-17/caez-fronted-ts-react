@@ -4,9 +4,9 @@ import { useTheme } from './hooks/theme';
 import MainTemplate from './views/public/layout/MainTemplate';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Loader from './views/public/Loader';
-import RoutesComponent from './routers/RoutesComponent';
 import LoginForm from './views/public/LoginForm';
 import ProtectedRoute from './components/ProtectedRoute';
+import RoutesComponent from './routers/RoutesComponent'; // Mantén todas las rutas aquí
 
 const App: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -32,7 +32,7 @@ const App: React.FC = () => {
     }, []);
 
     if (loading) {
-        return <Loader />;
+        return <Loader />; // Mostramos un Loader hasta que se resuelva el estado de autenticación
     }
 
     return (
@@ -43,9 +43,9 @@ const App: React.FC = () => {
                         {/* Ruta de Login */}
                         <Route path="/login" element={!isLoggedIn ? <LoginForm /> : <Navigate to="/" />} />
 
-                        {/* Ruta protegida del dashboard */}
+                        {/* Rutas protegidas */}
                         <Route
-                            path="/"
+                            path="/*"
                             element={
                                 <ProtectedRoute isLoggedIn={isLoggedIn}>
                                     <MainTemplate>
@@ -55,19 +55,7 @@ const App: React.FC = () => {
                             }
                         />
 
-                        {/* Ruta raíz protegida */}
-                        <Route
-                            path="/"
-                            element={
-                                <ProtectedRoute isLoggedIn={isLoggedIn}>
-                                    <MainTemplate>
-                                        <RoutesComponent />
-                                    </MainTemplate>
-                                </ProtectedRoute>
-                            }
-                        />
-
-                        {/* Redirigir cualquier otra ruta al dashboard o login */}
+                        {/* Redirigir cualquier otra ruta */}
                         <Route
                             path="*"
                             element={<Navigate to={isLoggedIn ? "/" : "/login"} />}

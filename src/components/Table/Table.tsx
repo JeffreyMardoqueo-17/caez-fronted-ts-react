@@ -102,35 +102,42 @@ export function Table({ tableHead, tableRows }: TableProps) {
                             </tr>
                         </thead>
                         <tbody className="bg-white dark:bg-darkTheme-background">
-                            {currentRows.map((row, index) => (
-                                <tr key={index} className="border-b border-gray-200 dark:border-gray-800 dark:hover:bg-darkTheme-formulario hover:cursor-pointer">
-                                    {tableHead.map((key, cellIndex) => (
-                                        <td key={cellIndex} className="px-6 py-3">
-                                            {Array.isArray(row[key]) ? (
-                                                <div className="flex space-x-2">
-                                                    {row[key].map((action: Action, actionIndex: number) => (
-                                                        <ActionButton
-                                                            key={actionIndex}
-                                                            icon={action.icon}
-                                                            onClick={action.onClick}
-                                                        />
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <CustomTypography
-                                                    fontBold=''
-                                                    color=''
-                                                    fontSize="text-sm"
-                                                    className="leading-none text-lightTheme-gray dark:text-darkTheme-gray"
-                                                >
-                                                    {row[key]}
-                                                </CustomTypography>
-                                            )}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
+                            {currentRows.map((row, index) => {
+                                console.log('Row data:', row); // Verifica qué datos están en cada fila
+                                return (
+                                    <tr key={index} className="border-b border-gray-200 dark:border-gray-800 dark:hover:bg-darkTheme-formulario hover:cursor-pointer">
+                                        {tableHead.map((key, cellIndex) => {
+                                            console.log('Key:', key, 'Value:', row[key]); // Verifica si 'Descripcion' está presente
+                                            return (
+                                                <td key={cellIndex} className="px-6 py-3">
+                                                    {Array.isArray(row[key]) ? (
+                                                        <div className="flex space-x-2">
+                                                            {row[key].map((action: Action, actionIndex: number) => (
+                                                                <ActionButton
+                                                                    key={actionIndex}
+                                                                    icon={action.icon}
+                                                                    onClick={action.onClick}
+                                                                />
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <CustomTypography
+                                                            fontBold=''
+                                                            color=''
+                                                            fontSize="text-sm"
+                                                            className="leading-none text-lightTheme-gray dark:text-darkTheme-gray"
+                                                        >
+                                                            {row[key]}
+                                                        </CustomTypography>
+                                                    )}
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                );
+                            })}
                         </tbody>
+
                     </table>
                 </div>
             </div>

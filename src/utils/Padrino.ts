@@ -33,7 +33,7 @@ export const filtrarPadrinos = (tablaPadrino: Padrino[], terminoBusqueda: string
 //para crear a un nuevo padrino
 export const createPadrino = async (nuevoPadrino: Omit<Padrino, 'Id' | 'FechaRegistro'>): Promise<void> => {
     try {
-        const url = 'http://localhost:3000/padrinos';
+        const url = 'http://localhost:9000/padrinos';
         await axios.post(url, nuevoPadrino);
         console.log('Padrino creado exitosamente');
     } catch (error) {

@@ -76,7 +76,7 @@ export default function PadrinosPage() {
         <div className="bg-lightTheme-primary dark:bg-darkTheme-background w-full h-auto mb-4">
             <form className="flex flex-wrap sm:flex-nowrap justify-between items-center gap-4">
                 {/* Input de búsqueda */}
-                <div className="relative flex-grow w-full bg-green-400">
+                <div className="relative flex-grow w-full">
                     <label htmlFor="Buscar" className="sr-only">Buscar</label>
                     <div className="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
                         <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">

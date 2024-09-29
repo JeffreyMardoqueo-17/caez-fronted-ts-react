@@ -20,6 +20,7 @@ const EnfermedadPage: React.FC = () => {
             const enfermedades = await getEnfermedades();
             setEnfermedades(enfermedades);
             setTablaEnfermedades(enfermedades);
+            console.log(enfermedades);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
         }
@@ -44,10 +45,9 @@ const EnfermedadPage: React.FC = () => {
     };
 
     const tableHead = ["Nombre", "Descripción", "Acciones"];
-
     const tableRows = enfermedades.map(enfermedad => ({
         Nombre: enfermedad.Nombre,
-        Descripcion: enfermedad.Descripcion,
+        Descripcion: enfermedad.Descripcion || 'Sin descripción', // Mostrar "Sin descripción" si está vacío
         Acciones: [
             {
                 label: 'Editar',
@@ -66,6 +66,10 @@ const EnfermedadPage: React.FC = () => {
             }
         ]
     }));
+
+    console.log('Datos pasados a la tabla:', tableRows);
+
+
 
     const handleEdit = (enfermedad: Enfermedad) => {
         console.log("Editar:", enfermedad);

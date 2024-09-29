@@ -33,7 +33,7 @@ export default function EnfermedadCreate() {
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/enfermedad', {
+            const response = await axios.post('http://localhost:9000/enfermedad', {
                 nombre: Nombre, // Convertir a minúsculas
                 descripcion: Descripcion, // Convertir a minúsculas
             });

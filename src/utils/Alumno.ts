@@ -19,8 +19,10 @@ export const createAlumno = async (nuevoAlumno: Omit<Alumno, 'Id' | 'FechaRegist
     try {
         const url = 'http://localhost:9000/alumnos';
         await axios.post(url, nuevoAlumno);
+        console.log(nuevoAlumno)
         console.log('Alumno creado exitosamente');
     } catch (error) {
+        console.log(nuevoAlumno)
         console.error('Error al crear el Alumno:', error);
         throw error;
     }

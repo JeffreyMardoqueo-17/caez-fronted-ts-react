@@ -23,25 +23,25 @@ export interface Encargado {
   Administrador: boolean;
   FechaRegistro: string;
 }
-
 export interface Alumno {
   Id: string;
   Nombre: string;
   Apellido: string;
   FechaNacimiento: string;
-  Sexo: string;
-  Role: string;
-  Encargado: string;
-  Enfermedad: string | null;
-  TipoDocumento: string;
+  Sexo: number | string;
+  Role: number | string;
+  Encargado: number | string;
+  Enfermedad: number | string;
+  TipoDocumento: number | string;
   NumDocumento: string;
-  Grado: string;
-  Turno: string;
-  Administrador: string;
-  Padrino: string | null;
+  Grado: number | string;
+  Turno: number | string;
+  Administrador: number | string;
+  Padrino: number | string;
   FechaRegistro: string;
-  EsBecado: boolean;
+  EsBecado: boolean | string; // Puede ser boolean o string dependiendo de GET o POST
 }
+
 export interface Padrino {
   Id: string;
   Nombre: string;

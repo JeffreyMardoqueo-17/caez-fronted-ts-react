@@ -51,8 +51,7 @@ const AlumnosPage = () => {
         console.log("Editar:", alumno);
     };
 
-    const tableHead = ["Nombre", "Apellido", "Encargado", "NIE", "GRADO", "Turno", "Es Becado", "Acciones"];
-
+    const tableHead = ["Nombre", "Apellido", "Encargado", "NIE", "GRADO", "Turno", "Becado", "Acciones"];
     const tableRows = alumnos.map(alumno => ({
         Nombre: alumno.Nombre,
         Apellido: alumno.Apellido,
@@ -60,7 +59,8 @@ const AlumnosPage = () => {
         NumDocumento: alumno.NumDocumento,
         Grado: alumno.Grado,
         Turno: alumno.Turno,
-        "Es Becado": alumno.EsBecado ? 'SI' : 'NO',
+        // "Es Becado": alumno.EsBecado === 'Sí' || alumno.EsBecado === true ? 'SI' : 'NO',
+        Becado: alumno.EsBecado,
         Acciones: [
             { icon: <FaEye />, onClick: () => handleVerMas(alumno) },
             { icon: <FaEdit />, onClick: () => handleEdit(alumno) },

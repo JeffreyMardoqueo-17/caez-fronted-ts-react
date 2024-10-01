@@ -1,19 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Alumno, Encargado, Enfermedad, Grado, Padrino, Role, Sexo, TipoDocumento, Turno, User } from '../../../interfaces/TablasBD'
+import React, { useEffect, useState } from 'react';
+import { Alumno, Encargado, Enfermedad, Grado, Padrino, Role, Sexo, Turno, User } from '../../../interfaces/TablasBD';
 import { getSexos } from '../../../utils/Sexo';
 import { getRoles } from '../../../utils/Roles';
 import { getEncargados } from '../../../utils/Encargado';
 import { getEnfermedades } from '../../../utils/Enfermedad';
-import GetTiposDocumento from '../../../utils/TipoDocumento';
 import getGrados from '../../../utils/Grado';
 import getTurno from '../../../utils/Turno';
 import { getAdministradores } from '../../../utils/Administrador';
 import { getPadrinos } from '../../../utils/Padrino';
 import { createAlumno } from '../../../utils/Alumno';
-import { validateInput } from '../../../fuctions/Funciones';
 
 export default function AlumnoCreate() {
-
     const [alumno, setAlumno] = useState<Omit<Alumno, 'Id' | 'FechaRegistro'>>({
         Nombre: '',
         Apellido: '',
@@ -22,7 +19,7 @@ export default function AlumnoCreate() {
         Role: '',
         Encargado: '',
         Enfermedad: '',
-        TipoDocumento: '',
+        TipoDocumento: '2',  // Establecemos el TipoDocumento a NIE automáticamente (Id: 2)
         NumDocumento: '',
         Grado: '',
         Turno: '',
@@ -30,134 +27,46 @@ export default function AlumnoCreate() {
         Padrino: '',
         EsBecado: false
     });
-    //PARA OBTENER LOS SEXOS DE LA BASE DE DATOS
+
+    const [mostrarPadrino, setMostrarPadrino] = useState(false);
+
+    const handleEsBecadoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const isChecked = e.target.checked;
+        setMostrarPadrino(isChecked);
+        setAlumno({
+            ...alumno,
+            EsBecado: isChecked,
+            Padrino: isChecked ? alumno.Padrino : ''
+        });
+    };
+
     const [sexos, setSexos] = useState<Sexo[]>([]);
-    useEffect(() => {
-        const fetchSexos = async () => {
-            try {
-                const data = await getSexos();
-                setSexos(data);
-            } catch (error) {
-                console.error('Error al obtener los sexos:', error);
-            }
-        };
-        fetchSexos();
-    }, []);
-    //PARA OBTENER LOS rOLES DE LA BASE DE DATOS
     const [roles, setRoles] = useState<Role[]>([]);
-    useEffect(() => {
-        const fetchRoles = async () => {
-            try {
-                const data = await getRoles();
-                setRoles(data);
-            } catch (error) {
-                console.error('Error al obtener los roles:', error);
-            }
-        };
-        fetchRoles();
-    }, []);
-    //para obtener los encargados de la base de datos
     const [encargados, setEncargados] = useState<Encargado[]>([]);
-    useEffect(() => {
-        const fetchEncargados = async () => {
-            try {
-                const data = await getEncargados();
-                setEncargados(data);
-                setEncargados(data);
-            } catch (error) {
-                console.error('Error al obtener los encargados:', error);
-            }
-        };
-        fetchEncargados();
-    })
-    // para onteer las enferedad des la base de datoss
-    const [enfermedad, setEnfermedad] = useState<Enfermedad[]>([]);
-    const isFetched = useRef(false);  // Bandera para controlar si ya se hizo la petición
-
-    useEffect(() => {
-        const fetchEnfermedad = async () => {
-            if (isFetched.current) return; // Si ya se hizo la petición, no la volvemos a hacer
-            try {
-                const data = await getEnfermedades();
-                setEnfermedad(data);
-                isFetched.current = true; // Marcamos como que ya se ha realizado la petición
-            } catch (error) {
-                console.error('Error al obtener las enfermedades:', error);
-            }
-        };
-        fetchEnfermedad();
-    }, []); // Dependencias vacías aseguran que se ejecute solo una vez
-    // para obtener los tipos de documento de la base de datos
-    const [tipoDocumento, setTipoDocumento] = useState<TipoDocumento[]>([]);
-    useEffect(() => {
-        const fetchTipoDocumento = async () => {
-            try {
-                const data = await GetTiposDocumento();
-                setTipoDocumento(data);
-            } catch (error) {
-                console.error('Error al obtener los tipos de documento:', error);
-            }
-        };
-        fetchTipoDocumento();
-    }, []);
-
-    //para obtener los grados de la base de datos
-    const [grado, setGrado] = useState<Grado[]>([]);
-    useEffect(() => {
-        const fetchGrado = async () => {
-            try {
-                const data = await getGrados();
-                setGrado(data);
-            } catch (error) {
-                console.error('Error al obtener los tipos de documento:', error);
-            }
-        };
-        fetchGrado();
-    }, []);
-
-    // para obtener los turnos
-    const [turno, setTurno] = useState<Turno[]>([]);
-    useEffect(() => {
-        const fetchTurno = async () => {
-            try {
-                const data = await getTurno();
-                setTurno(data);
-            } catch (error) {
-                console.error('Error al obtener los turnos:', error);
-            }
-        };
-        fetchTurno();
-    }, [])
-
-    //para obtener a los administradores
+    const [padrinos, setPadrinos] = useState<Padrino[]>([]);
+    const [enfermedades, setEnfermedades] = useState<Enfermedad[]>([]);
+    const [grados, setGrados] = useState<Grado[]>([]);
+    const [turnos, setTurnos] = useState<Turno[]>([]);
     const [administradores, setAdministradores] = useState<User[]>([]);
+
     useEffect(() => {
-        const fetchAdministradores = async () => {
+        const fetchData = async () => {
             try {
-                const data = await getAdministradores();
-                console.log("Administradores recibidos:", data);
-                setAdministradores(data);
+                setSexos(await getSexos());
+                setRoles(await getRoles());
+                setEncargados(await getEncargados());
+                setPadrinos(await getPadrinos());
+                setEnfermedades(await getEnfermedades());
+                setGrados(await getGrados());
+                setTurnos(await getTurno());
+                setAdministradores(await getAdministradores());
             } catch (error) {
-                console.error('Error al obtener los administradores:', error);
+                console.error('Error al obtener los datos:', error);
             }
         };
-        fetchAdministradores();
-    }, []); // Dependencias vacías aseguran que se ejecute solo una vez
+        fetchData();
+    }, []);
 
-    const [padrino, setPadrino] = useState<Padrino[]>([]);
-    useEffect(() => {
-        const fetchPadrino = async () => {
-            try {
-                const data = await getPadrinos();
-                setPadrino(data);
-            } catch (error) {
-                console.error('Error al obtener los padrinos:', error);
-            }
-        };
-        fetchPadrino();
-    }, [])
-
-    //para que ponga en el inputs el dato que quiera el susaurio y se procese el cambio
     const procesarCambio = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setAlumno({
@@ -166,11 +75,10 @@ export default function AlumnoCreate() {
         });
     };
 
-    //lo que le pasare al formulario para que cree un padrino, usando la funcion de crear padrino
     const crearAlumno = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await createAlumno(alumno);
+            await createAlumno(alumno); // Enviamos directamente el objeto `alumno` sin convertir los ids
             alert('Alumno creado exitosamente');
         } catch (error) {
             console.error('Error al crear el Alumno:', error);
@@ -192,9 +100,10 @@ export default function AlumnoCreate() {
                             value={alumno.Nombre}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Nombre)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         />
                     </div>
+
                     {/* Apellido */}
                     <div>
                         <label htmlFor="Apellido" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Apellido</label>
@@ -205,10 +114,10 @@ export default function AlumnoCreate() {
                             value={alumno.Apellido}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Apellido)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         />
                     </div>
-                    {/* fecha de naciemiento */}
+
                     {/* Fecha de Nacimiento */}
                     <div>
                         <label htmlFor="FechaNacimiento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Fecha de Nacimiento</label>
@@ -219,10 +128,9 @@ export default function AlumnoCreate() {
                             value={alumno.FechaNacimiento}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.FechaNacimiento)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         />
                     </div>
-
 
                     {/* Sexo */}
                     <div>
@@ -233,7 +141,7 @@ export default function AlumnoCreate() {
                             value={alumno.Sexo}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Sexo)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         >
                             <option value="">Seleccione</option>
                             {sexos.map((sexo) => (
@@ -251,7 +159,7 @@ export default function AlumnoCreate() {
                             value={alumno.Role}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Role)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         >
                             <option value="">Seleccione</option>
                             {roles.map((role) => (
@@ -259,7 +167,41 @@ export default function AlumnoCreate() {
                             ))}
                         </select>
                     </div>
-                    {/* Encargados  */}
+
+                    {/* Checkbox de Es Becado */}
+                    <div className="col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            <input
+                                type="checkbox"
+                                checked={alumno.EsBecado}
+                                onChange={handleEsBecadoChange}
+                                className="mr-2"
+                            />
+                            ¿Es Becado?
+                        </label>
+                    </div>
+
+                    {/* Padrino */}
+                    {mostrarPadrino && (
+                        <div>
+                            <label htmlFor="Padrino" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Padrino</label>
+                            <select
+                                name="Padrino"
+                                id="Padrino"
+                                value={alumno.Padrino ?? ''}
+                                onChange={procesarCambio}
+                                required={mostrarPadrino}
+                                className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
+                            >
+                                <option value="">Seleccione</option>
+                                {padrinos.map((padrino) => (
+                                    <option key={padrino.Id} value={padrino.Id}>{padrino.Nombre} {padrino.Apellido}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+
+                    {/* Encargado */}
                     <div>
                         <label htmlFor="Encargado" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Encargado</label>
                         <select
@@ -268,7 +210,7 @@ export default function AlumnoCreate() {
                             value={alumno.Encargado}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Encargado)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         >
                             <option value="">Seleccione</option>
                             {encargados.map((encargado) => (
@@ -276,6 +218,7 @@ export default function AlumnoCreate() {
                             ))}
                         </select>
                     </div>
+
                     {/* Enfermedad */}
                     <div>
                         <label htmlFor="Enfermedad" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Enfermedad</label>
@@ -285,35 +228,31 @@ export default function AlumnoCreate() {
                             value={alumno.Enfermedad ?? ''}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Enfermedad ?? '')}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         >
                             <option value="">Seleccione</option>
-                            {enfermedad.map((enferedad) => (
-                                <option key={enferedad.Id} value={enferedad.Id}>{enferedad.Nombre}</option>
-                            ))}
-                        </select>
-                    </div>
-                    {/* Tipo de Documento */}
-                    <div>
-                        <label htmlFor="TipoDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Tipo Documento</label>
-                        <select
-                            name="TipoDocumento"
-                            id="TipoDocumento"
-                            value={alumno.TipoDocumento}
-                            onChange={procesarCambio}
-                            required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.TipoDocumento)}`}
-                        >
-                            <option value="">Seleccione</option>
-                            {tipoDocumento.map((tipo) => (
-                                <option key={tipo.id} value={tipo.id}>{tipo.Nombre}</option>
+                            {enfermedades.map((enfermedad) => (
+                                <option key={enfermedad.Id} value={enfermedad.Id}>{enfermedad.Nombre}</option>
                             ))}
                         </select>
                     </div>
 
-                    {/* nUMERO DE DOCUMENTO */}
+                    {/* Tipo de Documento (Preestablecido como NIE) */}
                     <div>
-                        <label htmlFor="NumDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Numero de Documento</label>
+                        <label htmlFor="TipoDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Tipo Documento</label>
+                        <input
+                            type="text"
+                            name="TipoDocumento"
+                            id="TipoDocumento"
+                            value="NIE"  // Muestra NIE y lo preestablece
+                            readOnly
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
+                        />
+                    </div>
+
+                    {/* Número de Documento */}
+                    <div>
+                        <label htmlFor="NumDocumento" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Número de Documento</label>
                         <input
                             type="text"
                             name="NumDocumento"
@@ -321,84 +260,66 @@ export default function AlumnoCreate() {
                             value={alumno.NumDocumento}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.NumDocumento)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         />
                     </div>
-                    {/* GRADO */}
+
+                    {/* Grado */}
                     <div>
-                        <label htmlFor="Grado" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Grados</label>
+                        <label htmlFor="Grado" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Grado</label>
                         <select
                             name="Grado"
                             id="Grado"
                             value={alumno.Grado}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Grado)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         >
                             <option value="">Seleccione</option>
-                            {grado.map((grado) => (
+                            {grados.map((grado) => (
                                 <option key={grado.Id} value={grado.Id}>{grado.Nombre}</option>
                             ))}
                         </select>
                     </div>
-                    {/* <TURNOS></TURNOS> */}
+
+                    {/* Turno */}
                     <div>
-                        <label htmlFor="Turno" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Turnos</label>
+                        <label htmlFor="Turno" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Turno</label>
                         <select
                             name="Turno"
                             id="Turno"
                             value={alumno.Turno}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Turno)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         >
                             <option value="">Seleccione</option>
-                            {turno.map((turno) => (
+                            {turnos.map((turno) => (
                                 <option key={turno.Id} value={turno.Id}>{turno.Nombre}</option>
                             ))}
                         </select>
                     </div>
-                    {/* <PADRINOSSSS></PADRINOSSSS> */}
-                    <div>
-                        <label htmlFor="Padrino" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Padrino</label>
-                        <select
-                            name="Padrino"
-                            id="Padrino"
-                            value={alumno.Padrino ?? ''}
-                            onChange={procesarCambio}
-                            required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Padrino ?? '')}`}
-                        >
-                            <option value="">Seleccione</option>
-                            {padrino.map((padrino) => (
-                                <option key={padrino.Id} value={padrino.Id}>{padrino.Nombre}{padrino.Apellido}</option>
-                            ))}
-                        </select>
-                    </div>
 
-                    {/* ADMINISTRADOR */}
-                    {/* ADMINISTRADOR */}
+                    {/* Administrador */}
                     <div>
-                        <label htmlFor="IdAdministrador" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administrador</label>
+                        <label htmlFor="Administrador" className="block text-sm font-medium text-gray-700 dark:text-gray-400">Administrador</label>
                         <select
-                            name="Administrador"  // Asegúrate de que el nombre coincide con la propiedad en el estado
-                            id="IdAdministrador"
+                            name="Administrador"
+                            id="Administrador"
                             value={alumno.Administrador}
                             onChange={procesarCambio}
                             required
-                            className={`block dark:bg-darkTheme-input dark:text-darkTheme-gray cursor-pointer w-full rounded-md shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 ${validateInput(alumno.Administrador)}`}
+                            className="block dark:bg-darkTheme-input dark:text-darkTheme-gray w-full rounded-md shadow-sm"
                         >
                             <option value="">Seleccione</option>
-                            {administradores.map(administrador => (
-                                <option key={administrador.Id} value={administrador.Id}>
-                                    {administrador.Name} {administrador.LastName}
-                                </option>
+                            {administradores.map((admin) => (
+                                <option key={admin.Id} value={admin.Id}>{admin.Name} {admin.LastName}</option>
                             ))}
                         </select>
                     </div>
-
-
                 </div>
+
+                {/* Botón para crear alumno */}
                 <button
                     type="submit"
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -407,5 +328,5 @@ export default function AlumnoCreate() {
                 </button>
             </form>
         </div>
-    )
+    );
 }
